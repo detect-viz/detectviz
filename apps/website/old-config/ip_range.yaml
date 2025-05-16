@@ -1,0 +1,625 @@
+ip_ranges:
+  - factory: F12
+    phase: P7
+    datacenter: DC1
+    room: R0
+    start: 172.5.0.1
+    end: 172.5.0.254
+  - factory: F12
+    phase: P7
+    datacenter: DC1
+    room: R0
+    start: 172.5.1.1
+    end: 172.5.1.254
+  - factory: F12
+    phase: P7
+    datacenter: DC1
+    room: R0
+    start: 172.5.2.1
+    end: 172.5.2.254
+  - factory: F12
+    phase: P7
+    datacenter: DC1
+    room: R0
+    start: 172.5.3.1
+    end: 172.5.3.254
+  - factory: F12
+    phase: P7
+    datacenter: DC1
+    room: R0
+    start: 172.5.4.1
+    end: 172.5.4.254
+  - factory: F12
+    phase: P7
+    datacenter: DC1
+    room: R0
+    start: 172.5.5.1
+    end: 172.5.5.254
+  - factory: F12
+    phase: P7
+    datacenter: DC1
+    room: R0
+    start: 172.5.6.1
+    end: 172.5.6.254
+  - factory: F12
+    phase: P7
+    datacenter: DC1
+    room: R0
+    start: 172.5.7.1
+    end: 172.5.7.254
+  - factory: F12
+    phase: P7
+    datacenter: DC1
+    room: R1
+    start: 172.5.8.1
+    end: 172.5.8.254
+  - factory: F12
+    phase: P7
+    datacenter: DC1
+    room: R1
+    start: 172.5.9.1
+    end: 172.5.9.254
+  - factory: F12
+    phase: P7
+    datacenter: DC1
+    room: R1
+    start: 172.5.10.1
+    end: 172.5.10.254
+  - factory: F12
+    phase: P7
+    datacenter: DC1
+    room: R1
+    start: 172.5.11.1
+    end: 172.5.11.254
+  - factory: F12
+    phase: P7
+    datacenter: DC1
+    room: R1
+    start: 172.5.12.1
+    end: 172.5.12.254
+  - factory: F12
+    phase: P7
+    datacenter: DC1
+    room: R1
+    start: 172.5.13.1
+    end: 172.5.13.254
+  - factory: F12
+    phase: P7
+    datacenter: DC1
+    room: R1
+    start: 172.5.14.1
+    end: 172.5.14.254
+  - factory: F12
+    phase: P7
+    datacenter: DC1
+    room: R1
+    start: 172.5.15.1
+    end: 172.5.15.254
+  - factory: F12
+    phase: P7
+    datacenter: DC1
+    room: R2
+    start: 172.5.16.1
+    end: 172.5.16.254
+  - factory: F12
+    phase: P7
+    datacenter: DC1
+    room: R2
+    start: 172.5.17.1
+    end: 172.5.17.254
+  - factory: F12
+    phase: P7
+    datacenter: DC1
+    room: R2
+    start: 172.5.18.1
+    end: 172.5.18.254
+  - factory: F12
+    phase: P7
+    datacenter: DC1
+    room: R2
+    start: 172.5.19.1
+    end: 172.5.19.254
+  - factory: F12
+    phase: P7
+    datacenter: DC1
+    room: R2
+    start: 172.5.20.1
+    end: 172.5.20.254
+  - factory: F12
+    phase: P7
+    datacenter: DC1
+    room: R2
+    start: 172.5.21.1
+    end: 172.5.21.254
+  - factory: F12
+    phase: P7
+    datacenter: DC1
+    room: R2
+    start: 172.5.22.1
+    end: 172.5.22.254
+  - factory: F12
+    phase: P7
+    datacenter: DC1
+    room: R2
+    start: 172.5.23.1
+    end: 172.5.23.254
+  - factory: F12
+    phase: P7
+    datacenter: DC1
+    room: R3
+    start: 172.5.24.1
+    end: 172.5.24.254
+  - factory: F12
+    phase: P7
+    datacenter: DC1
+    room: R3
+    start: 172.5.25.1
+    end: 172.5.25.254
+  - factory: F12
+    phase: P7
+    datacenter: DC1
+    room: R3
+    start: 172.5.26.1
+    end: 172.5.26.254
+  - factory: F12
+    phase: P7
+    datacenter: DC1
+    room: R3
+    start: 172.5.27.1
+    end: 172.5.27.254
+  - factory: F12
+    phase: P7
+    datacenter: DC1
+    room: R3
+    start: 172.5.28.1
+    end: 172.5.28.254
+  - factory: F12
+    phase: P7
+    datacenter: DC1
+    room: R3
+    start: 172.5.29.1
+    end: 172.5.29.254
+  - factory: F12
+    phase: P7
+    datacenter: DC1
+    room: R3
+    start: 172.5.30.1
+    end: 172.5.30.254
+  - factory: F12
+    phase: P7
+    datacenter: DC1
+    room: R3
+    start: 172.5.31.1
+    end: 172.5.31.254
+  - factory: F12
+    phase: P7
+    datacenter: DC1
+    room: R4
+    start: 172.5.32.1
+    end: 172.5.32.254
+  - factory: F12
+    phase: P7
+    datacenter: DC1
+    room: R4
+    start: 172.5.33.1
+    end: 172.5.33.254
+  - factory: F12
+    phase: P7
+    datacenter: DC1
+    room: R4
+    start: 172.5.34.1
+    end: 172.5.34.254
+  - factory: F12
+    phase: P7
+    datacenter: DC1
+    room: R4
+    start: 172.5.35.1
+    end: 172.5.35.254
+  - factory: F12
+    phase: P7
+    datacenter: DC1
+    room: R4
+    start: 172.5.36.1
+    end: 172.5.36.254
+  - factory: F12
+    phase: P7
+    datacenter: DC1
+    room: R4
+    start: 172.5.37.1
+    end: 172.5.37.254
+  - factory: F12
+    phase: P7
+    datacenter: DC1
+    room: R4
+    start: 172.5.38.1
+    end: 172.5.38.254
+  - factory: F12
+    phase: P7
+    datacenter: DC1
+    room: R4
+    start: 172.5.39.1
+    end: 172.5.39.254
+  - factory: F12
+    phase: P7
+    datacenter: DC1
+    room: R5
+    start: 172.5.40.1
+    end: 172.5.40.254
+  - factory: F12
+    phase: P7
+    datacenter: DC1
+    room: R5
+    start: 172.5.41.1
+    end: 172.5.41.254
+  - factory: F12
+    phase: P7
+    datacenter: DC1
+    room: R5
+    start: 172.5.42.1
+    end: 172.5.42.254
+  - factory: F12
+    phase: P7
+    datacenter: DC1
+    room: R5
+    start: 172.5.43.1
+    end: 172.5.43.254
+  - factory: F12
+    phase: P7
+    datacenter: DC1
+    room: R5
+    start: 172.5.44.1
+    end: 172.5.44.254
+  - factory: F12
+    phase: P7
+    datacenter: DC1
+    room: R5
+    start: 172.5.45.1
+    end: 172.5.45.254
+  - factory: F12
+    phase: P7
+    datacenter: DC1
+    room: R5
+    start: 172.5.46.1
+    end: 172.5.46.254
+  - factory: F12
+    phase: P7
+    datacenter: DC1
+    room: R5
+    start: 172.5.47.1
+    end: 172.5.47.254
+  - factory: F12
+    phase: P7
+    datacenter: DC1
+    room: R6
+    start: 172.5.48.1
+    end: 172.5.48.254
+  - factory: F12
+    phase: P7
+    datacenter: DC1
+    room: R6
+    start: 172.5.49.1
+    end: 172.5.49.254
+  - factory: F12
+    phase: P7
+    datacenter: DC1
+    room: R6
+    start: 172.5.50.1
+    end: 172.5.50.254
+  - factory: F12
+    phase: P7
+    datacenter: DC1
+    room: R6
+    start: 172.5.51.1
+    end: 172.5.51.254
+  - factory: F12
+    phase: P7
+    datacenter: DC1
+    room: R6
+    start: 172.5.52.1
+    end: 172.5.52.254
+  - factory: F12
+    phase: P7
+    datacenter: DC1
+    room: R6
+    start: 172.5.53.1
+    end: 172.5.53.254
+  - factory: F12
+    phase: P7
+    datacenter: DC1
+    room: R6
+    start: 172.5.54.1
+    end: 172.5.54.254
+  - factory: F12
+    phase: P7
+    datacenter: DC1
+    room: R6
+    start: 172.5.55.1
+    end: 172.5.55.254
+  - factory: F12
+    phase: P7
+    datacenter: DC1
+    room: R7
+    start: 172.5.56.1
+    end: 172.5.56.254
+  - factory: F12
+    phase: P7
+    datacenter: DC1
+    room: R7
+    start: 172.5.57.1
+    end: 172.5.57.254
+  - factory: F12
+    phase: P7
+    datacenter: DC1
+    room: R7
+    start: 172.5.58.1
+    end: 172.5.58.254
+  - factory: F12
+    phase: P7
+    datacenter: DC1
+    room: R7
+    start: 172.5.59.1
+    end: 172.5.59.254
+  - factory: F12
+    phase: P7
+    datacenter: DC1
+    room: R7
+    start: 172.5.60.1
+    end: 172.5.60.254
+  - factory: F12
+    phase: P7
+    datacenter: DC1
+    room: R7
+    start: 172.5.61.1
+    end: 172.5.61.254
+  - factory: F12
+    phase: P7
+    datacenter: DC1
+    room: R7
+    start: 172.5.62.1
+    end: 172.5.62.254
+  - factory: F12
+    phase: P7
+    datacenter: DC1
+    room: R7
+    start: 172.5.63.1
+    end: 172.5.63.254
+  - factory: F12
+    phase: P7
+    datacenter: DC2
+    room: R0
+    start: 172.6.0.1
+    end: 172.6.0.254
+  - factory: F12
+    phase: P7
+    datacenter: DC2
+    room: R0
+    start: 172.6.1.1
+    end: 172.6.1.254
+  - factory: F12
+    phase: P7
+    datacenter: DC2
+    room: R0
+    start: 172.6.2.1
+    end: 172.6.2.254
+  - factory: F12
+    phase: P7
+    datacenter: DC2
+    room: R0
+    start: 172.6.3.1
+    end: 172.6.3.254
+  - factory: F12
+    phase: P7
+    datacenter: DC2
+    room: R0
+    start: 172.6.4.1
+    end: 172.6.4.254
+  - factory: F12
+    phase: P7
+    datacenter: DC2
+    room: R0
+    start: 172.6.5.1
+    end: 172.6.5.254
+  - factory: F12
+    phase: P7
+    datacenter: DC2
+    room: R0
+    start: 172.6.6.1
+    end: 172.6.6.254
+  - factory: F12
+    phase: P7
+    datacenter: DC2
+    room: R0
+    start: 172.6.7.1
+    end: 172.6.7.254
+  - factory: F12
+    phase: P7
+    datacenter: DC2
+    room: R1
+    start: 172.6.8.1
+    end: 172.6.8.254
+  - factory: F12
+    phase: P7
+    datacenter: DC2
+    room: R1
+    start: 172.6.9.1
+    end: 172.6.9.254
+  - factory: F12
+    phase: P7
+    datacenter: DC2
+    room: R1
+    start: 172.6.10.1
+    end: 172.6.10.254
+  - factory: F12
+    phase: P7
+    datacenter: DC2
+    room: R1
+    start: 172.6.11.1
+    end: 172.6.11.254
+  - factory: F12
+    phase: P7
+    datacenter: DC2
+    room: R1
+    start: 172.6.12.1
+    end: 172.6.12.254
+  - factory: F12
+    phase: P7
+    datacenter: DC2
+    room: R1
+    start: 172.6.13.1
+    end: 172.6.13.254
+  - factory: F12
+    phase: P7
+    datacenter: DC2
+    room: R1
+    start: 172.6.14.1
+    end: 172.6.14.254
+  - factory: F12
+    phase: P7
+    datacenter: DC2
+    room: R1
+    start: 172.6.15.1
+    end: 172.6.15.254
+  - factory: F12
+    phase: P7
+    datacenter: DC2
+    room: R2
+    start: 172.6.16.1
+    end: 172.6.16.254
+  - factory: F12
+    phase: P7
+    datacenter: DC2
+    room: R2
+    start: 172.6.17.1
+    end: 172.6.17.254
+  - factory: F12
+    phase: P7
+    datacenter: DC2
+    room: R2
+    start: 172.6.18.1
+    end: 172.6.18.254
+  - factory: F12
+    phase: P7
+    datacenter: DC2
+    room: R2
+    start: 172.6.19.1
+    end: 172.6.19.254
+  - factory: F12
+    phase: P7
+    datacenter: DC2
+    room: R2
+    start: 172.6.20.1
+    end: 172.6.20.254
+  - factory: F12
+    phase: P7
+    datacenter: DC2
+    room: R2
+    start: 172.6.21.1
+    end: 172.6.21.254
+  - factory: F12
+    phase: P7
+    datacenter: DC2
+    room: R2
+    start: 172.6.22.1
+    end: 172.6.22.254
+  - factory: F12
+    phase: P7
+    datacenter: DC2
+    room: R2
+    start: 172.6.23.1
+    end: 172.6.23.254
+  - factory: F12
+    phase: P7
+    datacenter: DC2
+    room: R3
+    start: 172.6.24.1
+    end: 172.6.24.254
+  - factory: F12
+    phase: P7
+    datacenter: DC2
+    room: R3
+    start: 172.6.25.1
+    end: 172.6.25.254
+  - factory: F12
+    phase: P7
+    datacenter: DC2
+    room: R3
+    start: 172.6.26.1
+    end: 172.6.26.254
+  - factory: F12
+    phase: P7
+    datacenter: DC2
+    room: R3
+    start: 172.6.27.1
+    end: 172.6.27.254
+  - factory: F12
+    phase: P7
+    datacenter: DC2
+    room: R3
+    start: 172.6.28.1
+    end: 172.6.28.254
+  - factory: F12
+    phase: P7
+    datacenter: DC2
+    room: R3
+    start: 172.6.29.1
+    end: 172.6.29.254
+  - factory: F12
+    phase: P7
+    datacenter: DC2
+    room: R3
+    start: 172.6.30.1
+    end: 172.6.30.254
+  - factory: F12
+    phase: P7
+    datacenter: DC2
+    room: R3
+    start: 172.6.31.1
+    end: 172.6.31.254
+  - factory: F12
+    phase: P7
+    datacenter: DC2
+    room: R4
+    start: 172.6.32.1
+    end: 172.6.32.254
+  - factory: F12
+    phase: P7
+    datacenter: DC2
+    room: R4
+    start: 172.6.33.1
+    end: 172.6.33.254
+  - factory: F12
+    phase: P7
+    datacenter: DC2
+    room: R4
+    start: 172.6.34.1
+    end: 172.6.34.254
+  - factory: F12
+    phase: P7
+    datacenter: DC2
+    room: R4
+    start: 172.6.35.1
+    end: 172.6.35.254
+  - factory: F12
+    phase: P7
+    datacenter: DC2
+    room: R4
+    start: 172.6.36.1
+    end: 172.6.36.254
+  - factory: F12
+    phase: P7
+    datacenter: DC2
+    room: R4
+    start: 172.6.37.1
+    end: 172.6.37.254
+  - factory: F12
+    phase: P7
+    datacenter: DC2
+    room: R4
+    start: 172.6.38.1
+    end: 172.6.38.254
+  - factory: F12
+    phase: P7
+    datacenter: DC2
+    room: R4
+    start: 172.6.39.1
+    end: 172.6.39.254

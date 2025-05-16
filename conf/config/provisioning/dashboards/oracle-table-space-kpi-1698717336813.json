@@ -1,0 +1,469 @@
+{
+  "__inputs": [
+    {
+      "name": "DS_INFLUXDB-MASTER",
+      "label": "influxdb-master",
+      "description": "",
+      "type": "datasource",
+      "pluginId": "influxdb",
+      "pluginName": "InfluxDB"
+    }
+  ],
+  "__elements": {},
+  "__requires": [
+    {
+      "type": "grafana",
+      "id": "grafana",
+      "name": "Grafana",
+      "version": "9.4.3"
+    },
+    {
+      "type": "datasource",
+      "id": "influxdb",
+      "name": "InfluxDB",
+      "version": "1.0.0"
+    },
+    {
+      "type": "panel",
+      "id": "stat",
+      "name": "Stat",
+      "version": ""
+    },
+    {
+      "type": "panel",
+      "id": "timeseries",
+      "name": "Time series",
+      "version": ""
+    }
+  ],
+  "annotations": {
+    "list": [
+      {
+        "builtIn": 1,
+        "datasource": {
+          "type": "grafana",
+          "uid": "-- Grafana --"
+        },
+        "enable": true,
+        "hide": true,
+        "iconColor": "rgba(0, 211, 255, 1)",
+        "name": "Annotations & Alerts",
+        "target": {
+          "limit": 100,
+          "matchAny": false,
+          "tags": [],
+          "type": "dashboard"
+        },
+        "type": "dashboard"
+      }
+    ]
+  },
+  "editable": true,
+  "fiscalYearStartMonth": 0,
+  "graphTooltip": 0,
+  "id": null,
+  "links": [
+    {
+      "asDropdown": false,
+      "icon": "dashboard",
+      "includeVars": false,
+      "keepTime": false,
+      "tags": [],
+      "targetBlank": false,
+      "title": "oracle-table-space-overview",
+      "tooltip": "",
+      "type": "link",
+      "url": "https://172.19.11.135:3000/grafana_iframe/d/oracle-table-space-overview/oracle-table-space-overview?orgId=1&refresh=10s&var-Host=${Host}&var-DBName=${DBName}&var-TableSpaceName=All"
+    }
+  ],
+  "liveNow": false,
+  "panels": [
+    {
+      "datasource": {
+        "type": "influxdb",
+        "uid": "${DS_INFLUXDB-MASTER}"
+      },
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "thresholds"
+          },
+          "decimals": 1,
+          "displayName": "${Field}",
+          "links": [],
+          "mappings": [],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "blue",
+                "value": null
+              },
+              {
+                "color": "orange",
+                "value": 0
+              }
+            ]
+          },
+          "unit": "none"
+        },
+        "overrides": [
+          {
+            "matcher": {
+              "id": "byRegexp",
+              "options": "/_pct/"
+            },
+            "properties": [
+              {
+                "id": "unit",
+                "value": "percent"
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byRegexp",
+              "options": "/_space/"
+            },
+            "properties": [
+              {
+                "id": "unit",
+                "value": "bytes"
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byRegexp",
+              "options": "/_size/"
+            },
+            "properties": [
+              {
+                "id": "unit",
+                "value": "bytes"
+              }
+            ]
+          }
+        ]
+      },
+      "gridPos": {
+        "h": 4,
+        "w": 4,
+        "x": 0,
+        "y": 0
+      },
+      "id": 15,
+      "options": {
+        "colorMode": "background",
+        "graphMode": "area",
+        "justifyMode": "center",
+        "orientation": "auto",
+        "reduceOptions": {
+          "calcs": [
+            "lastNotNull"
+          ],
+          "fields": "",
+          "values": true
+        },
+        "text": {},
+        "textMode": "value_and_name"
+      },
+      "pluginVersion": "9.4.3",
+      "repeat": "Field",
+      "repeatDirection": "v",
+      "targets": [
+        {
+          "datasource": {
+            "type": "influxdb",
+            "uid": "${DS_INFLUXDB-MASTER}"
+          },
+          "query": "import \"strings\"\nfrom(bucket: \"ipoc_task\")\n  |> range(start: v.timeRangeStart, stop: v.timeRangeStop)\n  |> filter(fn: (r) => r[\"_measurement\"] == \"db_oracle\")\n  |> filter(fn: (r) => r[\"DBName\"] == \"${DBName}\")\n  |> filter(fn: (r) => r[\"TableSpaceName\"] == \"${TableSpaceName}\")\n  |> filter(fn: (r) => r[\"_field\"] == \"${Field}\")\n  |> last()\n",
+          "refId": "A"
+        }
+      ],
+      "title": "${TableSpaceName}",
+      "transformations": [],
+      "type": "stat"
+    },
+    {
+      "datasource": {
+        "type": "influxdb",
+        "uid": "${DS_INFLUXDB-MASTER}"
+      },
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "palette-classic"
+          },
+          "custom": {
+            "axisCenteredZero": false,
+            "axisColorMode": "text",
+            "axisLabel": "",
+            "axisPlacement": "auto",
+            "barAlignment": 0,
+            "drawStyle": "line",
+            "fillOpacity": 25,
+            "gradientMode": "none",
+            "hideFrom": {
+              "legend": false,
+              "tooltip": false,
+              "viz": false
+            },
+            "lineInterpolation": "linear",
+            "lineWidth": 1,
+            "pointSize": 5,
+            "scaleDistribution": {
+              "type": "linear"
+            },
+            "showPoints": "auto",
+            "spanNulls": false,
+            "stacking": {
+              "group": "A",
+              "mode": "none"
+            },
+            "thresholdsStyle": {
+              "mode": "off"
+            }
+          },
+          "mappings": [],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green",
+                "value": null
+              },
+              {
+                "color": "red",
+                "value": 80
+              }
+            ]
+          }
+        },
+        "overrides": [
+          {
+            "matcher": {
+              "id": "byRegexp",
+              "options": "/_pct/"
+            },
+            "properties": [
+              {
+                "id": "unit",
+                "value": "percent"
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byRegexp",
+              "options": "/_size/"
+            },
+            "properties": [
+              {
+                "id": "unit",
+                "value": "bytes"
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byRegexp",
+              "options": "/_space/"
+            },
+            "properties": [
+              {
+                "id": "unit",
+                "value": "decbytes"
+              }
+            ]
+          }
+        ]
+      },
+      "gridPos": {
+        "h": 4,
+        "w": 20,
+        "x": 4,
+        "y": 0
+      },
+      "id": 119,
+      "options": {
+        "legend": {
+          "calcs": [],
+          "displayMode": "list",
+          "placement": "bottom",
+          "showLegend": true
+        },
+        "tooltip": {
+          "mode": "single",
+          "sort": "none"
+        }
+      },
+      "pluginVersion": "9.4.3",
+      "repeat": "Field",
+      "repeatDirection": "v",
+      "targets": [
+        {
+          "datasource": {
+            "type": "influxdb",
+            "uid": "${DS_INFLUXDB-MASTER}"
+          },
+          "query": "import \"strings\"\nfrom(bucket: \"ipoc_task\")\n  |> range(start: v.timeRangeStart, stop: v.timeRangeStop)\n  |> filter(fn: (r) => r[\"_measurement\"] == \"db_oracle\")\n  |> filter(fn: (r) => r[\"DBName\"] == \"${DBName}\")\n  |> filter(fn: (r) => r[\"TableSpaceName\"] == \"${TableSpaceName}\")\n  |> filter(fn: (r) => r[\"_field\"] == \"${Field}\")\n",
+          "refId": "A"
+        }
+      ],
+      "title": "${TableSpaceName} - ${Field}",
+      "transformations": [],
+      "type": "timeseries"
+    }
+  ],
+  "refresh": "",
+  "revision": 1,
+  "schemaVersion": 38,
+  "style": "dark",
+  "tags": [
+    "master-oracle"
+  ],
+  "templating": {
+    "list": [
+      {
+        "current": {},
+        "datasource": {
+          "type": "influxdb",
+          "uid": "${DS_INFLUXDB-MASTER}"
+        },
+        "definition": "import \"influxdata/influxdb/schema\"\n\t\tschema.tagValues(\n\t\t\tbucket: \"ipoc_task\", \n\t\t\ttag: \"host\",\n\t\t\tpredicate: (r) =>  \n\t\t\tr._measurement == \"db_oracle\",\n\t\t\tstart: v.timeRangeStart, \n\t\t\tstop: v.timeRangeStop)",
+        "hide": 0,
+        "includeAll": false,
+        "label": "Host",
+        "multi": false,
+        "name": "Host",
+        "options": [],
+        "query": "import \"influxdata/influxdb/schema\"\n\t\tschema.tagValues(\n\t\t\tbucket: \"ipoc_task\", \n\t\t\ttag: \"host\",\n\t\t\tpredicate: (r) =>  \n\t\t\tr._measurement == \"db_oracle\",\n\t\t\tstart: v.timeRangeStart, \n\t\t\tstop: v.timeRangeStop)",
+        "refresh": 1,
+        "regex": "",
+        "skipUrlSync": false,
+        "sort": 0,
+        "type": "query"
+      },
+      {
+        "current": {},
+        "datasource": {
+          "type": "influxdb",
+          "uid": "${DS_INFLUXDB-MASTER}"
+        },
+        "definition": "import \"influxdata/influxdb/schema\"\n\t\tschema.tagValues(\n\t\t\tbucket: \"ipoc_task\", \n\t\t\ttag: \"DBName\",\n\t\t\tpredicate: (r) =>  \n\t\t\tr._measurement == \"db_oracle\" and r.host == \"${Host}\",\n\t\t\tstart: v.timeRangeStart, \n\t\t\tstop: v.timeRangeStop)",
+        "hide": 0,
+        "includeAll": false,
+        "label": "DBName",
+        "multi": false,
+        "name": "DBName",
+        "options": [],
+        "query": "import \"influxdata/influxdb/schema\"\n\t\tschema.tagValues(\n\t\t\tbucket: \"ipoc_task\", \n\t\t\ttag: \"DBName\",\n\t\t\tpredicate: (r) =>  \n\t\t\tr._measurement == \"db_oracle\" and r.host == \"${Host}\",\n\t\t\tstart: v.timeRangeStart, \n\t\t\tstop: v.timeRangeStop)",
+        "refresh": 1,
+        "regex": "",
+        "skipUrlSync": false,
+        "sort": 0,
+        "type": "query"
+      },
+      {
+        "allValue": "",
+        "current": {},
+        "datasource": {
+          "type": "influxdb",
+          "uid": "${DS_INFLUXDB-MASTER}"
+        },
+        "definition": "import \"influxdata/influxdb/schema\"\n\t\tschema.tagValues(\n\t\t\tbucket: \"ipoc_task\", \n\t\t\ttag: \"TableSpaceName\",\n\t\t\tpredicate: (r) =>  \n\t\t\tr._measurement == \"db_oracle\" \n\t\t\tand r.host == \"${Host}\"\n      and r.DBName == \"${DBName}\",\n\t\t\tstart: v.timeRangeStart, \n\t\t\tstop: v.timeRangeStop)",
+        "hide": 0,
+        "includeAll": false,
+        "label": "TableSpaceName",
+        "multi": false,
+        "name": "TableSpaceName",
+        "options": [],
+        "query": "import \"influxdata/influxdb/schema\"\n\t\tschema.tagValues(\n\t\t\tbucket: \"ipoc_task\", \n\t\t\ttag: \"TableSpaceName\",\n\t\t\tpredicate: (r) =>  \n\t\t\tr._measurement == \"db_oracle\" \n\t\t\tand r.host == \"${Host}\"\n      and r.DBName == \"${DBName}\",\n\t\t\tstart: v.timeRangeStart, \n\t\t\tstop: v.timeRangeStop)",
+        "refresh": 1,
+        "regex": "",
+        "skipUrlSync": false,
+        "sort": 0,
+        "type": "query"
+      },
+      {
+        "current": {
+          "selected": false,
+          "text": "All",
+          "value": "All"
+        },
+        "hide": 0,
+        "includeAll": false,
+        "label": "Field",
+        "multi": false,
+        "name": "Field",
+        "options": [
+          {
+            "selected": false,
+            "text": "files_in_tablespace",
+            "value": "files_in_tablespace"
+          },
+          {
+            "selected": false,
+            "text": "max_free_size",
+            "value": "max_free_size"
+          },
+          {
+            "selected": false,
+            "text": "max_size_of_tablespace",
+            "value": "max_size_of_tablespace"
+          },
+          {
+            "selected": false,
+            "text": "total_auto_free_pct",
+            "value": "total_auto_free_pct"
+          },
+          {
+            "selected": false,
+            "text": "total_auto_used_pct",
+            "value": "total_auto_used_pct"
+          },
+          {
+            "selected": false,
+            "text": "total_free_pct",
+            "value": "total_free_pct"
+          },
+          {
+            "selected": false,
+            "text": "total_tablespace_free_space",
+            "value": "total_tablespace_free_space"
+          },
+          {
+            "selected": false,
+            "text": "total_tablespace_space",
+            "value": "total_tablespace_space"
+          },
+          {
+            "selected": false,
+            "text": "total_used_pct",
+            "value": "total_used_pct"
+          },
+          {
+            "selected": false,
+            "text": "total_used_space",
+            "value": "total_used_space"
+          }
+        ],
+        "query": " files_in_tablespace,\nmax_free_size,\nmax_size_of_tablespace,\ntotal_auto_free_pct,\ntotal_auto_used_pct,\ntotal_free_pct,\ntotal_tablespace_free_space,\ntotal_tablespace_space,\ntotal_used_pct,\ntotal_used_space",
+        "queryValue": "",
+        "skipUrlSync": false,
+        "type": "custom"
+      }
+    ]
+  },
+  "time": {
+    "from": "now-14d",
+    "to": "now"
+  },
+  "timepicker": {},
+  "timezone": "",
+  "title": "oracle-table-space-kpi",
+  "uid": "oracle-table-space-kpi",
+  "version": 173,
+  "weekStart": ""
+}

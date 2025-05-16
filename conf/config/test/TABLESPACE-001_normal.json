@@ -1,0 +1,32 @@
+{
+  "metadata": {
+    "realm_name": "master",
+    "resource_name": "test_server_TABLESPACE-001",
+    "datasource_name": "oracle_tablespace",
+    "timestamp": 1647234567
+  },
+  "data": {
+    "free_bytes:ORCL:USERS": [
+      {
+        "timestamp": 1647234567,
+        "value": 30000000000
+      },
+      {
+        "timestamp": 1647234507,
+        "value": 29800000000
+      },
+      {
+        "timestamp": 1647234447,
+        "value": 30200000000
+      },
+      {
+        "timestamp": 1647234387,
+        "value": 29900000000
+      },
+      {
+        "timestamp": 1647234327,
+        "value": 30100000000
+      }
+    ]
+  }
+} 

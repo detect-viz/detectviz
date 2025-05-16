@@ -1,0 +1,126 @@
+[[inputs.snmp]]
+  name = "{{ .NAME }}"
+  agents = ["udp://{{ .IP }}:{{ .PORT }}"]
+  interval = "{{ .INTERVAL }}"
+  timeout = "{{ .TIMEOUT }}"
+  retries = {{ .RETRIES }}
+  version = "{{ .VERSION }}"
+  community = "{{ .COMMUNITY }}"
+  path = ["{{ .MIBS_PATH }}"]
+  agent_host_tag = "ip"
+
+  {{ range $k, $v := .TAGS }}
+  [inputs.snmp.tags]
+    {{ $k }} = "{{ $v }}"
+  {{ end }}
+
+  [[inputs.snmp.table]]
+    name = "{{ .NAME }}"
+    [[inputs.snmp.table.field]]
+      name = "voltage.L1"
+      oid = "DeltaPDU-MIB::dpduOutputVoltage1"
+    [[inputs.snmp.table.field]]
+      name = "voltage.L2"
+      oid = "DeltaPDU-MIB::dpduOutputVoltage2"
+    [[inputs.snmp.table.field]]
+      name = "voltage.L3"
+      oid = "DeltaPDU-MIB::dpduOutputVoltage3"
+    [[inputs.snmp.table.field]]
+      name = "current.L1-1"
+      oid = "DeltaPDU-MIB::dpduOutputCurrent1"   
+    [[inputs.snmp.table.field]]
+      name = "current.L2-1"
+      oid = "DeltaPDU-MIB::dpduOutputCurrent2"
+    [[inputs.snmp.table.field]]
+      name = "current.L3-1"
+      oid = "DeltaPDU-MIB::dpduOutputCurrent3"
+    [[inputs.snmp.table.field]]
+      name = "current.L1-2"
+      oid = "DeltaPDU-MIB::dpduOutputCurrentL1-2"
+    [[inputs.snmp.table.field]]
+      name = "current.L2-2"
+      oid = "DeltaPDU-MIB::dpduOutputCurrentL2-2"
+    [[inputs.snmp.table.field]]
+      name = "current.L3-2"
+      oid = "DeltaPDU-MIB::dpduOutputCurrentL3-2"
+    [[inputs.snmp.table.field]]
+      name = "current.L1-3"
+      oid = "DeltaPDU-MIB::dpduOutputCurrentL1-3"
+    [[inputs.snmp.table.field]]
+      name = "current.L2-3"
+      oid = "DeltaPDU-MIB::dpduOutputCurrentL2-3"
+    [[inputs.snmp.table.field]]
+      name = "current.L3-3"
+      oid = "DeltaPDU-MIB::dpduOutputCurrentL3-3"
+    [[inputs.snmp.table.field]]
+      name = "current.L1"
+      oid = "DeltaPDU-MIB::dpduOutputCurrentL1Total"
+    [[inputs.snmp.table.field]]
+      name = "current.L2"
+      oid = "DeltaPDU-MIB::dpduOutputCurrentL2Total"
+    [[inputs.snmp.table.field]]
+      name = "current.L3"
+      oid = "DeltaPDU-MIB::dpduOutputCurrentL3Total"
+    [[inputs.snmp.table.field]]
+      name = "power.L1-1"
+      oid = "DeltaPDU-MIB::dpduOutputWattage1"
+    [[inputs.snmp.table.field]]
+      name = "power.L2-1"
+      oid = "DeltaPDU-MIB::dpduOutputWattage2"
+    [[inputs.snmp.table.field]]
+      name = "power.L3-1"
+      oid = "DeltaPDU-MIB::dpduOutputWattage3"
+    [[inputs.snmp.table.field]]
+      name = "power.L1-2"
+      oid = "DeltaPDU-MIB::dpduOutputWattageL1-2"
+    [[inputs.snmp.table.field]]
+      name = "power.L2-2"
+      oid = "DeltaPDU-MIB::dpduOutputWattageL2-2"
+    [[inputs.snmp.table.field]]
+      name = "power.L3-2"
+      oid = "DeltaPDU-MIB::dpduOutputWattageL3-2"
+    [[inputs.snmp.table.field]]
+      name = "power.L1-3"
+      oid = "DeltaPDU-MIB::dpduOutputWattageL1-3"
+    [[inputs.snmp.table.field]]
+      name = "power.L2-3"
+      oid = "DeltaPDU-MIB::dpduOutputWattageL2-3"     
+    [[inputs.snmp.table.field]]
+      name = "power.L3-3"
+      oid = "DeltaPDU-MIB::dpduOutputWattageL3-3"
+    [[inputs.snmp.table.field]]
+      name = "power.L1"
+      oid = "DeltaPDU-MIB::dpduOutputWattageL1Total"
+    [[inputs.snmp.table.field]]
+      name = "power.L2"
+      oid = "DeltaPDU-MIB::dpduOutputWattageL2Total"
+    [[inputs.snmp.table.field]]
+      name = "power.L3"
+      oid = "DeltaPDU-MIB::dpduOutputWattageL3Total"
+    [[inputs.snmp.table.field]]
+      name = "energy.L1-1"
+      oid = "DeltaPDU-MIB::dpduOutputEnergy1"
+    [[inputs.snmp.table.field]]
+      name = "energy.L2-1"
+      oid = "DeltaPDU-MIB::dpduOutputEnergy2"
+    [[inputs.snmp.table.field]]
+      name = "energy.L3-1"
+      oid = "DeltaPDU-MIB::dpduOutputEnergy3"
+    [[inputs.snmp.table.field]]
+      name = "energy.L1-2"
+      oid = "DeltaPDU-MIB::dpduOutputEnergyL1-2" 
+    [[inputs.snmp.table.field]]
+      name = "energy.L2-2"
+      oid = "DeltaPDU-MIB::dpduOutputEnergyL2-2"
+    [[inputs.snmp.table.field]]
+      name = "energy.L3-2"
+      oid = "DeltaPDU-MIB::dpduOutputEnergyL3-2"
+    [[inputs.snmp.table.field]]
+      name = "energy.L1-3"
+      oid = "DeltaPDU-MIB::dpduOutputEnergyL1-3"
+    [[inputs.snmp.table.field]]
+      name = "energy.L2-3"
+      oid = "DeltaPDU-MIB::dpduOutputEnergyL2-3"
+    [[inputs.snmp.table.field]]
+      name = "energy.L3-3"
+      oid = "DeltaPDU-MIB::dpduOutputEnergyL3-3"

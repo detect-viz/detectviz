@@ -1,0 +1,22 @@
+.grafana-panels-grid {
+  display: grid;
+  gap: 16px;
+}
+
+.grafana-panel {
+  min-height: 300px;
+}
+
+.grafana-panel[data-colspan="2"] {
+  grid-column: span 2;
+}
+
+.grafana-panel[data-rowspan="2"] {
+  min-height: 600px;
+}
+
+.grafana-iframe {
+  width: 100%;
+  height: 100%;
+  border-radius: 0 0 4px 4px;
+}

@@ -1,0 +1,7 @@
+protocol,device_type,brand,model,template_name,template_version,match_string,match_field,version_field,serial_number_field,snmp_community,snmp_version,enabled,interval,timeout,retries,description
+snmp,pdu,DELTA,PDUE428,PDU-DELTA-PDUE428_snmp.conf.tmpl,V1,PDUE428,1.3.6.1.4.1.2254.2.32.1.6.1.3.1,1.3.6.1.4.1.2254.2.32.1.4.0,1.3.6.1.4.1.2254.2.32.1.6.1.4.1,public,1,1,60s,5s,1,SNMP設備
+snmp,pdu,VERTIV,6PS56,PDU-VERTIV-6PS56_snmp.conf.tmpl,V1,6PS56,1.3.6.1.4.1.21239.5.2.1.8.0,1.3.6.1.4.1.21239.5.2.1.2.0,1.3.6.1.4.1.21239.5.2.1.10.0,public,2c,1,60s,5s,1,SNMP設備
+snmp,gateway,Lieneo,WCM-421,IOT_CLIENT-LIENEO-WCM-421_snmp.conf.tmpl,V1,WCM-421,1.3.6.1.4.1.2021.50.3.101.1,,,public,2c,1,60s,5s,1,下探Modbus設備
+modbus,pdu,DELTA,PDU1315,PDU-DELTA-PDU-GENERAL_modbus.conf.tmpl,V1,PDU1315,1024:input:8,1024:input:8,768:holding:8,,,1,60s,5s,1,Modbus設備
+modbus,pdu,DELTA,PDU4425,PDU-DELTA-PDU-GENERAL_modbus.conf.tmpl,V1,PDU4425,1024:input:8,1024:input:8,768:holding:8,,,1,60s,5s,1,Modbus設備
+modbus,pdu,DELTA,PDUE428,PDU-DELTA-PDU-GENERAL_modbus.conf.tmpl,V1,PDUE428,1024:input:8,1024:input:8,768:holding:8,,,1,60s,5s,1,Modbus設備

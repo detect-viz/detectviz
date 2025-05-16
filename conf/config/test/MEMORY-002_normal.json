@@ -1,0 +1,32 @@
+{
+  "metadata": {
+    "realm_name": "master",
+    "resource_name": "test_server_MEMORY-002",
+    "datasource_name": "nmon",
+    "timestamp": 1647234567
+  },
+  "data": {
+    "mem_usage": [
+      {
+        "timestamp": 1647234567,
+        "value": 60.0
+      },
+      {
+        "timestamp": 1647234507,
+        "value": 65.0
+      },
+      {
+        "timestamp": 1647234447,
+        "value": 55.0
+      },
+      {
+        "timestamp": 1647234387,
+        "value": 50.0
+      },
+      {
+        "timestamp": 1647234327,
+        "value": 45.0
+      }
+    ]
+  }
+} 

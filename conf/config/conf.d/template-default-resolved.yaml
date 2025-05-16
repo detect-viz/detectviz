@@ -1,0 +1,134 @@
+templates:
+    - name: "Default HTML Resolved"
+      format_type: "html"
+      rule_state: "resolved"
+      title: "[恢復] {{ .affected_hosts_count }} 台設備解除 {{ .resolved_alerts_count }} 個告警"
+      message: |
+        <strong>解除的告警類型:</strong> {{ .alert_categories }}<br>
+        <strong>影響設備數量:</strong> {{ .affected_hosts_count }}<br>
+        <strong>已恢復告警數量:</strong> {{ .resolved_alerts_count }}<br><br>
+        
+        <strong>恢復詳情:</strong><br>
+        {{ range .resolved_by_severity }}
+        <div style="margin-bottom: 10px;">
+          <strong style="color: #00AA00">
+            [{{ .severity }}] - {{ .count }} 個告警已恢復
+          </strong><br>
+          {{ range .hosts }}
+          <div style="margin-left: 15px; margin-bottom: 5px;">
+            <strong>{{ .resource_name }}</strong> ({{ .count }} 個告警已恢復)<br>
+            {{ range .metrics }}
+            <div style="margin-left: 15px;">
+              - <strong>{{ .metric_display_name }}</strong>: 
+                <span style="text-decoration: line-through; color: #FF0000;">{{ .previous_value }}</span> 
+                ➝ <span style="color: #00AA00;">{{ .resolved_value }}</span> / {{ .threshold }}<br>
+              <span style="margin-left: 20px; color: #666;">恢復時間: {{ .resolved_at }}</span><br>
+              {{ if .duration }}<span style="margin-left: 20px; color: #666;">持續時間: {{ .duration }} 秒</span><br>{{ end }}
+            </div>
+            {{ end }}
+          </div>
+          {{ end }}
+        </div>
+        {{ end }}<br>
+        
+        {{ if .resolution_summary }}
+        <strong>恢復原因或處理方式:</strong><br>
+        {{ .resolution_summary }}
+        {{ end }}
+
+    - name: "Default Markdown Resolved"
+      format_type: "markdown"
+      rule_state: "resolved"
+      title: "**[恢復] {{ .affected_hosts_count }} 台設備解除 {{ .resolved_alerts_count }} 個告警**"
+      message: |
+        **解除的告警類型**: {{ .alert_categories }}
+        **影響設備數量**: {{ .affected_hosts_count }}
+        **已恢復告警數量**: {{ .resolved_alerts_count }}
+
+        **恢復詳情**:
+        {{ range .resolved_by_severity }}
+        **[{{ .severity }}] - {{ .count }} 個告警已恢復**
+        {{ range .hosts }}
+        * **{{ .resource_name }}** ({{ .count }} 個告警已恢復)
+          {{ range .metrics }}
+          * **{{ .metric_display_name }}**: ~~{{ .previous_value }}~~ ➝ **{{ .resolved_value }}** / {{ .threshold }}
+            * 恢復時間: {{ .resolved_at }}
+            {{ if .duration }}* 持續時間: {{ .duration }} 秒{{ end }}
+          {{ end }}
+        {{ end }}
+        {{ end }}
+
+        {{ if .resolution_summary }}
+        **恢復原因或處理方式**:
+        {{ .resolution_summary }}
+        {{ end }}
+
+    - name: "Default Text Resolved"
+      format_type: "text"
+      rule_state: "resolved"
+      title: "[恢復] {{ .affected_hosts_count }} 台設備解除 {{ .resolved_alerts_count }} 個告警"
+      message: |
+        解除的告警類型: {{ .alert_categories }}
+        影響設備數量: {{ .affected_hosts_count }}
+        已恢復告警數量: {{ .resolved_alerts_count }}
+
+        恢復詳情:
+        {{ range .resolved_by_severity }}
+        [{{ .severity }}] - {{ .count }} 個告警已恢復
+        {{ range .hosts }}
+        * {{ .resource_name }} ({{ .count }} 個告警已恢復)
+          {{ range .metrics }}
+          * {{ .metric_display_name }}: (原值) {{ .previous_value }} → (恢復後) {{ .resolved_value }} / {{ .threshold }}
+            * 恢復時間: {{ .resolved_at }}
+            {{ if .duration }}* 持續時間: {{ .duration }} 秒{{ end }}
+          {{ end }}
+        {{ end }}
+        {{ end }}
+
+        {{ if .resolution_summary }}
+        恢復原因或處理方式:
+        {{ .resolution_summary }}
+        {{ end }}
+
+    - name: "Default JSON Resolved"
+      format_type: "json"
+      rule_state: "resolved"
+      title: ""
+      message: |
+        {
+          "title": "[恢復] {{ .affected_hosts_count }} 台設備解除 {{ .resolved_alerts_count }} 個告警",
+          "resolved_alerts_count": "{{ .resolved_alerts_count }}",
+          "affected_hosts_count": "{{ .affected_hosts_count }}",
+          "alert_type": "{{ .alert_categories }}",
+          "resolved_by_severity": [
+            {{ range $i, $sev := .resolved_by_severity }}
+            {
+              "severity": "{{ .severity }}",
+              "count": {{ .count }},
+              "hosts": [
+                {{ range $j, $host := .hosts }}
+                {
+                  "resource_name": "{{ .resource_name }}",
+                  "count": {{ .count }},
+                  "metrics": [
+                    {{ range $k, $metric := .metrics }}
+                    {
+                      "metric_display_name": "{{ .metric_display_name }}",
+                      "previous_value": "{{ .previous_value }}",
+                      "resolved_value": "{{ .resolved_value }}",
+                      "threshold": "{{ .threshold }}",
+                      "duration": "{{ .duration }}",
+                      "resolved_at": "{{ .resolved_at }}"
+                    }{{ if not (last $k (len $metric)) }},{{ end }}
+                    {{ end }}
+                  ]
+                }{{ if not (last $j (len $host)) }},{{ end }}
+                {{ end }}
+              ]
+            }{{ if not (last $i (len $sev)) }},{{ end }}
+            {{ end }}
+          ]
+          {{ if .resolution_summary }},
+          "resolution_summary": "{{ .resolution_summary }}"
+          {{ end }}
+        }

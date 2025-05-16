@@ -1,0 +1,15 @@
+contacts:
+  - name: "Messaging API 運維團隊"
+    type: "line"
+    enabled: true
+    severities: ["warn", "crit"]
+    details:
+      id: "U47c91345be89149537d43cf17a27156f"
+      token: "s9Bao6VivhqM1u6Tap1fBSvIkDXVqbxks9nZG4BAdrifTl4TdGDwBhZXSN/G+EDRAktX+REGJsUXFVeZZsiIOJ8GrhnR2U0QRBwZaRBjThZkRJtTD5/2EQOxCyFpjdFB/cmt3Ss2pIjnXr7mARzOSwdB04t89/1O/w1cDnyilFU="
+
+  - name: "系統管理員"
+    type: "email"
+    enabled: true
+    severities: ["info", "warn", "crit"]
+    details:
+      address: "admin@example.com" 

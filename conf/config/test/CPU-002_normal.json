@@ -1,0 +1,32 @@
+{
+  "metadata": {
+    "realm_name": "master",
+    "resource_name": "test_server_CPU-002",
+    "datasource_name": "nmon",
+    "timestamp": 1647234567
+  },
+  "data": {
+    "iowait_usage": [
+      {
+        "timestamp": 1647234567,
+        "value": 40.0
+      },
+      {
+        "timestamp": 1647234507,
+        "value": 42.0
+      },
+      {
+        "timestamp": 1647234447,
+        "value": 39.0
+      },
+      {
+        "timestamp": 1647234387,
+        "value": 41.0
+      },
+      {
+        "timestamp": 1647234327,
+        "value": 38.0
+      }
+    ]
+  }
+} 

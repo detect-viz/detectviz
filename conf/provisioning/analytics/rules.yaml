@@ -1,0 +1,492 @@
+rules:
+  cpu_usage_threshold:
+    metric_name: "cpu_usage"
+    model: "absolute_threshold"
+    unit: "%"
+    config:
+      thresholds:
+        critical: 90
+        warning: 80
+    templates:
+      desc:
+        critical: "CPU 使用率達到 {value}{unit}，已超過臨界值"
+        warning: "CPU 使用率達到 {value}{unit}，已超過警告值"
+        normal: "CPU 使用率正常，當前值 {value}{unit}"
+      prompt:
+        critical: "CPU 使用率達到 {value}{unit}，請分析可能原因並提供優化建議"
+        warning: "CPU 使用率接近警戒值，請評估系統負載情況"
+
+  cpu_usage_predict:
+    metric_name: "cpu_usage"
+    model: "prophet"
+    unit: "%"
+    templates:
+      desc:
+        anomaly: "預測 CPU 使用率將達到 {value}{unit}，可能超出系統承載能力"
+        normal: "預測 CPU 使用率在正常範圍內"
+      prompt:
+        anomaly: "根據預測，CPU 使用率將顯著上升，請提前規劃資源擴充方案"
+
+  idle_usage:
+    metric_name: "idle_usage"
+    model: "moving_average"
+    unit: "%"
+    config:
+      window_size: 60
+      std_dev: 2.0
+    templates:
+      desc:
+        critical: "CPU 空閒率異常，當前值 {value}{unit}，超出正常範圍 [{min}, {max}]"
+        warning: "CPU 空閒率波動，當前值 {value}{unit}，接近異常範圍"
+        normal: "CPU 空閒率正常，當前值 {value}{unit}"
+      prompt:
+        critical: "CPU 空閒率異常偏低，請分析系統負載情況"
+        warning: "CPU 空閒率下降，請評估系統資源使用情況"
+
+  system_usage:
+    metric_name: "system_usage"
+    model: "percentage_threshold"
+    unit: "%"
+    templates:
+      desc:
+        critical: "系統 CPU 使用率異常，當前值 {value}{unit}，超出歷史百分位"
+        warning: "系統 CPU 使用率偏高，當前值 {value}{unit}"
+        normal: "系統 CPU 使用率正常，當前值 {value}{unit}"
+      prompt:
+        critical: "系統 CPU 使用率異常升高，請分析系統進程負載"
+        warning: "系統 CPU 使用率偏高，請評估系統任務調度"
+
+  user_usage:
+    metric_name: "user_usage"
+    model: "percentage_threshold"
+    unit: "%"
+    templates:
+      desc:
+        critical: "用戶空間 CPU 使用率異常，當前值 {value}{unit}，超出歷史百分位"
+        warning: "用戶空間 CPU 使用率偏高，當前值 {value}{unit}"
+        normal: "用戶空間 CPU 使用率正常，當前值 {value}{unit}"
+      prompt:
+        critical: "用戶進程 CPU 使用異常，請分析應用程序性能"
+        warning: "用戶進程 CPU 使用偏高，請評估應用負載"
+
+  iowait_usage:
+    metric_name: "iowait_usage"
+    model: "absolute_threshold"
+    unit: "%"
+    config:
+      thresholds:
+        critical: 20
+        warning: 10
+    templates:
+      desc:
+        critical: "IO 等待時間達到 {value}{unit}，已超過臨界值"
+        warning: "IO 等待時間達到 {value}{unit}，已超過警告值"
+        normal: "IO 等待時間正常，當前值 {value}{unit}"
+      prompt:
+        critical: "IO 等待時間過長，請分析磁盤性能瓶頸"
+        warning: "IO 等待時間增加，請評估存儲系統性能"
+
+  steal_usage:
+    metric_name: "steal_usage"
+    model: "absolute_threshold"
+    unit: "%"
+    config:
+      thresholds:
+        critical: 5
+        warning: 2
+    templates:
+      desc:
+        critical: "CPU 資源爭奪達到 {value}{unit}，已超過臨界值"
+        warning: "CPU 資源爭奪達到 {value}{unit}，已超過警告值"
+        normal: "CPU 資源爭奪正常，當前值 {value}{unit}"
+      prompt:
+        critical: "虛擬機 CPU 資源爭奪嚴重，請檢查宿主機負載"
+        warning: "出現 CPU 資源爭奪，請評估虛擬化環境"
+
+  mem_usage_percent:
+    metric_name: "mem_usage"
+    model: "percentage_threshold"
+    unit: "%"
+    templates:
+      desc:
+        critical: "記憶體使用率異常，當前值 {value}{unit}，超出歷史百分位"
+        warning: "記憶體使用率偏高，當前值 {value}{unit}"
+        normal: "記憶體使用率正常，當前值 {value}{unit}"
+      prompt:
+        critical: "記憶體使用率超出歷史水平，請分析內存使用趨勢"
+        warning: "記憶體使用率偏高，請評估內存分配策略"
+
+  cache_usage:
+    metric_name: "cache_usage"
+    unit: "%"
+    config:
+      thresholds:
+        critical: 90
+        warning: 80
+    templates:
+      desc:
+        critical: "快取使用率達到 {value}{unit}，已超過臨界值"
+        warning: "快取使用率達到 {value}{unit}，已超過警告值"
+        normal: "快取使用率正常，當前值 {value}{unit}"
+      prompt:
+        critical: "系統快取使用量過高，請分析快取使用情況"
+        warning: "系統快取使用量增加，請評估快取配置"
+
+  buffer_usage:
+    metric_name: "buffer_usage"
+    unit: "%"
+    config:
+      thresholds:
+        critical: 90
+        warning: 80
+    templates:
+      desc:
+        critical: "緩衝區使用率達到 {value}{unit}，已超過臨界值"
+        warning: "緩衝區使用率達到 {value}{unit}，已超過警告值"
+        normal: "緩衝區使用率正常，當前值 {value}{unit}"
+      prompt:
+        critical: "系統緩衝區使用量過高，請分析 I/O 緩衝情況"
+        warning: "系統緩衝區使用量增加，請評估 I/O 模式"
+
+  fs_usage:
+    metric_name: "fs_usage"
+    model: "absolute_threshold"
+    unit: "%"
+    config:
+      thresholds:
+        critical: 90
+        warning: 80
+    templates:
+      desc:
+        critical: "文件系統使用率達到 {value}{unit}，已超過臨界值"
+        warning: "文件系統使用率達到 {value}{unit}，已超過警告值"
+        normal: "文件系統使用率正常，當前值 {value}{unit}"
+      prompt:
+        critical: "文件系統空間即將耗盡，請進行清理或擴容"
+        warning: "文件系統使用率偏高，請評估空間使用趨勢"
+
+  sent_bytes:
+    metric_name: "sent_bytes"
+    model: "prophet"
+    unit: "bytes"
+    templates:
+      desc:
+        anomaly: "預測發送流量將達到 {value}{unit}，可能超出網路容量"
+        normal: "預測發送流量在正常範圍內"
+      prompt:
+        anomaly: "根據預測，網路發送流量將顯著增加，請提前規劃網路容量並提供具體的擴容建議"
+
+  sent_bytes_ma:
+    metric_name: "sent_bytes"
+    model: "moving_average"
+    unit: "bytes"
+    config:
+      window_size: 60
+      std_dev: 2.0
+    templates:
+      desc:
+        critical: "發送流量異常，當前值 {value}{unit}，超出正常範圍 [{min}, {max}]"
+        warning: "發送流量波動，當前值 {value}{unit}，接近異常範圍"
+        normal: "發送流量正常，當前值 {value}{unit}"
+      prompt:
+        critical: "網路發送流量異常波動，請分析網路使用情況"
+        warning: "網路發送流量出現波動，請評估應用通信模式"
+
+  recv_bytes:
+    metric_name: "recv_bytes"
+    model: "prophet"
+    unit: "bytes"
+    templates:
+      desc:
+        anomaly: "預測接收流量將達到 {value}{unit}，可能超出網路容量"
+        normal: "預測接收流量在正常範圍內"
+      prompt:
+        anomaly: "根據預測，網路接收流量將顯著增加，請提前規劃網路容量並評估網路架構優化"
+
+  recv_bytes_ma:
+    metric_name: "recv_bytes"
+    model: "moving_average"
+    unit: "bytes"
+    config:
+      window_size: 60
+      std_dev: 2.0
+    templates:
+      desc:
+        critical: "接收流量異常，當前值 {value}{unit}，超出正常範圍 [{min}, {max}]"
+        warning: "接收流量波動，當前值 {value}{unit}，接近異常範圍"
+        normal: "接收流量正常，當前值 {value}{unit}"
+      prompt:
+        critical: "網路接收流量異常波動，請分析網路使用情況"
+        warning: "網路接收流量出現波動，請評估應用通信模式"
+
+  sent_errs:
+    metric_name: "sent_errs"
+    model: "isolation_forest"
+    unit: "count"
+    config:
+      contamination: 0.1
+    templates:
+      desc:
+        anomaly: "發送錯誤數異常，當前值 {value} 次"
+        normal: "發送錯誤數正常"
+      prompt:
+        anomaly: "網路發送錯誤數異常增加，請檢查網路連接質量"
+
+  recv_errs:
+    metric_name: "recv_errs"
+    model: "isolation_forest"
+    unit: "count"
+    config:
+      contamination: 0.1
+    templates:
+      desc:
+        anomaly: "接收錯誤數異常，當前值 {value} 次"
+        normal: "接收錯誤數正常"
+      prompt:
+        anomaly: "網路接收錯誤數異常增加，請檢查網路連接質量"
+
+  busy:
+    metric_name: "busy"
+    model: "moving_average"
+    unit: "%"
+    config:
+      window_size: 60
+      std_dev: 2.0
+    templates:
+      desc:
+        critical: "系統磁碟繁忙度異常，當前值 {value}{unit}，超出正常範圍 [{min}, {max}]"
+        warning: "系統磁碟繁忙度波動，當前值 {value}{unit}，接近異常範圍"
+        normal: "系統磁碟繁忙度正常，當前值 {value}{unit}"
+      prompt:
+        critical: "系統磁碟繁忙度異常波動，請分析 I/O 使用情況並提供優化建議"
+        warning: "系統磁碟繁忙度出現波動，請評估 I/O 任務調度情況"
+
+  busy_threshold:
+    metric_name: "busy"
+    model: "absolute_threshold"
+    unit: "%"
+    config:
+      thresholds:
+        critical: 90
+        warning: 80
+    templates:
+      desc:
+        critical: "系統繁忙度達到 {value}{unit}，已超過臨界值"
+        warning: "系統繁忙度達到 {value}{unit}，已超過警告值"
+        normal: "系統繁忙度正常，當前值 {value}{unit}"
+      prompt:
+        critical: "系統負載過高，請分析資源使用瓶頸"
+        warning: "系統負載偏高，請評估資源分配情況"
+
+  read_bytes:
+    metric_name: "read_bytes"
+    model: "prophet"
+    unit: "bytes"
+    templates:
+      desc:
+        anomaly: "預測磁盤讀取流量將達到 {value}{unit}，可能超出存儲容量"
+        normal: "預測磁盤讀取流量在正常範圍內"
+      prompt:
+        anomaly: "根據預測，磁盤讀取流量將顯著增加，請提前規劃存儲性能優化"
+
+  write_bytes:
+    metric_name: "write_bytes"
+    model: "prophet"
+    unit: "bytes"
+    templates:
+      desc:
+        anomaly: "預測磁盤寫入流量將達到 {value}{unit}，可能超出存儲容量"
+        normal: "預測磁盤寫入流量在正常範圍內"
+      prompt:
+        anomaly: "根據預測，磁盤寫入流量將顯著增加，請提前規劃存儲性能優化"
+
+  reads:
+    metric_name: "reads"
+    model: "percentage_threshold"
+    unit: "count"
+    templates:
+      desc:
+        critical: "磁盤讀取 IOPS 異常，當前值 {value}{unit}，超出歷史百分位"
+        warning: "磁盤讀取 IOPS 偏高，當前值 {value}{unit}"
+        normal: "磁盤讀取 IOPS 正常，當前值 {value}{unit}"
+      prompt:
+        critical: "磁盤讀取 IOPS 超出歷史水平，請分析存儲訪問模式"
+        warning: "磁盤讀取 IOPS 偏高，請評估應用讀取模式"
+
+  writes:
+    metric_name: "writes"
+    model: "percentage_threshold"
+    unit: "count"
+    templates:
+      desc:
+        critical: "磁盤寫入 IOPS 異常，當前值 {value}{unit}，超出歷史百分位"
+        warning: "磁盤寫入 IOPS 偏高，當前值 {value}{unit}"
+        normal: "磁盤寫入 IOPS 正常，當前值 {value}{unit}"
+      prompt:
+        critical: "磁盤寫入 IOPS 超出歷史水平，請分析存儲訪問模式"
+        warning: "磁盤寫入 IOPS 偏高，請評估應用寫入模式"
+
+  rqueue:
+    metric_name: "rqueue"
+    model: "absolute_threshold"
+    unit: "count"
+    config:
+      thresholds:
+        critical: 100
+        warning: 50
+    templates:
+      desc:
+        critical: "磁盤讀取隊列長度達到 {value}，已超過臨界值"
+        warning: "磁盤讀取隊列長度達到 {value}，已超過警告值"
+        normal: "磁盤讀取隊列長度正常，當前值 {value}"
+      prompt:
+        critical: "磁盤讀取隊列堆積嚴重，請分析 I/O 瓶頸"
+        warning: "磁盤讀取隊列增長，請評估存儲性能"
+
+  wqueue:
+    metric_name: "wqueue"
+    model: "absolute_threshold"
+    unit: "count"
+    config:
+      thresholds:
+        critical: 100
+        warning: 50
+    templates:
+      desc:
+        critical: "磁盤寫入隊列長度達到 {value}，已超過臨界值"
+        warning: "磁盤寫入隊列長度達到 {value}，已超過警告值"
+        normal: "磁盤寫入隊列長度正常，當前值 {value}"
+      prompt:
+        critical: "磁盤寫入隊列堆積嚴重，請分析 I/O 瓶頸"
+        warning: "磁盤寫入隊列增長，請評估存儲性能"
+
+  memory_usage_ma:
+    metric_name: "mem_usage"
+    model: "moving_average"
+    unit: "%"
+    config:
+      thresholds:
+        critical: 2.0
+        warning: 1.5
+    templates:
+      desc:
+        critical: "記憶體使用率異常，當前值 {value}{unit}，超出正常範圍 [{min}, {max}]"
+        warning: "記憶體使用率波動，當前值 {value}{unit}，接近異常範圍"
+        normal: "記憶體使用率正常，當前值 {value}{unit}"
+      prompt:
+        critical: "記憶體使用異常，請分析是否有記憶體洩漏"
+        warning: "記憶體使用波動，請評估應用程序記憶體使用情況"
+
+  uptime:
+    metric_name: "uptime"
+    model: "absolute_threshold"
+    unit: "s"
+    config:
+      thresholds:
+        critical: 86400 # 24 hours
+    templates:
+      desc:
+        critical: "系統運行時間低於 {value} 秒，可能發生重啟或故障"
+        warning: "系統運行時間接近 {value} 秒，請檢查是否有非預期重啟"
+        normal: "系統運行時間正常"
+      prompt:
+        critical: "系統 uptime 低於 {value} 秒，請分析可能原因並提供解決方案"
+        warning: "系統 uptime 接近 {value} 秒，請檢查是否有計劃性維護或故障"
+
+  disk_usage_threshold:
+    metric_name: "disk_usage"
+    model: "absolute_threshold"
+    unit: "%"
+    config:
+      thresholds:
+        critical: 90
+        warning: 80
+    templates:
+      desc:
+        critical: "磁碟使用率達到 {value}{unit}，超過臨界值"
+        warning: "磁碟使用率達到 {value}{unit}，接近警告值"
+        normal: "磁碟使用率正常，當前值 {value}{unit}"
+      prompt:
+        critical: "磁碟使用率達到 {value}%，超過安全閾值，請分析存儲空間使用情況並提供清理建議"
+        warning: "磁碟使用率達到 {value}%，請評估存儲空間增長趨勢並提供預防性建議"
+
+  network_errors:
+    metric_name: "network_errors"
+    model: "isolation_forest"
+    unit: "count"
+    config:
+      contamination: 0.1
+    templates:
+      desc:
+        anomaly: "網路錯誤數量異常 ({value})，與歷史模式明顯不同"
+        normal: "網路錯誤數量在正常範圍內"
+      prompt:
+        anomaly: "檢測到異常的網路錯誤數量，請分析網路連接狀況"
+
+  disk_reads:
+    metric_name: "disk_reads"
+    model: "moving_average"
+    unit: "count"
+    config:
+      thresholds:
+        critical: 2.0
+        warning: 1.5
+    templates:
+      desc:
+        critical: "磁碟讀取 IOPS 異常，當前值 {value}{unit}，超出正常範圍 [{min}, {max}]"
+        warning: "磁碟讀取 IOPS 波動，當前值 {value}{unit}，接近異常範圍"
+        normal: "磁碟讀取 IOPS 正常，當前值 {value}{unit}"
+      prompt:
+        critical: "磁碟讀取性能異常，請分析可能的 I/O 瓶頸"
+        warning: "磁碟讀取性能波動，請評估 I/O 使用情況"
+
+  disk_writes:
+    metric_name: "disk_writes"
+    model: "moving_average"
+    unit: "count"
+    config:
+      thresholds:
+        critical: 2.0
+        warning: 1.5
+    templates:
+      desc:
+        critical: "磁碟寫入 IOPS 異常，當前值 {value}{unit}，超出正常範圍 [{min}, {max}]"
+        warning: "磁碟寫入 IOPS 波動，當前值 {value}{unit}，接近異常範圍"
+        normal: "磁碟寫入 IOPS 正常，當前值 {value}{unit}"
+      prompt:
+        critical: "磁碟寫入性能異常，請分析可能的 I/O 瓶頸"
+        warning: "磁碟寫入性能波動，請評估 I/O 使用情況"
+
+  network_sent_ma:
+    metric_name: "sent_bytes"
+    model: "moving_average"
+    unit: "MB/s"
+    config:
+      thresholds:
+        critical: 2.0
+        warning: 1.5
+    templates:
+      desc:
+        critical: "網路發送流量異常，當前值 {value}{unit}，超出正常範圍 [{min}, {max}]"
+        warning: "網路發送流量波動，當前值 {value}{unit}，接近異常範圍"
+        normal: "網路發送流量正常，當前值 {value}{unit}"
+      prompt:
+        critical: "網路發送流量異常，請分析網路使用情況"
+        warning: "網路發送流量波動，請評估應用網路使用模式"
+
+  network_recv_ma:
+    metric_name: "recv_bytes"
+    model: "moving_average"
+    unit: "MB/s"
+    config:
+      thresholds:
+        critical: 2.0
+        warning: 1.5
+    templates:
+      desc:
+        critical: "網路接收流量異常，當前值 {value}{unit}，超出正常範圍 [{min}, {max}]"
+        warning: "網路接收流量波動，當前值 {value}{unit}，接近異常範圍"
+        normal: "網路接收流量正常，當前值 {value}{unit}"
+      prompt:
+        critical: "網路接收流量異常，請分析網路使用情況"
+        warning: "網路接收流量波動，請評估應用網路使用模式"

@@ -1,0 +1,32 @@
+{
+  "metadata": {
+    "realm_name": "master",
+    "resource_name": "test_server_DATABASE-001",
+    "datasource_name": "oracle_connection",
+    "timestamp": 1647234567
+  },
+  "data": {
+    "connection_refused:ORCL": [
+      {
+        "timestamp": 1647234567,
+        "value": 4
+      },
+      {
+        "timestamp": 1647234507,
+        "value": 5
+      },
+      {
+        "timestamp": 1647234447,
+        "value": 4
+      },
+      {
+        "timestamp": 1647234387,
+        "value": 6
+      },
+      {
+        "timestamp": 1647234327,
+        "value": 5
+      }
+    ]
+  }
+} 

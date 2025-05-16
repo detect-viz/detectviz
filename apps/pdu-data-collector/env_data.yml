@@ -1,0 +1,76 @@
+ColumnName:
+    Datacenter: datacenter
+    Factory: factory
+    IP: ip
+    Manufacturer: manufacturer
+    Model: model
+    Name: name
+    PLCIP: plc_ip
+    Panel: panel
+    Phase: phase
+    Protocol: protocol
+    Rack: rack
+    Room: room
+    Side: side
+    WifiClientIP: wifi_client_ip
+    WifiClientPort: wifi_client_port
+DCConfig:
+    BatchSize: "1000"
+    MaxWaitTime: "10"
+DCRecoveryDir:
+    InfluxDBEvent: ./fail_data/influxdb_event
+    InfluxDBRaw: ./fail_data/influxdb_raw
+    SQLServerEvent: ./fail_data/sqlserver_event
+    SQLServerHour: ./fail_data/sqlserver_hour
+    SQLServerMinute: ./fail_data/sqlserver_minute
+DeviceType:
+    AP: AP
+    PDU: PDU
+    PLC: PLC
+    Panel: PANEL
+    Switch: SWITCH
+    WifiClient: WIFI_CLIENT
+FactoryConfig:
+    AllowTags: factory,phase,datacenter,room,rack,side,panel,manufacturer,ip,port,model
+    BatchSize: "5000"
+    MaxWaitTime: "10"
+    SettingConfPath: ./conf
+FactoryRecoveryDir:
+    DCEvents: ./fail_data/dc_events
+    DCMetrics: ./fail_data/dc_metrics
+GlobalConfig:
+    CrontabTimezone: CRON_TZ=Asia/Taipei
+    LicenseKey: leK4Oab7Re86bpwBz-JFXLIl86BtYDt1RAMuNUkT
+InfluxDBBucket:
+    Aggregate: agg
+    Event: event
+    Log: log
+    Raw: raw
+InfluxDBOptions:
+    SetApplicationName: bimap-zbox-api
+    SetBatchSize: "5000"
+    SetFlushInterval: "3000"
+    SetHTTPRequestTimeout: "600"
+    SetLogLevel: "1"
+    SetMaxRetries: "5"
+    SetMaxRetryTime: "180000"
+    SetRetryInterval: "5000"
+    SetUseGzip: "true"
+PDUSchema:
+    BranchCurrent: branch_current
+    BranchEnergy: branch_energy
+    BranchTag: branch_name
+    BranchWatt: branch_watt
+    Measurement: pdu
+    PhaseCurrent: phase_current
+    PhaseEnergy: phase_energy
+    PhaseTag: phase_name
+    PhaseVoltage: phase_voltage
+    PhaseWatt: phase_watt
+    TotalCurrent: total_current
+    TotalEnergy: total_energy
+    TotalWatt: total_watt
+SQLServerTable:
+    Event: DataExchange_PDU_Event
+    Hour: DataExchange_PDU_RealTime_3H
+    Minute: DataExchange_PDU

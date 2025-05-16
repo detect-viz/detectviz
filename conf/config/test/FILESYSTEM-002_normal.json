@@ -1,0 +1,32 @@
+{
+  "metadata": {
+    "realm_name": "master",
+    "resource_name": "test_server_FILESYSTEM-002",
+    "datasource_name": "nmon",
+    "timestamp": 1647234567
+  },
+  "data": {
+    "fs_free_bytes:/dev/sda1": [
+      {
+        "timestamp": 1647234567,
+        "value": 15000000000
+      },
+      {
+        "timestamp": 1647234507,
+        "value": 14800000000
+      },
+      {
+        "timestamp": 1647234447,
+        "value": 15200000000
+      },
+      {
+        "timestamp": 1647234387,
+        "value": 14900000000
+      },
+      {
+        "timestamp": 1647234327,
+        "value": 15100000000
+      }
+    ]
+  }
+} 

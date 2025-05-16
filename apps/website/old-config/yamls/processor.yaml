@@ -1,0 +1,58 @@
+# 處理器通用設定
+settings:
+  buffer_size: 1000          # 添加處理緩衝區大小
+  max_concurrent: 5          # 添加並發處理數量
+  error_retry: 3             # 添加錯誤重試次數
+
+# PDU處理器配置
+pdu:
+  # 接收欄位格式
+  schema:
+    measurement: "pdu"
+    total_current_field: "current"
+    total_energy_field: "energy"
+    total_watt_field: "power"
+    branch_current_field: "branch_current"
+    branch_energy_field: "branch_energy"
+    branch_watt_field: "branch_power"
+    phase_current_field: "phase_current"
+    phase_watt_field: "phase_power"
+    phase_voltage_field: "phase_voltage"
+    phase_energy_field: "phase_energy"
+    branch_tag: "branch"
+    phase_tag: "phase"
+  
+  # 欄位類型定義
+  field_types:
+    current: "current"  # 電流類型
+    voltage: "voltage"  # 電壓類型
+    energy: "energy"    # 能量類型
+    watt: "watt"        # 功率類型
+  
+  # 欄位映射
+  field_mapping:
+    field_col: "field"    # 欄位名稱
+    value_col: "value"    # 數值欄位
+    time_col: "time"      # 時間欄位
+    bank_col: "bank"      # 機櫃欄位
+    name_col: "name"      # 名稱欄位
+  
+  # 比例配置
+  scale:
+    - manufacturer: "Delta"
+      current: 0.1
+      voltage: 0.1
+      watt: 1.0
+      energy: 0.1
+    - manufacturer: "Vertiv"
+      current: 0.01
+      voltage: 0.1
+      watt: 1.0
+      energy: 0.01
+
+# 設備處理器配置
+device:
+  measurement: "device"
+  status_field: "status"
+  uptime_field: "uptime"
+  timestamp_field: "timestamp"

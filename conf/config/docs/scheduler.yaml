@@ -1,0 +1,21 @@
+scheduler:
+  timezone: "Asia/Taipei"
+  max_retries: 3
+  retry_delay: 300
+  jobs:
+    - name: "log_parser"
+      spec: "*/5 * * * *"
+      type: "parser"
+      enabled: true
+      metadata:
+        source: "nmon"
+        
+    - name: "daily_task"
+      spec: "0 0 * * *"
+      type: "task"
+      enabled: true
+      
+    - name: "notify_sender"
+      spec: "*/1 * * * *"
+      type: "notify"
+      enabled: true 

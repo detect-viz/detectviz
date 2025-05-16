@@ -1,0 +1,126 @@
+devices:
+  - name: "PDU-DELTA-PDU1315"
+    deploy_version: "v1"
+    device_type: "pdu"
+    brand: "Delta"
+    model: "PDU1315"
+    protocol: "modbus"
+    match_contains_value: "PDU1315"
+    match_register_type: "input"
+    match_address: 1024
+    match_length: 8
+    register_fields:
+      - name: "serial_number"
+        type: "hold"
+        address: 768
+        length: 8
+      - name: "version"
+        type: "input"
+        address: 1024
+        length: 8 
+
+  - name: "PDU-DELTA-PDU4425"
+    deploy_version: "v1"
+    device_type: "pdu"
+    brand: "Delta"
+    model: "PDU4425"
+    protocol: "modbus"
+    modbus:
+    match_contains_value: "PDU4425"
+    match_register_type: "input"
+    match_address: 1024
+    match_length: 8
+    register_fields:
+      - name: "serial_number"
+        type: "hold"
+        address: 768
+        length: 8
+      - name: "version"
+        type: "input"
+        address: 1024
+        length: 8 
+
+  - name: "PDU-DELTA-PDUE428"
+    deploy_version: "v1"
+    device_type: "pdu"
+    brand: "Delta"
+    model: "PDUE428"
+    protocol: "snmp"
+    match_contains_value: "PDUE428"
+    match_oid: "1.3.6.1.4.1.2254.2.32.1.6.1.3.1"
+    register_fields:
+      - name: "model"
+        oid: "1.3.6.1.4.1.2254.2.32.1.6.1.3.1"
+      - name: "serial_number"
+        oid: "1.3.6.1.4.1.2254.2.32.1.6.1.4.1"
+      - name: "version"
+        oid: "1.3.6.1.4.1.2254.2.32.1.4.0"
+     
+  - name: "PDU-VERTIV-6PS56"
+    deploy_version: "v1"
+    device_type: "pdu"
+    brand: "Vertiv"
+    model: "6PS56"
+    protocol: "snmp"
+    match_contains_value: "6PS56"
+    match_oid: "1.3.6.1.4.1.21239.5.2.1.8.0"
+    register_fields:
+      - name: "model"
+        oid: "1.3.6.1.4.1.21239.5.2.1.8.0"
+      - name: "serial_number"
+        oid: "1.3.6.1.4.1.21239.5.2.1.10.0"
+      - name: "version"
+        oid: "1.3.6.1.4.1.21239.5.2.1.2.0"
+
+  - name: "AP-MOXA-AWK-1161A"
+    device_type: "ap"
+    brand: "Moxa"
+    model: "AWK-1161A"
+    protocol: "snmp"
+    match_contains_value: "AWK-1161A"
+    match_oid: "1.3.6.1.2.1.1.1.0" # SNMPv2-MIB::sysDescr.0
+    register_fields:
+      - name: "snmp_engine_id"
+        oid: "1.3.6.1.6.3.10.2.1.1.0"
+      - name: "uptime"
+        oid: "1.3.6.1.2.1.1.3.0"
+
+
+  - name: "IOT_CLIENT-LIENEO-WCM-421"
+    device_type: "gateway"
+    brand: "Lieneo"
+    model: "WCM-421"
+    protocol: "snmp"
+    match_contains_value: "WCM-421"
+    match_oid: "1.3.6.1.4.1.2021.50.3.101.1" # UCD-SNMP-MIB::ucdavis.50.3.101.1
+    register_fields:
+      - name: "snmp_engine_id"
+        oid: "1.3.6.1.6.3.10.2.1.1.0"
+      - name: "uptime"
+        oid: "1.3.6.1.2.1.1.3.0"
+
+  - name: "SWITCH-HPE-5130"
+    device_type: "switch"
+    brand: "HPE"
+    model: "5130"
+    protocol: "snmp"
+    match_contains_value: "HPE 5130"
+    match_oid: "1.3.6.1.2.1.47.1.1.1.1.2.2" # ENTITY-MIB::entPhysicalDescr.2
+    register_fields:
+      - name: "snmp_engine_id"
+        oid: "1.3.6.1.6.3.10.2.1.1.0"
+      - name: "uptime"
+        oid: "1.3.6.1.2.1.1.3.0"
+
+  - name: "SWITCH-HPE-5945"
+    device_type: "switch"
+    brand: "HPE"
+    model: "5945"
+    protocol: "snmp"
+    match_contains_value: "HPE 5945"
+    match_oid: "1.3.6.1.2.1.47.1.1.1.1.2.2" # ENTITY-MIB::entPhysicalDescr.2
+    register_fields:
+      - name: "snmp_engine_id"
+        oid: "1.3.6.1.6.3.10.2.1.1.0"
+      - name: "uptime"
+        oid: "1.3.6.1.2.1.1.3.0"

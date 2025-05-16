@@ -1,0 +1,152 @@
+code:
+  severity:
+    crit:
+      name: "crit"
+      alias: "Critical"
+      desc: "嚴重等級告警"
+    warn:
+      name: "warn" 
+      alias: "Warning"
+      desc: "警告訊息"
+    info:
+      name: "info"
+      alias: "Info"
+      desc: "一般訊息"
+  
+  channel_type:
+    discord:
+      name: "discord"
+      alias: "Discord"
+      desc: "透過 Discord 傳送告警"
+    line:
+      name: "line"
+      alias: "Line"
+      desc: "透過 Line 傳送告警"
+    mail:
+      name: "mail"
+      alias: "Email"
+      desc: "透過 Email 傳送告警"
+    slack:
+      name: "slack"
+      alias: "Slack"
+      desc: "透過 Slack 傳送告警"
+    teams:
+      name: "teams"
+      alias: "Microsoft Teams"
+      desc: "透過 Microsoft Teams 傳送告警"
+    webex:
+      name: "webex"
+      alias: "Cisco Webex"
+      desc: "透過 Cisco Webex 傳送告警"
+    webhook:
+      name: "webhook"
+      alias: "Webhook"
+      desc: "透過 Webhook 傳送告警"
+
+  health_state:
+    disconnected:
+      name: "health_disconnected"
+      alias: "失聯"
+      desc: "監控目標失去連線"
+    error:
+      name: "health_error"
+      alias: "錯誤"
+      desc: "監控目標出現錯誤"
+    healthy:
+      name: "health_healthy"
+      alias: "健康"
+      desc: "監控目標狀態正常"
+    warning:
+      name: "health_warning"
+      alias: "警告"
+      desc: "監控目標狀態異常但仍可用"
+
+  mute_state:
+    active:
+      name: "active"
+      alias: "Active"
+      desc: "靜音已啟用"
+    disable:
+      name: "disable"
+      alias: "Disable"
+      desc: "靜音未啟用"
+    ended:
+      name: "ended"
+      alias: "Ended"
+      desc: "靜音已結束"
+    scheduled:
+      name: "scheduled"
+      alias: "Scheduled"
+      desc: "靜音待生效"
+
+  rule_state:
+    alerting:
+      name: "alerting"
+      alias: "Alerting"
+      desc: "告警規則觸發"
+    disable:
+      name: "disable"
+      alias: "Disable"
+      desc: "告警規則已停用"
+    normal:
+      name: "normal"
+      alias: "Normal"
+      desc: "告警規則正常未觸發"
+    resolved:
+      name: "resolved"
+      alias: "Resolved"
+      desc: "告警已恢復正常狀態"
+ 
+  notify_state:
+    pending:
+      name: "pending"
+      alias: "Pending"
+      desc: "待通知"
+    sent:
+      name: "sent"
+      alias: "Sent"
+      desc: "已發送"
+    solved:
+      name: "solved"
+      alias: "Solved"
+      desc: "恢復通知"
+    failed:
+      name: "failed"
+      alias: "Failed"
+      desc: "通知失敗"
+
+  
+  contact_state:
+    normal:
+      name: "normal"
+      alias: "Normal"
+      desc: "告警尚未觸發"
+    muting:
+      name: "muting"
+      alias: "Muting"
+      desc: "告警處於抑制狀態"
+    silence:
+      name: "silence"
+      alias: "Silence"
+      desc: "告警正在等待靜音期間結束"
+    delayed:
+      name: "delayed"
+      alias: "Delayed"
+      desc: "告警正在等待下一次通知重試"
+
+  partition_mapping:
+    - name: "host"
+      alias: "主機"
+    - name: "database"
+      alias: "資料庫"
+    - name: "tablespace_name"
+      alias: "表空間"
+    - name: "disk_name"
+      alias: "磁碟名稱"
+    - name: "filesystem_name"
+      alias: "檔案系統"
+    - name: "network_name"
+      alias: "網卡名稱"
+    - name: "process_name"
+      alias: "程序名稱"
+

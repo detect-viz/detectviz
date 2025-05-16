@@ -1,0 +1,1488 @@
+{
+  "__inputs": [
+    {
+      "name": "DS_INFLUXDB",
+      "label": "influxdb",
+      "description": "",
+      "type": "datasource",
+      "pluginId": "influxdb",
+      "pluginName": "InfluxDB"
+    }
+  ],
+  "__elements": {},
+  "__requires": [
+    {
+      "type": "grafana",
+      "id": "grafana",
+      "name": "Grafana",
+      "version": "11.6.1"
+    },
+    {
+      "type": "datasource",
+      "id": "influxdb",
+      "name": "InfluxDB",
+      "version": "1.0.0"
+    },
+    {
+      "type": "panel",
+      "id": "status-history",
+      "name": "Status history",
+      "version": ""
+    },
+    {
+      "type": "panel",
+      "id": "timeseries",
+      "name": "Time series",
+      "version": ""
+    }
+  ],
+  "annotations": {
+    "list": [
+      {
+        "builtIn": 1,
+        "datasource": {
+          "type": "grafana",
+          "uid": "-- Grafana --"
+        },
+        "enable": true,
+        "hide": true,
+        "iconColor": "rgba(0, 211, 255, 1)",
+        "name": "Annotations & Alerts",
+        "type": "dashboard"
+      }
+    ]
+  },
+  "editable": true,
+  "fiscalYearStartMonth": 0,
+  "graphTooltip": 0,
+  "id": null,
+  "links": [
+    {
+      "asDropdown": true,
+      "icon": "external link",
+      "includeVars": true,
+      "keepTime": false,
+      "tags": [
+        "spc"
+      ],
+      "targetBlank": false,
+      "title": "Dashboard",
+      "tooltip": "",
+      "type": "dashboards",
+      "url": ""
+    }
+  ],
+  "panels": [
+    {
+      "collapsed": false,
+      "gridPos": {
+        "h": 1,
+        "w": 24,
+        "x": 0,
+        "y": 0
+      },
+      "id": 34,
+      "panels": [],
+      "title": "規則觸發數量時序統計圖",
+      "type": "row"
+    },
+    {
+      "datasource": {
+        "type": "influxdb",
+        "uid": "${DS_INFLUXDB}"
+      },
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "thresholds"
+          },
+          "custom": {
+            "axisPlacement": "auto",
+            "fillOpacity": 70,
+            "hideFrom": {
+              "legend": false,
+              "tooltip": false,
+              "viz": false
+            },
+            "lineWidth": 1
+          },
+          "decimals": 0,
+          "displayName": "${__field.labels._field}",
+          "fieldMinMax": false,
+          "mappings": [],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green"
+              },
+              {
+                "color": "orange",
+                "value": 1
+              },
+              {
+                "color": "red",
+                "value": 5
+              }
+            ]
+          },
+          "unit": "none"
+        },
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 7,
+        "w": 24,
+        "x": 0,
+        "y": 1
+      },
+      "id": 33,
+      "maxPerRow": 3,
+      "options": {
+        "colWidth": 0.9,
+        "legend": {
+          "displayMode": "list",
+          "placement": "bottom",
+          "showLegend": true
+        },
+        "rowHeight": 0.9,
+        "showValue": "auto",
+        "tooltip": {
+          "hideZeros": false,
+          "mode": "single",
+          "sort": "none"
+        }
+      },
+      "pluginVersion": "11.6.1",
+      "repeat": "flag",
+      "repeatDirection": "v",
+      "targets": [
+        {
+          "query": "\nfrom(bucket: \"${spc_bucket}\")\n  |> range(start: v.timeRangeStart, stop: v.timeRangeStop)\n  |> filter(fn: (r) => r[\"_measurement\"] == \"pdu\")\n  |> filter(fn: (r) => r[\"name\"] == \"${pdu}\")\n  |> filter(fn: (r) => r[\"_field\"] == \"${flag}\")\n  |> group(columns: [\"bank\"], mode:\"by\")\n     |> fill(column: \"_value\",  value: 0.0)\n  |> aggregateWindow(every: 1h, fn: count,createEmpty:true) \n",
+          "refId": "A",
+          "datasource": {
+            "type": "influxdb",
+            "uid": "${DS_INFLUXDB}"
+          }
+        }
+      ],
+      "title": "$flag",
+      "type": "status-history"
+    },
+    {
+      "collapsed": true,
+      "gridPos": {
+        "h": 1,
+        "w": 24,
+        "x": 0,
+        "y": 36
+      },
+      "id": 23,
+      "panels": [
+        {
+          "datasource": {
+            "type": "influxdb",
+            "uid": "${DS_INFLUXDB}"
+          },
+          "fieldConfig": {
+            "defaults": {
+              "color": {
+                "mode": "palette-classic"
+              },
+              "custom": {
+                "axisBorderShow": false,
+                "axisCenteredZero": false,
+                "axisColorMode": "text",
+                "axisLabel": "",
+                "axisPlacement": "auto",
+                "barAlignment": 0,
+                "barWidthFactor": 0.6,
+                "drawStyle": "line",
+                "fillOpacity": 0,
+                "gradientMode": "none",
+                "hideFrom": {
+                  "legend": false,
+                  "tooltip": false,
+                  "viz": false
+                },
+                "insertNulls": false,
+                "lineInterpolation": "linear",
+                "lineStyle": {
+                  "fill": "solid"
+                },
+                "lineWidth": 2,
+                "pointSize": 5,
+                "scaleDistribution": {
+                  "type": "linear"
+                },
+                "showPoints": "always",
+                "spanNulls": false,
+                "stacking": {
+                  "group": "A",
+                  "mode": "none"
+                },
+                "thresholdsStyle": {
+                  "mode": "off"
+                }
+              },
+              "displayName": "${__field.name}",
+              "mappings": [],
+              "thresholds": {
+                "mode": "absolute",
+                "steps": [
+                  {
+                    "color": "blue"
+                  },
+                  {
+                    "color": "red",
+                    "value": 80
+                  }
+                ]
+              },
+              "unit": "amp"
+            },
+            "overrides": [
+              {
+                "matcher": {
+                  "id": "byRegexp",
+                  "options": "/flag/"
+                },
+                "properties": [
+                  {
+                    "id": "custom.fillOpacity",
+                    "value": 29
+                  },
+                  {
+                    "id": "custom.drawStyle",
+                    "value": "points"
+                  },
+                  {
+                    "id": "color",
+                    "value": {
+                      "fixedColor": "yellow",
+                      "mode": "fixed"
+                    }
+                  },
+                  {
+                    "id": "custom.pointSize",
+                    "value": 8
+                  }
+                ]
+              },
+              {
+                "matcher": {
+                  "id": "byRegexp",
+                  "options": "/cl/"
+                },
+                "properties": [
+                  {
+                    "id": "custom.showPoints",
+                    "value": "never"
+                  },
+                  {
+                    "id": "custom.lineStyle",
+                    "value": {
+                      "dash": [
+                        10,
+                        10
+                      ],
+                      "fill": "dash"
+                    }
+                  },
+                  {
+                    "id": "color",
+                    "value": {
+                      "fixedColor": "red",
+                      "mode": "fixed"
+                    }
+                  }
+                ]
+              },
+              {
+                "matcher": {
+                  "id": "byName",
+                  "options": "current"
+                },
+                "properties": [
+                  {
+                    "id": "color",
+                    "value": {
+                      "fixedColor": "blue",
+                      "mode": "fixed"
+                    }
+                  }
+                ]
+              }
+            ]
+          },
+          "gridPos": {
+            "h": 6,
+            "w": 24,
+            "x": 0,
+            "y": 37
+          },
+          "id": 20,
+          "maxPerRow": 3,
+          "options": {
+            "legend": {
+              "calcs": [
+                "lastNotNull"
+              ],
+              "displayMode": "list",
+              "placement": "bottom",
+              "showLegend": true
+            },
+            "tooltip": {
+              "hideZeros": false,
+              "mode": "single",
+              "sort": "none"
+            }
+          },
+          "pluginVersion": "11.6.1",
+          "repeat": "bank",
+          "repeatDirection": "v",
+          "targets": [
+            {
+              "query": "from(bucket: \"raw\")\n  |> range(start: v.timeRangeStart, stop: v.timeRangeStop)\n  |> filter(fn: (r) => r[\"_measurement\"] == \"pdu\")\n  |> filter(fn: (r) => r[\"_field\"] == \"current\")\n  |> filter(fn: (r) => r[\"name\"] == \"${pdu}\")\n  |> filter(fn: (r) => r[\"bank\"] == \"${bank}\")\n  |> aggregateWindow(every: 10m, fn: last, createEmpty: true)",
+              "refId": "Raw",
+              "datasource": {
+                "type": "influxdb",
+                "uid": "${DS_INFLUXDB}"
+              }
+            },
+            {
+              "datasource": {
+                "type": "influxdb",
+                "uid": "${DS_INFLUXDB}"
+              },
+              "hide": false,
+              "query": "from(bucket: \"spc\")\n  |> range(start: v.timeRangeStart, stop: v.timeRangeStop)\n  |> filter(fn: (r) => r[\"_measurement\"] == \"pdu\")\n  |> filter(fn: (r) => r[\"name\"] == \"${pdu}\")\n  |> filter(fn: (r) => r[\"bank\"] == \"${bank}\")\n  |> filter(fn: (r) => r[\"_field\"] == \"pr1_flag\")\n  |> aggregateWindow(every: 10m, fn: last, createEmpty: true)\n",
+              "refId": "A"
+            },
+            {
+              "datasource": {
+                "type": "influxdb",
+                "uid": "${DS_INFLUXDB}"
+              },
+              "hide": false,
+              "query": "from(bucket: \"spc\")\n  |> range(start: v.timeRangeStart, stop: v.timeRangeStop)\n  |> filter(fn: (r) => r[\"_measurement\"] == \"pdu_line\")\n  |> filter(fn: (r) => r[\"name\"] == \"${pdu}\")\n  |> filter(fn: (r) => r[\"bank\"] == \"${bank}\")\n  |> filter(fn: (r) => r[\"_field\"] == \"lcl\" or r[\"_field\"] == \"ucl\")\n  |> aggregateWindow(every: 10m, fn: last, createEmpty: true)\n \n",
+              "refId": "B"
+            }
+          ],
+          "title": "$bank",
+          "type": "timeseries"
+        }
+      ],
+      "title": "PR1 - 有一點超過UCL或LCL",
+      "type": "row"
+    },
+    {
+      "collapsed": true,
+      "gridPos": {
+        "h": 1,
+        "w": 24,
+        "x": 0,
+        "y": 37
+      },
+      "id": 25,
+      "panels": [
+        {
+          "datasource": {
+            "type": "influxdb",
+            "uid": "${DS_INFLUXDB}"
+          },
+          "fieldConfig": {
+            "defaults": {
+              "color": {
+                "mode": "palette-classic"
+              },
+              "custom": {
+                "axisBorderShow": false,
+                "axisCenteredZero": false,
+                "axisColorMode": "text",
+                "axisLabel": "",
+                "axisPlacement": "auto",
+                "barAlignment": 0,
+                "barWidthFactor": 0.6,
+                "drawStyle": "line",
+                "fillOpacity": 0,
+                "gradientMode": "none",
+                "hideFrom": {
+                  "legend": false,
+                  "tooltip": false,
+                  "viz": false
+                },
+                "insertNulls": false,
+                "lineInterpolation": "linear",
+                "lineStyle": {
+                  "fill": "solid"
+                },
+                "lineWidth": 2,
+                "pointSize": 5,
+                "scaleDistribution": {
+                  "type": "linear"
+                },
+                "showPoints": "always",
+                "spanNulls": false,
+                "stacking": {
+                  "group": "A",
+                  "mode": "none"
+                },
+                "thresholdsStyle": {
+                  "mode": "off"
+                }
+              },
+              "displayName": "${__field.name}",
+              "mappings": [],
+              "thresholds": {
+                "mode": "absolute",
+                "steps": [
+                  {
+                    "color": "blue"
+                  },
+                  {
+                    "color": "red",
+                    "value": 80
+                  }
+                ]
+              },
+              "unit": "amp"
+            },
+            "overrides": [
+              {
+                "matcher": {
+                  "id": "byRegexp",
+                  "options": "/flag/"
+                },
+                "properties": [
+                  {
+                    "id": "custom.fillOpacity",
+                    "value": 29
+                  },
+                  {
+                    "id": "custom.drawStyle",
+                    "value": "points"
+                  },
+                  {
+                    "id": "color",
+                    "value": {
+                      "fixedColor": "yellow",
+                      "mode": "fixed"
+                    }
+                  },
+                  {
+                    "id": "custom.pointSize",
+                    "value": 8
+                  }
+                ]
+              },
+              {
+                "matcher": {
+                  "id": "byRegexp",
+                  "options": "/_a_/"
+                },
+                "properties": [
+                  {
+                    "id": "custom.showPoints",
+                    "value": "never"
+                  },
+                  {
+                    "id": "custom.lineStyle",
+                    "value": {
+                      "dash": [
+                        10,
+                        10
+                      ],
+                      "fill": "dash"
+                    }
+                  },
+                  {
+                    "id": "color",
+                    "value": {
+                      "fixedColor": "red",
+                      "mode": "fixed"
+                    }
+                  }
+                ]
+              },
+              {
+                "matcher": {
+                  "id": "byName",
+                  "options": "current"
+                },
+                "properties": [
+                  {
+                    "id": "color",
+                    "value": {
+                      "fixedColor": "blue",
+                      "mode": "fixed"
+                    }
+                  }
+                ]
+              },
+              {
+                "matcher": {
+                  "id": "byName",
+                  "options": "base_mean"
+                },
+                "properties": [
+                  {
+                    "id": "custom.lineStyle",
+                    "value": {
+                      "dash": [
+                        10,
+                        10
+                      ],
+                      "fill": "dash"
+                    }
+                  },
+                  {
+                    "id": "custom.showPoints",
+                    "value": "never"
+                  },
+                  {
+                    "id": "color",
+                    "value": {
+                      "fixedColor": "green",
+                      "mode": "fixed"
+                    }
+                  }
+                ]
+              }
+            ]
+          },
+          "gridPos": {
+            "h": 6,
+            "w": 24,
+            "x": 0,
+            "y": 92
+          },
+          "id": 26,
+          "options": {
+            "legend": {
+              "calcs": [
+                "lastNotNull"
+              ],
+              "displayMode": "list",
+              "placement": "bottom",
+              "showLegend": true
+            },
+            "tooltip": {
+              "hideZeros": false,
+              "mode": "single",
+              "sort": "none"
+            }
+          },
+          "pluginVersion": "11.6.1",
+          "repeat": "bank",
+          "repeatDirection": "v",
+          "targets": [
+            {
+              "query": "from(bucket: \"raw\")\n  |> range(start: v.timeRangeStart, stop: v.timeRangeStop)\n  |> filter(fn: (r) => r[\"_measurement\"] == \"pdu\")\n  |> filter(fn: (r) => r[\"_field\"] == \"current\")\n  |> filter(fn: (r) => r[\"name\"] == \"${pdu}\")\n  |> filter(fn: (r) => r[\"bank\"] == \"${bank}\")\n  |> aggregateWindow(every: 10m, fn: last, createEmpty: true)",
+              "refId": "Raw",
+              "datasource": {
+                "type": "influxdb",
+                "uid": "${DS_INFLUXDB}"
+              }
+            },
+            {
+              "datasource": {
+                "type": "influxdb",
+                "uid": "${DS_INFLUXDB}"
+              },
+              "hide": false,
+              "query": "from(bucket: \"spc\")\n  |> range(start: v.timeRangeStart, stop: v.timeRangeStop)\n  |> filter(fn: (r) => r[\"_measurement\"] == \"pdu\")\n  |> filter(fn: (r) => r[\"name\"] == \"${pdu}\")\n  |> filter(fn: (r) => r[\"bank\"] == \"${bank}\")\n  |> filter(fn: (r) => r[\"_field\"] == \"pr2_flag\")\n  |> aggregateWindow(every: 10m, fn: last, createEmpty: true)\n",
+              "refId": "A"
+            },
+            {
+              "datasource": {
+                "type": "influxdb",
+                "uid": "${DS_INFLUXDB}"
+              },
+              "hide": false,
+              "query": "from(bucket: \"spc\")\n  |> range(start: v.timeRangeStart, stop: v.timeRangeStop)\n  |> filter(fn: (r) => r[\"_measurement\"] == \"pdu_line\")\n  |> filter(fn: (r) => r[\"name\"] == \"${pdu}\")\n  |> filter(fn: (r) => r[\"bank\"] == \"${bank}\")\n  |> filter(fn: (r) => r[\"_field\"] == \"zone_a_hi\" or r[\"_field\"] == \"zone_a_lo\" or r[\"_field\"] == \"base_mean\")\n  |> aggregateWindow(every: 10m, fn: last, createEmpty: true)\n \n",
+              "refId": "B"
+            }
+          ],
+          "title": "$bank",
+          "type": "timeseries"
+        }
+      ],
+      "title": "PR2 - 連續3點中有2點進入A區",
+      "type": "row"
+    },
+    {
+      "collapsed": false,
+      "gridPos": {
+        "h": 1,
+        "w": 24,
+        "x": 0,
+        "y": 38
+      },
+      "id": 28,
+      "panels": [],
+      "title": "PR3 - 連續5點中有4點進入B區",
+      "type": "row"
+    },
+    {
+      "datasource": {
+        "type": "influxdb",
+        "uid": "${DS_INFLUXDB}"
+      },
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "palette-classic"
+          },
+          "custom": {
+            "axisBorderShow": false,
+            "axisCenteredZero": false,
+            "axisColorMode": "text",
+            "axisLabel": "",
+            "axisPlacement": "auto",
+            "barAlignment": 0,
+            "barWidthFactor": 0.6,
+            "drawStyle": "line",
+            "fillOpacity": 0,
+            "gradientMode": "none",
+            "hideFrom": {
+              "legend": false,
+              "tooltip": false,
+              "viz": false
+            },
+            "insertNulls": false,
+            "lineInterpolation": "linear",
+            "lineStyle": {
+              "fill": "solid"
+            },
+            "lineWidth": 2,
+            "pointSize": 5,
+            "scaleDistribution": {
+              "type": "linear"
+            },
+            "showPoints": "always",
+            "spanNulls": false,
+            "stacking": {
+              "group": "A",
+              "mode": "none"
+            },
+            "thresholdsStyle": {
+              "mode": "off"
+            }
+          },
+          "displayName": "${__field.name}",
+          "mappings": [],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "blue"
+              },
+              {
+                "color": "red",
+                "value": 80
+              }
+            ]
+          },
+          "unit": "amp"
+        },
+        "overrides": [
+          {
+            "matcher": {
+              "id": "byRegexp",
+              "options": "/flag/"
+            },
+            "properties": [
+              {
+                "id": "custom.fillOpacity",
+                "value": 29
+              },
+              {
+                "id": "custom.drawStyle",
+                "value": "points"
+              },
+              {
+                "id": "color",
+                "value": {
+                  "fixedColor": "yellow",
+                  "mode": "fixed"
+                }
+              },
+              {
+                "id": "custom.pointSize",
+                "value": 8
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byRegexp",
+              "options": "/_b_/"
+            },
+            "properties": [
+              {
+                "id": "custom.showPoints",
+                "value": "never"
+              },
+              {
+                "id": "custom.lineStyle",
+                "value": {
+                  "dash": [
+                    10,
+                    10
+                  ],
+                  "fill": "dash"
+                }
+              },
+              {
+                "id": "color",
+                "value": {
+                  "fixedColor": "red",
+                  "mode": "fixed"
+                }
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "current"
+            },
+            "properties": [
+              {
+                "id": "color",
+                "value": {
+                  "fixedColor": "blue",
+                  "mode": "fixed"
+                }
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "base_mean"
+            },
+            "properties": [
+              {
+                "id": "custom.lineStyle",
+                "value": {
+                  "dash": [
+                    10,
+                    10
+                  ],
+                  "fill": "dash"
+                }
+              },
+              {
+                "id": "custom.showPoints",
+                "value": "never"
+              },
+              {
+                "id": "color",
+                "value": {
+                  "fixedColor": "green",
+                  "mode": "fixed"
+                }
+              }
+            ]
+          }
+        ]
+      },
+      "gridPos": {
+        "h": 6,
+        "w": 24,
+        "x": 0,
+        "y": 39
+      },
+      "id": 27,
+      "options": {
+        "legend": {
+          "calcs": [
+            "lastNotNull"
+          ],
+          "displayMode": "list",
+          "placement": "bottom",
+          "showLegend": true
+        },
+        "tooltip": {
+          "hideZeros": false,
+          "mode": "single",
+          "sort": "none"
+        }
+      },
+      "pluginVersion": "11.6.1",
+      "repeat": "bank",
+      "repeatDirection": "v",
+      "targets": [
+        {
+          "query": "from(bucket: \"raw\")\n  |> range(start: v.timeRangeStart, stop: v.timeRangeStop)\n  |> filter(fn: (r) => r[\"_measurement\"] == \"pdu\")\n  |> filter(fn: (r) => r[\"_field\"] == \"current\")\n  |> filter(fn: (r) => r[\"name\"] == \"${pdu}\")\n  |> filter(fn: (r) => r[\"bank\"] == \"${bank}\")\n  |> aggregateWindow(every: 10m, fn: last, createEmpty: true)",
+          "refId": "Raw",
+          "datasource": {
+            "type": "influxdb",
+            "uid": "${DS_INFLUXDB}"
+          }
+        },
+        {
+          "datasource": {
+            "type": "influxdb",
+            "uid": "${DS_INFLUXDB}"
+          },
+          "hide": false,
+          "query": "from(bucket: \"spc\")\n  |> range(start: v.timeRangeStart, stop: v.timeRangeStop)\n  |> filter(fn: (r) => r[\"_measurement\"] == \"pdu\")\n  |> filter(fn: (r) => r[\"name\"] == \"${pdu}\")\n  |> filter(fn: (r) => r[\"bank\"] == \"${bank}\")\n  |> filter(fn: (r) => r[\"_field\"] == \"pr3_flag\")\n  |> aggregateWindow(every: 10m, fn: last, createEmpty: true)\n",
+          "refId": "A"
+        },
+        {
+          "datasource": {
+            "type": "influxdb",
+            "uid": "${DS_INFLUXDB}"
+          },
+          "hide": false,
+          "query": "from(bucket: \"spc\")\n  |> range(start: v.timeRangeStart, stop: v.timeRangeStop)\n  |> filter(fn: (r) => r[\"_measurement\"] == \"pdu_line\")\n  |> filter(fn: (r) => r[\"name\"] == \"${pdu}\")\n  |> filter(fn: (r) => r[\"bank\"] == \"${bank}\")\n  |> filter(fn: (r) => r[\"_field\"] == \"zone_b_hi\" or r[\"_field\"] == \"zone_b_lo\" or r[\"_field\"] == \"base_mean\")\n  |> aggregateWindow(every: 10m, fn: last, createEmpty: true)\n \n",
+          "refId": "B"
+        }
+      ],
+      "title": "$bank",
+      "type": "timeseries"
+    },
+    {
+      "collapsed": true,
+      "gridPos": {
+        "h": 1,
+        "w": 24,
+        "x": 0,
+        "y": 93
+      },
+      "id": 29,
+      "panels": [
+        {
+          "datasource": {
+            "type": "influxdb",
+            "uid": "${DS_INFLUXDB}"
+          },
+          "fieldConfig": {
+            "defaults": {
+              "color": {
+                "mode": "palette-classic"
+              },
+              "custom": {
+                "axisBorderShow": false,
+                "axisCenteredZero": false,
+                "axisColorMode": "text",
+                "axisLabel": "",
+                "axisPlacement": "auto",
+                "barAlignment": 0,
+                "barWidthFactor": 0.6,
+                "drawStyle": "line",
+                "fillOpacity": 0,
+                "gradientMode": "none",
+                "hideFrom": {
+                  "legend": false,
+                  "tooltip": false,
+                  "viz": false
+                },
+                "insertNulls": false,
+                "lineInterpolation": "linear",
+                "lineStyle": {
+                  "fill": "solid"
+                },
+                "lineWidth": 2,
+                "pointSize": 5,
+                "scaleDistribution": {
+                  "type": "linear"
+                },
+                "showPoints": "always",
+                "spanNulls": false,
+                "stacking": {
+                  "group": "A",
+                  "mode": "none"
+                },
+                "thresholdsStyle": {
+                  "mode": "off"
+                }
+              },
+              "displayName": "${__field.name}",
+              "mappings": [],
+              "thresholds": {
+                "mode": "absolute",
+                "steps": [
+                  {
+                    "color": "blue"
+                  },
+                  {
+                    "color": "red",
+                    "value": 80
+                  }
+                ]
+              },
+              "unit": "amp"
+            },
+            "overrides": [
+              {
+                "matcher": {
+                  "id": "byRegexp",
+                  "options": "/flag/"
+                },
+                "properties": [
+                  {
+                    "id": "custom.fillOpacity",
+                    "value": 29
+                  },
+                  {
+                    "id": "custom.drawStyle",
+                    "value": "points"
+                  },
+                  {
+                    "id": "color",
+                    "value": {
+                      "fixedColor": "yellow",
+                      "mode": "fixed"
+                    }
+                  },
+                  {
+                    "id": "custom.pointSize",
+                    "value": 8
+                  }
+                ]
+              },
+              {
+                "matcher": {
+                  "id": "byName",
+                  "options": "current"
+                },
+                "properties": [
+                  {
+                    "id": "color",
+                    "value": {
+                      "fixedColor": "blue",
+                      "mode": "fixed"
+                    }
+                  }
+                ]
+              },
+              {
+                "matcher": {
+                  "id": "byName",
+                  "options": "base_mean"
+                },
+                "properties": [
+                  {
+                    "id": "custom.lineStyle",
+                    "value": {
+                      "dash": [
+                        10,
+                        10
+                      ],
+                      "fill": "dash"
+                    }
+                  },
+                  {
+                    "id": "custom.showPoints",
+                    "value": "never"
+                  },
+                  {
+                    "id": "color",
+                    "value": {
+                      "fixedColor": "green",
+                      "mode": "fixed"
+                    }
+                  }
+                ]
+              }
+            ]
+          },
+          "gridPos": {
+            "h": 10,
+            "w": 24,
+            "x": 0,
+            "y": 185
+          },
+          "id": 30,
+          "maxPerRow": 3,
+          "options": {
+            "legend": {
+              "calcs": [
+                "lastNotNull"
+              ],
+              "displayMode": "list",
+              "placement": "bottom",
+              "showLegend": true
+            },
+            "tooltip": {
+              "hideZeros": false,
+              "mode": "single",
+              "sort": "none"
+            }
+          },
+          "pluginVersion": "11.6.1",
+          "repeat": "bank",
+          "repeatDirection": "v",
+          "targets": [
+            {
+              "query": "from(bucket: \"raw\")\n  |> range(start: v.timeRangeStart, stop: v.timeRangeStop)\n  |> filter(fn: (r) => r[\"_measurement\"] == \"pdu\")\n  |> filter(fn: (r) => r[\"_field\"] == \"current\")\n  |> filter(fn: (r) => r[\"name\"] == \"${pdu}\")\n  |> filter(fn: (r) => r[\"bank\"] == \"${bank}\")\n  |> aggregateWindow(every: 10m, fn: last, createEmpty: true)",
+              "refId": "Raw",
+              "datasource": {
+                "type": "influxdb",
+                "uid": "${DS_INFLUXDB}"
+              }
+            },
+            {
+              "datasource": {
+                "type": "influxdb",
+                "uid": "${DS_INFLUXDB}"
+              },
+              "hide": false,
+              "query": "from(bucket: \"spc\")\n  |> range(start: v.timeRangeStart, stop: v.timeRangeStop)\n  |> filter(fn: (r) => r[\"_measurement\"] == \"pdu\")\n  |> filter(fn: (r) => r[\"name\"] == \"${pdu}\")\n  |> filter(fn: (r) => r[\"bank\"] == \"${bank}\")\n  |> filter(fn: (r) => r[\"_field\"] == \"pr4_flag\")\n  |> aggregateWindow(every: 10m, fn: last, createEmpty: true)\n",
+              "refId": "A"
+            },
+            {
+              "datasource": {
+                "type": "influxdb",
+                "uid": "${DS_INFLUXDB}"
+              },
+              "hide": false,
+              "query": "from(bucket: \"spc\")\n  |> range(start: v.timeRangeStart, stop: v.timeRangeStop)\n  |> filter(fn: (r) => r[\"_measurement\"] == \"pdu_line\")\n  |> filter(fn: (r) => r[\"name\"] == \"${pdu}\")\n  |> filter(fn: (r) => r[\"bank\"] == \"${bank}\")\n  |> filter(fn: (r) => r[\"_field\"] == \"base_mean\")\n  |> aggregateWindow(every: 10m, fn: last, createEmpty: true)\n \n",
+              "refId": "B"
+            }
+          ],
+          "title": "$bank",
+          "type": "timeseries"
+        }
+      ],
+      "title": "PR4 - 連續8點以上全部落在CL同一側",
+      "type": "row"
+    },
+    {
+      "collapsed": true,
+      "gridPos": {
+        "h": 1,
+        "w": 24,
+        "x": 0,
+        "y": 94
+      },
+      "id": 31,
+      "panels": [
+        {
+          "datasource": {
+            "type": "influxdb",
+            "uid": "${DS_INFLUXDB}"
+          },
+          "fieldConfig": {
+            "defaults": {
+              "color": {
+                "mode": "palette-classic"
+              },
+              "custom": {
+                "axisBorderShow": false,
+                "axisCenteredZero": false,
+                "axisColorMode": "text",
+                "axisLabel": "",
+                "axisPlacement": "auto",
+                "barAlignment": 0,
+                "barWidthFactor": 0.6,
+                "drawStyle": "line",
+                "fillOpacity": 0,
+                "gradientMode": "none",
+                "hideFrom": {
+                  "legend": false,
+                  "tooltip": false,
+                  "viz": false
+                },
+                "insertNulls": false,
+                "lineInterpolation": "linear",
+                "lineStyle": {
+                  "fill": "solid"
+                },
+                "lineWidth": 2,
+                "pointSize": 5,
+                "scaleDistribution": {
+                  "type": "linear"
+                },
+                "showPoints": "always",
+                "spanNulls": false,
+                "stacking": {
+                  "group": "A",
+                  "mode": "none"
+                },
+                "thresholdsStyle": {
+                  "mode": "off"
+                }
+              },
+              "displayName": "${__field.name}",
+              "mappings": [],
+              "thresholds": {
+                "mode": "absolute",
+                "steps": [
+                  {
+                    "color": "blue"
+                  },
+                  {
+                    "color": "red",
+                    "value": 80
+                  }
+                ]
+              },
+              "unit": "amp"
+            },
+            "overrides": [
+              {
+                "matcher": {
+                  "id": "byRegexp",
+                  "options": "/flag/"
+                },
+                "properties": [
+                  {
+                    "id": "custom.fillOpacity",
+                    "value": 29
+                  },
+                  {
+                    "id": "custom.drawStyle",
+                    "value": "points"
+                  },
+                  {
+                    "id": "color",
+                    "value": {
+                      "fixedColor": "yellow",
+                      "mode": "fixed"
+                    }
+                  },
+                  {
+                    "id": "custom.pointSize",
+                    "value": 8
+                  }
+                ]
+              },
+              {
+                "matcher": {
+                  "id": "byName",
+                  "options": "current"
+                },
+                "properties": [
+                  {
+                    "id": "color",
+                    "value": {
+                      "fixedColor": "blue",
+                      "mode": "fixed"
+                    }
+                  }
+                ]
+              },
+              {
+                "matcher": {
+                  "id": "byName",
+                  "options": "base_mean"
+                },
+                "properties": [
+                  {
+                    "id": "custom.lineStyle",
+                    "value": {
+                      "dash": [
+                        10,
+                        10
+                      ],
+                      "fill": "dash"
+                    }
+                  },
+                  {
+                    "id": "custom.showPoints",
+                    "value": "never"
+                  },
+                  {
+                    "id": "color",
+                    "value": {
+                      "fixedColor": "green",
+                      "mode": "fixed"
+                    }
+                  }
+                ]
+              }
+            ]
+          },
+          "gridPos": {
+            "h": 10,
+            "w": 24,
+            "x": 0,
+            "y": 95
+          },
+          "id": 32,
+          "options": {
+            "legend": {
+              "calcs": [
+                "lastNotNull"
+              ],
+              "displayMode": "list",
+              "placement": "bottom",
+              "showLegend": true
+            },
+            "tooltip": {
+              "hideZeros": false,
+              "mode": "single",
+              "sort": "none"
+            }
+          },
+          "pluginVersion": "11.6.1",
+          "repeat": "bank",
+          "repeatDirection": "v",
+          "targets": [
+            {
+              "query": "from(bucket: \"raw\")\n  |> range(start: v.timeRangeStart, stop: v.timeRangeStop)\n  |> filter(fn: (r) => r[\"_measurement\"] == \"pdu\")\n  |> filter(fn: (r) => r[\"_field\"] == \"current\")\n  |> filter(fn: (r) => r[\"name\"] == \"${pdu}\")\n  |> filter(fn: (r) => r[\"bank\"] == \"${bank}\")\n  |> aggregateWindow(every: 10m, fn: last, createEmpty: true)",
+              "refId": "Raw",
+              "datasource": {
+                "type": "influxdb",
+                "uid": "${DS_INFLUXDB}"
+              }
+            },
+            {
+              "datasource": {
+                "type": "influxdb",
+                "uid": "${DS_INFLUXDB}"
+              },
+              "hide": false,
+              "query": "from(bucket: \"spc\")\n  |> range(start: v.timeRangeStart, stop: v.timeRangeStop)\n  |> filter(fn: (r) => r[\"_measurement\"] == \"pdu\")\n  |> filter(fn: (r) => r[\"name\"] == \"${pdu}\")\n  |> filter(fn: (r) => r[\"bank\"] == \"${bank}\")\n  |> filter(fn: (r) => r[\"_field\"] == \"pr5_flag\")\n  |> aggregateWindow(every: 10m, fn: last, createEmpty: true)\n",
+              "refId": "A"
+            },
+            {
+              "datasource": {
+                "type": "influxdb",
+                "uid": "${DS_INFLUXDB}"
+              },
+              "hide": false,
+              "query": "from(bucket: \"spc\")\n  |> range(start: v.timeRangeStart, stop: v.timeRangeStop)\n  |> filter(fn: (r) => r[\"_measurement\"] == \"pdu_line\")\n  |> filter(fn: (r) => r[\"name\"] == \"${pdu}\")\n  |> filter(fn: (r) => r[\"bank\"] == \"${bank}\")\n  |> filter(fn: (r) => r[\"_field\"] == \"base_mean\")\n  |> aggregateWindow(every: 10m, fn: last, createEmpty: true)\n \n",
+              "refId": "B"
+            }
+          ],
+          "title": "$bank",
+          "type": "timeseries"
+        }
+      ],
+      "title": "PR5 - 連續7點持續上升或下降",
+      "type": "row"
+    }
+  ],
+  "schemaVersion": 41,
+  "tags": [
+    "spc"
+  ],
+  "templating": {
+    "list": [
+      {
+        "current": {
+          "text": "spc",
+          "value": "spc"
+        },
+        "hide": 2,
+        "label": "spc_bucket",
+        "name": "spc_bucket",
+        "options": [
+          {
+            "selected": true,
+            "text": "spc",
+            "value": "spc"
+          }
+        ],
+        "query": "spc",
+        "type": "textbox"
+      },
+      {
+        "current": {
+          "text": "raw",
+          "value": "raw"
+        },
+        "hide": 2,
+        "label": "raw_bucket",
+        "name": "raw_bucket",
+        "options": [
+          {
+            "selected": true,
+            "text": "raw",
+            "value": "raw"
+          }
+        ],
+        "query": "raw",
+        "type": "textbox"
+      },
+      {
+        "current": {
+          "text": "pdu",
+          "value": "pdu"
+        },
+        "hide": 2,
+        "label": "measurement",
+        "name": "measurement",
+        "options": [
+          {
+            "selected": true,
+            "text": "pdu",
+            "value": "pdu"
+          }
+        ],
+        "query": "pdu",
+        "type": "textbox"
+      },
+      {
+        "allowCustomValue": true,
+        "current": {},
+        "definition": "import \"influxdata/influxdb/v1\"\nv1.tagValues(\n    bucket: \"${spc_bucket}\",\n    tag: \"fab\",\n    predicate: (r) => true,\n    start: -90d\n)",
+        "includeAll": false,
+        "label": "Fab",
+        "name": "fab",
+        "options": [],
+        "query": {
+          "query": "import \"influxdata/influxdb/v1\"\nv1.tagValues(\n    bucket: \"${spc_bucket}\",\n    tag: \"fab\",\n    predicate: (r) => true,\n    start: -90d\n)"
+        },
+        "refresh": 1,
+        "regex": "",
+        "type": "query"
+      },
+      {
+        "current": {},
+        "definition": "import \"influxdata/influxdb/schema\"\nschema.measurementFieldKeys(bucket: \"${spc_bucket}\", measurement: \"${measurement}\")",
+        "hide": 2,
+        "label": "Metric",
+        "name": "field",
+        "options": [],
+        "query": {
+          "query": "import \"influxdata/influxdb/schema\"\nschema.measurementFieldKeys(bucket: \"${spc_bucket}\", measurement: \"${measurement}\")"
+        },
+        "refresh": 1,
+        "regex": "",
+        "type": "query"
+      },
+      {
+        "allowCustomValue": false,
+        "current": {},
+        "definition": "import \"influxdata/influxdb/v1\"\nv1.tagValues(\n    bucket: \"${spc_bucket}\",\n    tag: \"name\",\n    predicate: (r) => r.fab == \"${fab}\" ,\n    start: -100d\n)",
+        "includeAll": true,
+        "label": "PDU",
+        "name": "pdu",
+        "options": [],
+        "query": {
+          "query": "import \"influxdata/influxdb/v1\"\nv1.tagValues(\n    bucket: \"${spc_bucket}\",\n    tag: \"name\",\n    predicate: (r) => r.fab == \"${fab}\" ,\n    start: -100d\n)"
+        },
+        "refresh": 1,
+        "regex": "",
+        "type": "query"
+      },
+      {
+        "allowCustomValue": false,
+        "current": {
+          "text": [
+            "$__all"
+          ],
+          "value": [
+            "$__all"
+          ]
+        },
+        "hide": 2,
+        "includeAll": true,
+        "label": "bank",
+        "multi": true,
+        "name": "bank",
+        "options": [
+          {
+            "selected": false,
+            "text": "L1-1",
+            "value": "L1-1"
+          },
+          {
+            "selected": false,
+            "text": "L1-2",
+            "value": "L1-2"
+          },
+          {
+            "selected": false,
+            "text": "L1-3",
+            "value": "L1-3"
+          },
+          {
+            "selected": false,
+            "text": "L2-1",
+            "value": "L2-1"
+          },
+          {
+            "selected": false,
+            "text": "L2-2",
+            "value": "L2-2"
+          },
+          {
+            "selected": false,
+            "text": "L2-3",
+            "value": "L2-3"
+          },
+          {
+            "selected": false,
+            "text": "L3-1",
+            "value": "L3-1"
+          },
+          {
+            "selected": false,
+            "text": "L3-2",
+            "value": "L3-2"
+          },
+          {
+            "selected": false,
+            "text": "L3-3",
+            "value": "L3-3"
+          }
+        ],
+        "query": "L1-1,L1-2,L1-3,L2-1,L2-2,L2-3,L3-1,L3-2,L3-3",
+        "type": "custom"
+      },
+      {
+        "allowCustomValue": false,
+        "current": {
+          "text": [
+            "$__all"
+          ],
+          "value": [
+            "$__all"
+          ]
+        },
+        "hide": 2,
+        "includeAll": true,
+        "label": "flag",
+        "multi": true,
+        "name": "flag",
+        "options": [
+          {
+            "selected": false,
+            "text": "pr1_flag",
+            "value": "pr1_flag"
+          },
+          {
+            "selected": false,
+            "text": "pr2_flag",
+            "value": "pr2_flag"
+          },
+          {
+            "selected": false,
+            "text": "pr3_flag",
+            "value": "pr3_flag"
+          },
+          {
+            "selected": false,
+            "text": "pr4_flag",
+            "value": "pr4_flag"
+          },
+          {
+            "selected": false,
+            "text": "pr5_flag",
+            "value": "pr5_flag"
+          }
+        ],
+        "query": "pr1_flag,pr2_flag,pr3_flag,pr4_flag,pr5_flag",
+        "type": "custom"
+      }
+    ]
+  },
+  "time": {
+    "from": "2025-04-13T16:00:00.000Z",
+    "to": "2025-04-14T15:59:59.000Z"
+  },
+  "timepicker": {},
+  "timezone": "browser",
+  "title": "SPC_每日PR規則觸發總覽",
+  "uid": "celjpy3lglhj4a",
+  "version": 70,
+  "weekStart": ""
+}

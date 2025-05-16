@@ -1,0 +1,66 @@
+AggregateInfluxDB:
+    Category: InfluxDB
+    Code: INFLUXDB03
+    Description: Performs aggregation on InfluxDB data
+    Level: info
+    Name: AggregateInfluxDB
+BackupInfluxDB:
+    Category: InfluxDB
+    Code: INFLUXDB04
+    Description: Backs up data from the InfluxDB database
+    Level: info
+    Name: BackupInfluxDB
+ConnectInfluxDB:
+    Category: InfluxDB
+    Code: INFLUXDB01
+    Description: Connects to the InfluxDB database
+    Level: info
+    Name: ConnectInfluxDB
+ConnectMysql:
+    Category: Mysql
+    Code: MYSQL01
+    Description: Connects to the MySQL database
+    Level: info
+    Name: ConnectMysql
+ConnectSqlServer:
+    Category: SQLServer
+    Code: SQLSERVER01
+    Description: Connects to the SQL Server database
+    Level: info
+    Name: ConnectSqlServer
+LoadCrontab:
+    Category: Cron
+    Code: CRON01
+    Description: Loads and schedules crontab jobs
+    Level: info
+    Name: LoadCrontab
+LoadEnvConfig:
+    Category: Config
+    Code: ENV01
+    Description: Loads environment configuration settings
+    Level: info
+    Name: LoadEnvConfig
+LoadMigration:
+    Category: Migration
+    Code: MIG01
+    Description: Loads migration files for database schema updates
+    Level: info
+    Name: LoadMigration
+MatchTag:
+    Category: Tag
+    Code: TAG01
+    Description: Matches and applies tags to incoming data
+    Level: info
+    Name: MatchTag
+OutputInfluxDB:
+    Category: InfluxDB
+    Code: INFLUXDB02
+    Description: Outputs data to the InfluxDB database
+    Level: info
+    Name: OutputInfluxDB
+OutputSqlServer:
+    Category: SQLServer
+    Code: SQLSERVER02
+    Description: Outputs data to the SQL Server database
+    Level: info
+    Name: OutputSqlServer

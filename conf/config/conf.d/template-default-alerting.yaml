@@ -1,0 +1,129 @@
+templates:
+    - name: "Default HTML Alert"
+      format_type: "html"
+      rule_state: "alerting"
+      title: "[{{ .severity }}] {{ .affected_hosts_count }} 台設備發生 {{ .affected_alerts_count }} 個告警"
+      message: |
+        <strong>告警類型:</strong> {{ .alert_categories }}<br>
+        <strong>影響設備數量:</strong> {{ .affected_hosts_count }}<br>
+        <strong>總告警數量:</strong> {{ .affected_alerts_count }}<br><br>
+        
+        <strong>告警分類:</strong><br>
+        {{ range .alerts_by_severity }}
+        <div style="margin-bottom: 10px;">
+          <strong style="color: {{ if if_eq .severity "Critical" }}#FF0000{{ else if if_eq .severity "Warning" }}#FFA500{{ else }}#0000FF{{ end }}">
+            [{{ .severity }}] - {{ .count }} 個告警
+          </strong><br>
+          {{ range .hosts }}
+          <div style="margin-left: 15px; margin-bottom: 5px;">
+            <strong>{{ .resource_name }}</strong> ({{ .count }} 個告警)<br>
+            {{ range .metrics }}
+            <div style="margin-left: 15px;">
+              - <strong>{{ .metric_display_name }}</strong>: {{ .triggered_value }} / {{ .threshold }} 
+              {{ if .duration }}(持續 {{ .duration }} 秒){{ end }}<br>
+              <span style="margin-left: 20px; color: #666;">觸發時間: {{ .last_triggered_at }}</span><br>
+            </div>
+            {{ end }}
+          </div>
+          {{ end }}
+        </div>
+        {{ end }}<br>
+        
+        {{ if .resolution_suggestion }}
+        <strong>建議處理方式:</strong><br>
+        {{ .resolution_suggestion }}
+        {{ end }}
+
+    - name: "Default Markdown Alert"
+      format_type: "markdown"
+      rule_state: "alerting"
+      title: "**[{{ .severity }}] {{ .affected_hosts_count }} 台設備發生 {{ .affected_alerts_count }} 個告警**"
+      message: |
+        **告警類型**: {{ .alert_categories }}
+        **影響設備數量**: {{ .affected_hosts_count }}
+        **總告警數量**: {{ .affected_alerts_count }}
+
+        **告警分類**:
+        {{ range .alerts_by_severity }}
+        **[{{ .severity }}] - {{ .count }} 個告警**
+        {{ range .hosts }}
+        * **{{ .resource_name }}** ({{ .count }} 個告警)
+          {{ range .metrics }}
+          * **{{ .metric_display_name }}**: {{ .triggered_value }} / {{ .threshold }} {{ if .duration }}(持續 {{ .duration }} 秒){{ end }}
+            * 觸發時間: {{ .last_triggered_at }}
+          {{ end }}
+        {{ end }}
+        {{ end }}
+
+        {{ if .resolution_suggestion }}
+        **建議處理方式**:
+        {{ .resolution_suggestion }}
+        {{ end }}
+
+    - name: "Default Text Alert"
+      format_type: "text"
+      rule_state: "alerting"
+      title: "[{{ .severity }}] {{ .affected_hosts_count }} 台設備發生 {{ .affected_alerts_count }} 個告警"
+      message: |
+        告警類型: {{ .alert_categories }}
+        影響設備數量: {{ .affected_hosts_count }}
+        總告警數量: {{ .affected_alerts_count }}
+
+        告警分類:
+        {{ range .alerts_by_severity }}
+        [{{ .severity }}] - {{ .count }} 個告警
+        {{ range .hosts }}
+        * {{ .resource_name }} ({{ .count }} 個告警)
+          {{ range .metrics }}
+          * {{ .metric_display_name }}: {{ .triggered_value }} / {{ .threshold }} {{ if .duration }}(持續 {{ .duration }} 秒){{ end }}
+            * 觸發時間: {{ .last_triggered_at }}
+          {{ end }}
+        {{ end }}
+        {{ end }}
+
+        {{ if .resolution_suggestion }}
+        建議處理方式:
+        {{ .resolution_suggestion }}
+        {{ end }}
+
+    - name: "Default JSON Alert"
+      format_type: "json"
+      rule_state: "alerting"
+      title: ""
+      message: |
+        {
+          "title": "[{{ .severity }}] {{ .affected_hosts_count }} 台設備發生 {{ .affected_alerts_count }} 個告警",
+          "alert_type": "{{ .alert_categories }}",
+          "affected_hosts_count": "{{ .affected_hosts_count }}",
+          "affected_alerts_count": "{{ .affected_alerts_count }}",
+          "alerts_by_severity": [
+            {{ range $i, $sev := .alerts_by_severity }}
+            {
+              "severity": "{{ .severity }}",
+              "count": {{ .count }},
+              "hosts": [
+                {{ range $j, $host := .hosts }}
+                {
+                  "resource_name": "{{ .resource_name }}",
+                  "count": {{ .count }},
+                  "metrics": [
+                    {{ range $k, $metric := .metrics }}
+                    {
+                      "metric_display_name": "{{ .metric_display_name }}",
+                      "triggered_value": "{{ .triggered_value }}",
+                      "threshold": "{{ .threshold }}",
+                      "duration": "{{ .duration }}",
+                      "last_triggered_at": "{{ .last_triggered_at }}"
+                    }{{ if not (last $k (len $metric)) }},{{ end }}
+                    {{ end }}
+                  ]
+                }{{ if not (last $j (len $host)) }},{{ end }}
+                {{ end }}
+              ]
+            }{{ if not (last $i (len $sev)) }},{{ end }}
+            {{ end }}
+          ]
+          {{ if .resolution_suggestion }},
+          "resolution_suggestion": "{{ .resolution_suggestion }}"
+          {{ end }}
+        }

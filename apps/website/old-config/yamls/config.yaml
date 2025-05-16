@@ -1,0 +1,142 @@
+# ViOT 系統配置
+
+# 應用程序基本信息
+app:
+  name: "viot"
+  version: "1.0.0"
+  description: "機房 PDU 電力監控與資料處理平台"
+  host: "localhost"
+  port: 8080  # 應從web.yaml移至這裡，保持一致性
+  read_timeout: 60
+  write_timeout: 60
+  shutdown_timeout: 30
+
+
+# 管理器設置
+manager:
+  web_enable: true
+  service_data_path: "./data"
+  telegraf_post_url: "http://localhost:8094/api/telegraf/data"
+  config_paths:
+    processor: "conf/processor.yaml"
+    deployer: "conf/deployer.yaml"
+    collector: "conf/collector.yaml" 
+    scanner: "conf/scanner.yaml"
+    web: "conf/web.yaml"
+  
+  # InfluxDB 配置
+  influxdb:
+    url: "http://localhost:8086"
+    binary_path: "./bin/influx"
+    storage_path: "./data/influxdb"
+    token: ""
+    bucket: 
+      rawdata:
+        name: "rawdata"
+        retention: "90d"
+      monitor:
+        name: "monitor"
+        retention: "90d"
+    batch_size: 5000
+    timeout: 5
+    retry: 3
+    tasks:
+      - script: "data/influxdb/task_script/output_sqlserver.flux"
+        name: "SQL Server Output"
+        description: "Export PDU data to SQL Server every 10 minutes"
+        interval: "5,15,30,45,55 * * * *"
+        enabled: true
+        retry: 3
+        timeout: "30s"
+    backup_policy: # 定時備份
+      path: "data/backup"
+      low_space_threshold: 500 # MB 達低門檻停止備份 
+    data_policy: # 斷線會落檔備份
+      fail_write_path: "data/restore"
+      low_space_threshold: 500 # MB 當 service_data_path 剩餘容量低於門檻值停止落檔 
+
+  # 日誌設置
+  logging:
+    output_path: "logs/viot.log"
+    level: "info"              # 日誌級別：debug, info, warn, error
+    format: "json"             # 日誌格式：json 或 console
+    max_size: 100              # 單個日誌文件最大尺寸(MB)
+    max_backups: 3             # 保留的舊日誌文件數量
+    max_age: 28                # 日誌文件保存天數
+    compress: true             # 是否壓縮舊日誌
+    enable_stacktrace: false   # 是否在錯誤級別記錄堆棧跟踪
+    development: true          # 開發模式
+    caller: true               # 是否記錄調用者信息
+
+# 任務調度配置
+scheduler:
+  status_sync: "*/10 * * * *"   # 每10分鐘同步狀態
+  data_sync: "*/10 * * * *"     # 每10分鐘同步數據
+  health_check: "*/30 * * * *"  # 每30分鐘檢查健康
+  disk_check: "0 0 * * *"       # 每天午夜檢查磁盤
+  recover_check: "*/10 * * * *" # 每10分鐘檢查恢復
+  influxdb_backup: "0 * * * *"  # 每小時備份InfluxDB
+  scanner: "*/30 * * * *"        # 每30分鐘掃描設備
+
+# 進程監控設置
+process_monitor:
+  monitor_interval: "10s"     # 監控間隔
+  stop_delay: "5s"            # 停止延遲
+  health_check:               # 健康檢查配置
+    enabled: true             # 是否啟用健康檢查
+    interval: "30s"           # 健康檢查間隔
+    timeout: "5s"             # 健康檢查超時
+  startup_order:              # 啟動順序
+    - "influxdb"              # 首先啟動InfluxDB
+    - "telegraf"              # 然後啟動Telegraf
+  shutdown_order:             # 關閉順序
+    - "telegraf"              # 首先關閉Telegraf
+    - "influxdb"              # 然後關閉InfluxDB
+  subprocesses:
+    # Telegraf子進程配置
+    telegraf:
+      enabled: true                # 是否啟用
+      executable: "telegraf"       # 可執行文件名稱或路徑
+      config_file: "telegraf.conf" # 配置文件
+      work_dir: "./conf"           # 工作目錄
+      restart_delay: "5s"          # 重啟延遲
+      max_restarts: 10             # 最大重啟次數
+      graceful_shutdown_sec: 10    # 優雅關閉時間
+      health_check_interval: "1m"  # 健康檢查間隔
+      health_check_command: "telegraf --test --config ./conf/telegraf.conf" # 健康檢查命令
+      env:                         # 環境變量
+        TELEGRAF_DEBUG: "false"
+        TELEGRAF_HOSTNAME: "auto"
+      args: []                     # 命令行參數
+      auto_start: true             # 啟動時自動啟動
+      depends_on: ["influxdb"]     # 依賴其他進程
+      restart_on_failure: true     # 失敗時重啟
+      restart_on_crash: true       # 崩潰時重啟
+
+    # InfluxDB子進程配置
+    influxdb:
+      enabled: true                # 是否啟用
+      executable: "influxd"        # 可執行文件名稱或路徑
+      work_dir: "./data/influxdb"  # 工作目錄
+      restart_delay: "10s"         # 重啟延遲
+      max_restarts: 5              # 最大重啟次數
+      graceful_shutdown_sec: 30    # 優雅關閉時間
+      health_check_interval: "2m"  # 健康檢查間隔
+      health_check_command: "influx -execute 'SHOW DATABASES'" # 健康檢查命令
+      env:                         # 環境變量
+        INFLUXDB_HTTP_AUTH_ENABLED: "false"
+      args: []                     # 命令行參數
+      auto_start: true             # 啟動時自動啟動
+      restart_on_failure: true     # 失敗時重啟
+      restart_on_crash: true       # 崩潰時重啟
+
+# 輸出配置
+output:
+  tasks:
+    # InfluxDB 備份任務，每天凌晨1點執行
+    influxdb_backup_cron: "0 0 1 * * *"
+    buffer_size: 1000
+    max_concurrent: 5
+    retry_count: 3
+    retry_interval: "10s"
+

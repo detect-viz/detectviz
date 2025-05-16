@@ -1,0 +1,958 @@
+{
+  "__inputs": [
+    {
+      "name": "DS_INFLUXDB",
+      "label": "influxdb",
+      "description": "",
+      "type": "datasource",
+      "pluginId": "influxdb",
+      "pluginName": "InfluxDB"
+    }
+  ],
+  "__elements": {},
+  "__requires": [
+    {
+      "type": "panel",
+      "id": "barchart",
+      "name": "Bar chart",
+      "version": ""
+    },
+    {
+      "type": "grafana",
+      "id": "grafana",
+      "name": "Grafana",
+      "version": "11.6.1"
+    },
+    {
+      "type": "datasource",
+      "id": "influxdb",
+      "name": "InfluxDB",
+      "version": "1.0.0"
+    },
+    {
+      "type": "panel",
+      "id": "piechart",
+      "name": "Pie chart",
+      "version": ""
+    },
+    {
+      "type": "panel",
+      "id": "stat",
+      "name": "Stat",
+      "version": ""
+    },
+    {
+      "type": "panel",
+      "id": "table",
+      "name": "Table",
+      "version": ""
+    }
+  ],
+  "annotations": {
+    "list": [
+      {
+        "builtIn": 1,
+        "datasource": {
+          "type": "grafana",
+          "uid": "-- Grafana --"
+        },
+        "enable": true,
+        "hide": true,
+        "iconColor": "rgba(0, 211, 255, 1)",
+        "name": "Annotations & Alerts",
+        "type": "dashboard"
+      }
+    ]
+  },
+  "editable": true,
+  "fiscalYearStartMonth": 0,
+  "graphTooltip": 0,
+  "id": null,
+  "links": [
+    {
+      "asDropdown": true,
+      "icon": "external link",
+      "includeVars": true,
+      "keepTime": true,
+      "tags": [
+        "spc"
+      ],
+      "targetBlank": false,
+      "title": "Dashboard",
+      "tooltip": "",
+      "type": "dashboards",
+      "url": ""
+    }
+  ],
+  "panels": [
+    {
+      "collapsed": false,
+      "gridPos": {
+        "h": 1,
+        "w": 24,
+        "x": 0,
+        "y": 0
+      },
+      "id": 19,
+      "panels": [],
+      "repeat": "pdu",
+      "title": "$pdu",
+      "type": "row"
+    },
+    {
+      "datasource": {
+        "type": "influxdb",
+        "uid": "${DS_INFLUXDB}"
+      },
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "thresholds"
+          },
+          "fieldMinMax": false,
+          "mappings": [],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "blue"
+              }
+            ]
+          }
+        },
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 3,
+        "w": 4,
+        "x": 0,
+        "y": 1
+      },
+      "id": 13,
+      "options": {
+        "colorMode": "background",
+        "graphMode": "none",
+        "justifyMode": "auto",
+        "orientation": "auto",
+        "percentChangeColorMode": "standard",
+        "reduceOptions": {
+          "calcs": [],
+          "fields": "/^_value$/",
+          "values": false
+        },
+        "showPercentChange": false,
+        "text": {
+          "titleSize": 30
+        },
+        "textMode": "value",
+        "wideLayout": true
+      },
+      "pluginVersion": "11.6.1",
+      "targets": [
+        {
+          "query": "from(bucket: \"${spc_bucket}\")\n  |> range(start: v.timeRangeStart, stop: v.timeRangeStop)\n  |> filter(fn: (r) => r[\"_measurement\"] == \"pdu\")\n  |> filter(fn: (r) => r[\"_field\"] == \"data_points\")\n  |> group()\n  |> last()\n  |> duplicate(column: \"_time\", as: \"_value\")\n  |> keep(columns: [\"_value\"])\n  |> last()\n",
+          "refId": "A",
+          "datasource": {
+            "type": "influxdb",
+            "uid": "${DS_INFLUXDB}"
+          }
+        }
+      ],
+      "title": "資料更新日期",
+      "transformations": [
+        {
+          "id": "formatTime",
+          "options": {
+            "outputFormat": "yy-MM-DD",
+            "timeField": "_value",
+            "useTimezone": true
+          }
+        }
+      ],
+      "type": "stat"
+    },
+    {
+      "datasource": {
+        "type": "influxdb",
+        "uid": "${DS_INFLUXDB}"
+      },
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "thresholds"
+          },
+          "decimals": 1,
+          "displayName": "${__field.labels.bank}",
+          "mappings": [],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "semi-dark-blue"
+              }
+            ]
+          },
+          "unit": "amp"
+        },
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 6,
+        "w": 20,
+        "x": 4,
+        "y": 1
+      },
+      "id": 2,
+      "maxPerRow": 12,
+      "options": {
+        "colorMode": "value",
+        "graphMode": "area",
+        "justifyMode": "auto",
+        "orientation": "vertical",
+        "percentChangeColorMode": "inverted",
+        "reduceOptions": {
+          "calcs": [
+            "lastNotNull"
+          ],
+          "fields": "",
+          "values": false
+        },
+        "showPercentChange": true,
+        "text": {
+          "percentSize": 20,
+          "titleSize": 20,
+          "valueSize": 25
+        },
+        "textMode": "value_and_name",
+        "wideLayout": false
+      },
+      "pluginVersion": "11.6.1",
+      "targets": [
+        {
+          "query": "from(bucket: \"raw\")\n  |> range(start: v.timeRangeStart, stop: v.timeRangeStop)\n  |> filter(fn: (r) => r[\"_measurement\"] == \"pdu\")\n  |> filter(fn: (r) => r[\"name\"] == \"${pdu}\")\n // |> filter(fn: (r) => r[\"bank\"] == \"${bank}\")\n |> group(columns: [\"bank\"], mode:\"by\")\n\n\n",
+          "refId": "A",
+          "datasource": {
+            "type": "influxdb",
+            "uid": "${DS_INFLUXDB}"
+          }
+        }
+      ],
+      "transparent": true,
+      "type": "stat"
+    },
+    {
+      "datasource": {
+        "type": "influxdb",
+        "uid": "${DS_INFLUXDB}"
+      },
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "thresholds"
+          },
+          "fieldMinMax": false,
+          "mappings": [],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "purple"
+              }
+            ]
+          }
+        },
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 3,
+        "w": 4,
+        "x": 0,
+        "y": 4
+      },
+      "id": 3,
+      "options": {
+        "colorMode": "background",
+        "graphMode": "area",
+        "justifyMode": "auto",
+        "orientation": "auto",
+        "percentChangeColorMode": "standard",
+        "reduceOptions": {
+          "calcs": [
+            "lastNotNull"
+          ],
+          "fields": "/.*/",
+          "values": false
+        },
+        "showPercentChange": false,
+        "text": {},
+        "textMode": "value",
+        "wideLayout": true
+      },
+      "pluginVersion": "11.6.1",
+      "targets": [
+        {
+          "query": "import \"influxdata/influxdb/v1\"\nv1.tagValues(\n    bucket: \"${spc_bucket}\",\n    tag: \"name\",\n    predicate: (r) => r.fab == \"${fab}\" \n\n       and r.name == \"${pdu}\",\n    start: -90d\n)",
+          "refId": "A",
+          "datasource": {
+            "type": "influxdb",
+            "uid": "${DS_INFLUXDB}"
+          }
+        }
+      ],
+      "title": "目前選取 PDU",
+      "type": "stat"
+    },
+    {
+      "datasource": {
+        "type": "influxdb",
+        "uid": "${DS_INFLUXDB}"
+      },
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "palette-classic"
+          },
+          "custom": {
+            "hideFrom": {
+              "legend": false,
+              "tooltip": false,
+              "viz": false
+            }
+          },
+          "displayName": "${__field.labels._field}",
+          "fieldMinMax": false,
+          "mappings": [],
+          "noValue": "0"
+        },
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 8,
+        "w": 4,
+        "x": 0,
+        "y": 7
+      },
+      "id": 12,
+      "options": {
+        "displayLabels": [
+          "name",
+          "value"
+        ],
+        "legend": {
+          "displayMode": "list",
+          "placement": "bottom",
+          "showLegend": false
+        },
+        "pieType": "pie",
+        "reduceOptions": {
+          "calcs": [
+            "lastNotNull"
+          ],
+          "fields": "/.*/",
+          "values": false
+        },
+        "tooltip": {
+          "hideZeros": false,
+          "mode": "single",
+          "sort": "none"
+        }
+      },
+      "pluginVersion": "11.6.1",
+      "targets": [
+        {
+          "query": "from(bucket: \"${spc_bucket}\")\n  |> range(start: v.timeRangeStart, stop: v.timeRangeStop)\n  |> filter(fn: (r) => r[\"_measurement\"] == \"pdu\")\n  |> filter(fn: (r) => r[\"name\"] == \"${pdu}\")\n    |> filter(fn: (r) => r[\"_field\"] == \"pr2_counter\" or r[\"_field\"] == \"pr3_counter\" or r[\"_field\"] == \"pr1_counter\" or r[\"_field\"] == \"pr4_counter\" or r[\"_field\"] == \"pr5_counter\")\n  |> group(columns: [\"_field\"], mode:\"by\") \n  |> sum()\n  |> group(columns: [\"_field\"], mode:\"by\") \n  |> drop(columns: [\"_start\", \"_stop\"])\n      \n     \n  \n\n\n",
+          "refId": "A",
+          "datasource": {
+            "type": "influxdb",
+            "uid": "${DS_INFLUXDB}"
+          }
+        }
+      ],
+      "title": "PR 異常規則比例分佈",
+      "type": "piechart"
+    },
+    {
+      "datasource": {
+        "type": "influxdb",
+        "uid": "${DS_INFLUXDB}"
+      },
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "palette-classic"
+          },
+          "custom": {
+            "axisBorderShow": false,
+            "axisCenteredZero": false,
+            "axisColorMode": "text",
+            "axisGridShow": true,
+            "axisLabel": "",
+            "axisPlacement": "auto",
+            "fillOpacity": 100,
+            "gradientMode": "none",
+            "hideFrom": {
+              "legend": false,
+              "tooltip": false,
+              "viz": false
+            },
+            "lineWidth": 0,
+            "scaleDistribution": {
+              "type": "linear"
+            },
+            "thresholdsStyle": {
+              "mode": "off"
+            }
+          },
+          "displayName": "${__field.labels._field}",
+          "fieldMinMax": false,
+          "mappings": [],
+          "noValue": "NO data",
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green"
+              },
+              {
+                "color": "red",
+                "value": 80
+              }
+            ]
+          }
+        },
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 8,
+        "w": 20,
+        "x": 4,
+        "y": 7
+      },
+      "id": 11,
+      "options": {
+        "barRadius": 0,
+        "barWidth": 0.59,
+        "fullHighlight": false,
+        "groupWidth": 0.7,
+        "legend": {
+          "calcs": [
+            "sum"
+          ],
+          "displayMode": "table",
+          "placement": "right",
+          "showLegend": true
+        },
+        "orientation": "auto",
+        "showValue": "never",
+        "stacking": "normal",
+        "text": {},
+        "tooltip": {
+          "hideZeros": false,
+          "mode": "multi",
+          "sort": "none"
+        },
+        "xTickLabelRotation": 0,
+        "xTickLabelSpacing": 100
+      },
+      "pluginVersion": "11.6.1",
+      "targets": [
+        {
+          "query": "from(bucket: \"${spc_bucket}\")\n  |> range(start: v.timeRangeStart, stop: v.timeRangeStop)\n  |> filter(fn: (r) => r[\"_measurement\"] == \"pdu\")\n  |> filter(fn: (r) => r[\"name\"] == \"${pdu}\")\n  |> filter(fn: (r) => r[\"_field\"] == \"pr3_flag\" or r[\"_field\"] == \"pr4_flag\" or r[\"_field\"] == \"pr2_flag\" or r[\"_field\"] == \"pr1_flag\" or r[\"_field\"] == \"pr5_flag\")\n  |> group(columns: [\"name\",\"_field\"])\n  |> aggregateWindow(every: 1h, fn: count )  \n \n  ",
+          "refId": "A",
+          "datasource": {
+            "type": "influxdb",
+            "uid": "${DS_INFLUXDB}"
+          }
+        }
+      ],
+      "title": "PR 異常事件每日統計時序圖",
+      "type": "barchart"
+    },
+    {
+      "datasource": {
+        "type": "influxdb",
+        "uid": "${DS_INFLUXDB}"
+      },
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "thresholds"
+          },
+          "custom": {
+            "align": "center",
+            "cellOptions": {
+              "type": "auto"
+            },
+            "inspect": false,
+            "minWidth": 50
+          },
+          "decimals": 2,
+          "mappings": [],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green"
+              },
+              {
+                "color": "red",
+                "value": 80
+              }
+            ]
+          }
+        },
+        "overrides": [
+          {
+            "matcher": {
+              "id": "byRegexp",
+              "options": "/PR/"
+            },
+            "properties": [
+              {
+                "id": "decimals",
+                "value": 0
+              },
+              {
+                "id": "custom.cellOptions",
+                "value": {
+                  "type": "color-text"
+                }
+              },
+              {
+                "id": "thresholds",
+                "value": {
+                  "mode": "absolute",
+                  "steps": [
+                    {
+                      "color": "green"
+                    },
+                    {
+                      "color": "red",
+                      "value": 1
+                    }
+                  ]
+                }
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "bank"
+            },
+            "properties": [
+              {
+                "id": "custom.cellOptions",
+                "value": {
+                  "type": "color-background"
+                }
+              },
+              {
+                "id": "color",
+                "value": {
+                  "fixedColor": "yellow",
+                  "mode": "fixed"
+                }
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "quality"
+            },
+            "properties": [
+              {
+                "id": "mappings",
+                "value": [
+                  {
+                    "options": {
+                      "0": {
+                        "color": "green",
+                        "index": 0,
+                        "text": "正常計算"
+                      },
+                      "1": {
+                        "color": "#808080",
+                        "index": 1,
+                        "text": "mean 太小"
+                      },
+                      "2": {
+                        "color": "#808080",
+                        "index": 2,
+                        "text": "std 太小"
+                      },
+                      "3": {
+                        "color": "#808080",
+                        "index": 3,
+                        "text": "std 遠大於 mean"
+                      },
+                      "4": {
+                        "color": "#808080",
+                        "index": 4,
+                        "text": "usl == lsl（無合理範圍）"
+                      },
+                      "5": {
+                        "color": "red",
+                        "index": 5,
+                        "text": "容忍區太小（變異太小）"
+                      }
+                    },
+                    "type": "value"
+                  }
+                ]
+              },
+              {
+                "id": "custom.cellOptions",
+                "value": {
+                  "type": "color-background"
+                }
+              },
+              {
+                "id": "custom.minWidth"
+              }
+            ]
+          }
+        ]
+      },
+      "gridPos": {
+        "h": 12,
+        "w": 24,
+        "x": 0,
+        "y": 15
+      },
+      "id": 20,
+      "options": {
+        "cellHeight": "sm",
+        "footer": {
+          "countRows": false,
+          "fields": "",
+          "reducer": [
+            "sum"
+          ],
+          "show": false
+        },
+        "showHeader": true
+      },
+      "pluginVersion": "11.6.1",
+      "targets": [
+        {
+          "datasource": {
+            "type": "influxdb",
+            "uid": "${DS_INFLUXDB}"
+          },
+          "query": "import \"influxdata/influxdb/schema\"\nfrom(bucket: \"spc\")\n  |> range(start: v.timeRangeStart, stop: v.timeRangeStop)\n  |> filter(fn: (r) => r[\"_measurement\"] == \"pdu\")\n  |> filter(fn: (r) => r[\"name\"] == \"${pdu}\")\n  |> filter(fn: (r) => r[\"_field\"] !~ /flag/)\n  |> last()\n  |> schema.fieldsAsCols()\n  |> group()\n",
+          "refId": "A"
+        }
+      ],
+      "title": "統計類",
+      "transformations": [
+        {
+          "id": "organize",
+          "options": {
+            "excludeByName": {
+              "_measurement": true,
+              "_start": true,
+              "_stop": true,
+              "_time": true,
+              "bank": false,
+              "daily_stddev": true,
+              "data_points": true,
+              "date_str": true,
+              "fab": true,
+              "mean": true,
+              "metric": true,
+              "name": true,
+              "ooc_counter": true,
+              "ooc_rate": true,
+              "oos_counter": true,
+              "oos_rate": true,
+              "p02": true,
+              "p25": true,
+              "p75": true,
+              "p98": true,
+              "pp": true,
+              "ppk": true,
+              "pr1_rate": true,
+              "pr2_rate": true,
+              "pr3_rate": true,
+              "pr4_rate": true,
+              "pr5_rate": true,
+              "std": true,
+              "zone_a_hi": true,
+              "zone_a_lo": true,
+              "zone_b_hi": true,
+              "zone_b_lo": true
+            },
+            "includeByName": {},
+            "indexByName": {
+              "_measurement": 4,
+              "_start": 1,
+              "_stop": 2,
+              "_time": 3,
+              "bank": 6,
+              "base_mean": 14,
+              "base_std": 15,
+              "cp": 16,
+              "cpk": 17,
+              "data_points": 32,
+              "date_str": 0,
+              "fab": 7,
+              "lcl": 18,
+              "lsl": 19,
+              "max": 20,
+              "mean": 21,
+              "metric": 8,
+              "min": 22,
+              "name": 5,
+              "ooc_counter": 33,
+              "ooc_rate": 34,
+              "oos_counter": 35,
+              "oos_rate": 36,
+              "p02": 37,
+              "p25": 23,
+              "p75": 24,
+              "p98": 38,
+              "pp": 39,
+              "ppk": 40,
+              "pr1_counter": 9,
+              "pr1_rate": 41,
+              "pr2_counter": 10,
+              "pr2_rate": 42,
+              "pr3_counter": 11,
+              "pr3_rate": 43,
+              "pr4_counter": 12,
+              "pr4_rate": 44,
+              "pr5_counter": 13,
+              "pr5_rate": 45,
+              "quality_code": 46,
+              "std": 25,
+              "ucl": 26,
+              "usl": 27,
+              "zone_a_hi": 28,
+              "zone_a_lo": 29,
+              "zone_b_hi": 30,
+              "zone_b_lo": 31
+            },
+            "renameByName": {
+              "base_mean": "mean",
+              "base_std": "std",
+              "baseline_mean": "mean",
+              "baseline_stddev": "stddev",
+              "cp": "CP",
+              "cpk": "CPK",
+              "daily_P25": "P25",
+              "daily_P75": "P75",
+              "daily_cp": "cp",
+              "daily_cpk": "cpk",
+              "daily_data_points": "points",
+              "daily_lcl": "lcl",
+              "daily_max": "max",
+              "daily_mean": "mean",
+              "daily_min": "min",
+              "daily_ucl": "ucl",
+              "date_str": "date",
+              "lcl": "LCL",
+              "lsl": "LSL",
+              "max": "",
+              "pr1_counter": "PR1",
+              "pr2_counter": "PR2",
+              "pr3_counter": "PR3",
+              "pr4_counter": "PR4",
+              "pr5_counter": "PR5",
+              "quality_code": "quality",
+              "spec_lsl": "lsl",
+              "spec_usl": "usl",
+              "zone_a_lower": "a_lower",
+              "zone_a_upper": "a_upper",
+              "zone_b_lower": "b_lower",
+              "zone_b_upper": "b_upper"
+            }
+          }
+        }
+      ],
+      "type": "table"
+    }
+  ],
+  "schemaVersion": 41,
+  "tags": [
+    "spc"
+  ],
+  "templating": {
+    "list": [
+      {
+        "current": {
+          "text": "spc",
+          "value": "spc"
+        },
+        "hide": 2,
+        "label": "spc_bucket",
+        "name": "spc_bucket",
+        "options": [
+          {
+            "selected": true,
+            "text": "spc",
+            "value": "spc"
+          }
+        ],
+        "query": "spc",
+        "type": "textbox"
+      },
+      {
+        "current": {
+          "text": "raw",
+          "value": "raw"
+        },
+        "hide": 2,
+        "label": "raw_bucket",
+        "name": "raw_bucket",
+        "options": [
+          {
+            "selected": true,
+            "text": "raw",
+            "value": "raw"
+          }
+        ],
+        "query": "raw",
+        "type": "textbox"
+      },
+      {
+        "current": {
+          "text": "pdu",
+          "value": "pdu"
+        },
+        "hide": 2,
+        "label": "measurement",
+        "name": "measurement",
+        "options": [
+          {
+            "selected": true,
+            "text": "pdu",
+            "value": "pdu"
+          }
+        ],
+        "query": "pdu",
+        "type": "textbox"
+      },
+      {
+        "allowCustomValue": true,
+        "current": {},
+        "definition": "import \"influxdata/influxdb/v1\"\nv1.tagValues(\n    bucket: \"${spc_bucket}\",\n    tag: \"fab\",\n    predicate: (r) => true,\n    start: -90d\n)",
+        "includeAll": false,
+        "label": "Fab",
+        "name": "fab",
+        "options": [],
+        "query": {
+          "query": "import \"influxdata/influxdb/v1\"\nv1.tagValues(\n    bucket: \"${spc_bucket}\",\n    tag: \"fab\",\n    predicate: (r) => true,\n    start: -90d\n)"
+        },
+        "refresh": 1,
+        "regex": "",
+        "type": "query"
+      },
+      {
+        "current": {},
+        "definition": "import \"influxdata/influxdb/schema\"\nschema.measurementFieldKeys(bucket: \"${spc_bucket}\", measurement: \"${measurement}\")",
+        "hide": 2,
+        "label": "Metric",
+        "name": "field",
+        "options": [],
+        "query": {
+          "query": "import \"influxdata/influxdb/schema\"\nschema.measurementFieldKeys(bucket: \"${spc_bucket}\", measurement: \"${measurement}\")"
+        },
+        "refresh": 1,
+        "regex": "",
+        "type": "query"
+      },
+      {
+        "allowCustomValue": false,
+        "current": {},
+        "definition": "import \"influxdata/influxdb/v1\"\nv1.tagValues(\n    bucket: \"${spc_bucket}\",\n    tag: \"name\",\n    predicate: (r) => r.fab == \"${fab}\" ,\n    start: -100d\n)",
+        "includeAll": true,
+        "label": "PDU",
+        "name": "pdu",
+        "options": [],
+        "query": {
+          "query": "import \"influxdata/influxdb/v1\"\nv1.tagValues(\n    bucket: \"${spc_bucket}\",\n    tag: \"name\",\n    predicate: (r) => r.fab == \"${fab}\" ,\n    start: -100d\n)"
+        },
+        "refresh": 1,
+        "regex": "",
+        "type": "query"
+      },
+      {
+        "allowCustomValue": false,
+        "current": {
+          "text": [
+            "$__all"
+          ],
+          "value": [
+            "$__all"
+          ]
+        },
+        "hide": 2,
+        "includeAll": true,
+        "label": "bank",
+        "multi": true,
+        "name": "bank",
+        "options": [
+          {
+            "selected": false,
+            "text": "L1-1",
+            "value": "L1-1"
+          },
+          {
+            "selected": false,
+            "text": "L1-2",
+            "value": "L1-2"
+          },
+          {
+            "selected": false,
+            "text": "L1-3",
+            "value": "L1-3"
+          },
+          {
+            "selected": false,
+            "text": "L2-1",
+            "value": "L2-1"
+          },
+          {
+            "selected": false,
+            "text": "L2-2",
+            "value": "L2-2"
+          },
+          {
+            "selected": false,
+            "text": "L2-3",
+            "value": "L2-3"
+          },
+          {
+            "selected": false,
+            "text": "L3-1",
+            "value": "L3-1"
+          },
+          {
+            "selected": false,
+            "text": "L3-2",
+            "value": "L3-2"
+          },
+          {
+            "selected": false,
+            "text": "L3-3",
+            "value": "L3-3"
+          }
+        ],
+        "query": "L1-1,L1-2,L1-3,L2-1,L2-2,L2-3,L3-1,L3-2,L3-3",
+        "type": "custom"
+      }
+    ]
+  },
+  "time": {
+    "from": "2025-04-09T04:00:00.500Z",
+    "to": "2025-04-11T03:59:58.500Z"
+  },
+  "timepicker": {},
+  "timezone": "browser",
+  "title": "SPC_每日細節指標總覽",
+  "uid": "F12P7-SPC_Detail",
+  "version": 234,
+  "weekStart": ""
+}

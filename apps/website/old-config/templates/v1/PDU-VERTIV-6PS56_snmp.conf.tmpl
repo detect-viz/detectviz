@@ -1,0 +1,34 @@
+[[inputs.snmp]]
+  name = "{{ .NAME }}"
+  agents = ["udp://{{ .IP }}:{{ .PORT }}"]
+  interval = "{{ .INTERVAL }}"
+  timeout = "{{ .TIMEOUT }}"
+  retries = {{ .RETRIES }}
+  version = "{{ .VERSION }}"
+  community = "{{ .COMMUNITY }}"
+  path = ["{{ .MIBS_PATH }}"]
+  agent_host_tag = "ip"
+
+  {{ range $k, $v := .TAGS }}
+  [inputs.snmp.tags]
+    {{ $k }} = "{{ $v }}"
+  {{ end }}
+
+  [[inputs.snmp.table]]
+    name = "{{ .NAME }}"
+    [[inputs.snmp.table.field]] 
+      name = "bank" # phase Phase A/B/C
+      oid = "VERTIV-V5-MIB::pduPhaseName"
+      is_tag = true
+    [[inputs.snmp.table.field]]
+      name = "current"
+      oid = "VERTIV-V5-MIB::pduPhaseCurrent"
+    [[inputs.snmp.table.field]]
+      name = "voltage"
+      oid = "VERTIV-V5-MIB::pduPhaseVoltage"
+    [[inputs.snmp.table.field]]
+      name = "power"
+      oid = "VERTIV-V5-MIB::pduPhaseRealPower"
+    [[inputs.snmp.table.field]]
+      name = "energy"
+      oid = "VERTIV-V5-MIB::pduPhaseEnergy"

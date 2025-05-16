@@ -1,0 +1,26 @@
+web:
+  port: 8080  # 此端口設定與應用程序相關，應考慮在app中統一設定
+  host: "0.0.0.0"  # 應添加，與app.host保持一致
+  web_path: "./web"             # Web 目錄路徑
+  static_path: "./web/static"   # 靜態文件目錄路徑
+  template_path: "./web/templates" # 模板目錄路徑
+  config_file: "./web/config.json" # 前端配置文件
+  api_prefix: "/api/v1"  # 添加API前綴設定
+  cors:
+    allowed_origins: ["*"]
+    allowed_methods: ["GET", "POST", "PUT", "DELETE", "OPTIONS"]
+    allowed_headers: ["*"]
+  ui:
+    refresh_interval: 60
+    default_dc: "DC1"
+    default_room: "R1"
+    colors:
+      monitored: "#2ecc71"
+      unmonitored: "#cccccc"
+    # 可以新增一些UI相關設定
+    theme: "light"  # 默認主題
+    language: "zh-TW"  # 默認語言
+  status:
+    pdu_status_path: "./data/pdu_status.csv"
+    device_status_path: "./data/device_status.csv" 
+    sync_interval: "5m"  # 5分鐘同步一次

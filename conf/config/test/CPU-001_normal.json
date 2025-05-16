@@ -1,0 +1,32 @@
+{
+  "metadata": {
+    "realm_name": "master",
+    "resource_name": "test_server_CPU-001",
+    "datasource_name": "nmon",
+    "timestamp": 1647234567
+  },
+  "data": {
+    "cpu_usage": [
+      {
+        "timestamp": 1647234567,
+        "value": 80.0
+      },
+      {
+        "timestamp": 1647234507,
+        "value": 82.0
+      },
+      {
+        "timestamp": 1647234447,
+        "value": 79.0
+      },
+      {
+        "timestamp": 1647234387,
+        "value": 81.0
+      },
+      {
+        "timestamp": 1647234327,
+        "value": 80.0
+      }
+    ]
+  }
+} 

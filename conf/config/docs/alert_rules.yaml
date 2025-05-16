@@ -1,0 +1,33 @@
+rules:
+  - name: "CPU 使用率過高"
+    resource_group: "servers"
+    metric: "cpu_usage"
+    check_type: "absolute"
+    operator: ">"
+    thresholds:
+      info: 70
+      warn: 80
+      crit: 90
+    unit: "%"
+    duration: 300  # 5分鐘
+    contacts:
+      - name: "Messaging API 運維團隊"
+    labels:
+      team: "ops"
+      environment: "prod"
+
+  - name: "記憶體使用量突增"
+    resource_group: "servers"
+    metric: "memory_usage"
+    check_type: "amplitude"
+    operator: ">"
+    thresholds:
+      warn: 30  # 30% 增幅
+      crit: 50  # 50% 增幅
+    unit: "%"
+    duration: 180  # 3分鐘
+    contacts:
+      - name: "Messaging API 運維團隊"
+    labels:
+      team: "ops"
+      environment: "prod" 

@@ -1,0 +1,39 @@
+[[inputs.modbus]]
+  name = "PDU-DELTA-PDU1315"
+  name_override = "PDU-DELTA-PDU1315"
+  controller = "tcp://REPLACE_IP:REPLACE_PORT"
+  transmission_mode = "RTUoverTCP"
+  configuration_type = "request"
+  interval = "REPLACE_INTERVAL"
+  timeout = "REPLACE_TIMEOUT"
+  busy_retries = REPLACE_BUSY_RETRIES
+  busy_retries_wait = "REPLACE_BUSY_RETRIES_WAIT"
+  exclude_register_type_tag = true
+
+    [[inputs.modbus.request]]
+        slave_id = REPLACE_SLAVE_ID
+        register = "register"
+        fields = [
+          { name = "voltage.L1", type = "INT16", scale=1.0, address = 1034},
+          { name = "voltage.L2", type = "INT16", scale=1.0, address = 1036},
+          { name = "voltage.L3", type = "INT16", scale=1.0, address = 1038},
+          { name = "current.L1", type = "INT16", scale=1.0, address = 1035},
+          { name = "current.L2", type = "INT16", scale=1.0, address = 1037},
+          { name = "current.L3", type = "INT16", scale=1.0, address = 1039},
+          { name = "power.L1", type = "UINT16", scale=1.0, address = 1041},
+          { name = "power.L2", type = "UINT16", scale=1.0, address = 1042},
+          { name = "power.L3", type = "UINT16", scale=1.0, address = 1043}
+        ]
+
+        [inputs.modbus.request.tags]
+          factory = "REPLACE_FACTORY"
+          phase = "REPLACE_PHASE"
+          dc = "REPLACE_DC"
+          room = "REPLACE_ROOM"
+          rack = "REPLACE_RACK"
+          side = "REPLACE_SIDE"
+
+        [inputs.modbus.workarounds]
+          close_connection_after_gather = true
+          pause_between_requests = "REPLACE_PAUSE_BETWEEN_REQUESTS"
+          pause_after_connect = "REPLACE_PAUSE_AFTER_CONNECT"

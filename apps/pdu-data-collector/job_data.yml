@@ -1,0 +1,87 @@
+DCAggregateInfluxDBDaily:
+    CronExpression: 0 40 2 * * *
+    Description: 每日聚合 InfluxDB 數據
+    Enable: "true"
+    Name: AggregateInfluxDBDaily
+DCAggregateInfluxDBHourly:
+    CronExpression: 30 30 * * * *
+    Description: 每小時聚合 InfluxDB 數據
+    Enable: "true"
+    Name: AggregateInfluxDBHourly
+DCBackupInfluxDB:
+    CronExpression: 0 20 4 * * *
+    Description: 備份 InfluxDB 數據
+    Enable: "true"
+    Name: BackupInfluxDB
+DCFlushInfluxDBData:
+    CronExpression: 30 * * * * *
+    Description: 定期刷新 InfluxDB 數據
+    Enable: "true"
+    Name: FlushInfluxDBData
+DCOutputSQLServerEvent:
+    CronExpression: 0 5,15,25,35,45,55 * * * *
+    DataRange: -10m
+    Delay: "10"
+    Description: 每 10 分鐘輸出 SQLServer 事件數據
+    Enable: "true"
+    Name: OutputSQLServerEvent
+DCOutputSQLServerHour:
+    Aggregate: 10m
+    CronExpression: 0 3,6,9,12,15,18,21 * * * *
+    DataRange: -3h
+    Delay: "180"
+    Description: 每 3 小時輸出 SQLServer 數據
+    Enable: "false"
+    Name: OutputSQLServerHour
+DCOutputSQLServerMinute:
+    CronExpression: 0 5,15,25,35,45,55 * * * *
+    DataRange: -10m
+    Delay: "10"
+    Description: 每 10 分鐘輸出 SQLServer 數據
+    Enable: "false"
+    Name: OutputSQLServerMinute
+DCRecoverInfluxDBData:
+    CronExpression: 0 */3 * * * *
+    Description: 重傳未成功寫入 InfluxDB 的數據
+    Enable: "true"
+    Name: RecoverInfluxDBData
+DCSyncGlobalTag:
+    CronExpression: 30 */10 * * * *
+    Description: 同步全局標籤
+    Enable: "true"
+    Name: SyncGlobalTag
+FactoryFlushDCData:
+    CronExpression: 0 * * * * *
+    Description: 刷新 DC 資料
+    Enable: "true"
+    Name: FlushDCData
+FactoryRecoverDCData:
+    CronExpression: 0 */1 * * * *
+    Description: 重傳失敗的 DC 資料
+    Enable: "true"
+    Name: RecoverDCData
+FactorySyncGlobalEnv:
+    CronExpression: 0 */10 * * * *
+    Description: 同步全局環境配置
+    Enable: "true"
+    Name: SyncGlobalEnv
+FactorySyncGlobalJob:
+    CronExpression: 0 */10 * * * *
+    Description: 同步全局 Job 名單
+    Enable: "true"
+    Name: SyncGlobalJob
+FactorySyncGlobalLog:
+    CronExpression: 0 */10 * * * *
+    Description: 同步全局 Log 名單
+    Enable: "true"
+    Name: SyncGlobalLog
+FactorySyncGlobalPDU:
+    CronExpression: 0 */10 * * * *
+    Description: 同步全局 PDU 名單
+    Enable: "true"
+    Name: SyncGlobalPDU
+FactorySyncGlobalRule:
+    CronExpression: 0 */10 * * * *
+    Description: 同步告警規則
+    Enable: "false"
+    Name: SyncGlobalRule

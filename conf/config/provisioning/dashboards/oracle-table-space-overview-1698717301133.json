@@ -1,0 +1,680 @@
+{
+  "__inputs": [
+    {
+      "name": "DS_INFLUXDB-MASTER",
+      "label": "influxdb-master",
+      "description": "",
+      "type": "datasource",
+      "pluginId": "influxdb",
+      "pluginName": "InfluxDB"
+    }
+  ],
+  "__elements": {},
+  "__requires": [
+    {
+      "type": "grafana",
+      "id": "grafana",
+      "name": "Grafana",
+      "version": "9.4.3"
+    },
+    {
+      "type": "datasource",
+      "id": "influxdb",
+      "name": "InfluxDB",
+      "version": "1.0.0"
+    },
+    {
+      "type": "panel",
+      "id": "stat",
+      "name": "Stat",
+      "version": ""
+    },
+    {
+      "type": "panel",
+      "id": "status-history",
+      "name": "Status history",
+      "version": ""
+    },
+    {
+      "type": "panel",
+      "id": "table",
+      "name": "Table",
+      "version": ""
+    }
+  ],
+  "annotations": {
+    "list": [
+      {
+        "builtIn": 1,
+        "datasource": {
+          "type": "grafana",
+          "uid": "-- Grafana --"
+        },
+        "enable": true,
+        "hide": true,
+        "iconColor": "rgba(0, 211, 255, 1)",
+        "name": "Annotations & Alerts",
+        "target": {
+          "limit": 100,
+          "matchAny": false,
+          "tags": [],
+          "type": "dashboard"
+        },
+        "type": "dashboard"
+      }
+    ]
+  },
+  "editable": true,
+  "fiscalYearStartMonth": 0,
+  "graphTooltip": 0,
+  "id": null,
+  "links": [
+    {
+      "asDropdown": false,
+      "icon": "dashboard",
+      "includeVars": false,
+      "keepTime": false,
+      "tags": [],
+      "targetBlank": false,
+      "title": "oracle-table-space-kpi",
+      "tooltip": "",
+      "type": "link",
+      "url": "https://172.19.11.135:3000/grafana_iframe/d/oracle-table-space-kpi/oracle-table-space-kpi?orgId=1&var-Host=${Host}&var-DBName=${DBName}&var-Field=All"
+    },
+    {
+      "asDropdown": false,
+      "icon": "external link",
+      "includeVars": false,
+      "keepTime": false,
+      "tags": [],
+      "targetBlank": false,
+      "title": "ALL-total_used_space",
+      "tooltip": "",
+      "type": "link",
+      "url": "https://172.19.11.135:3000/grafana_iframe/d/total_used_space/total-used-space?orgId=1&var-DBName=All"
+    }
+  ],
+  "liveNow": false,
+  "panels": [
+    {
+      "datasource": {
+        "type": "influxdb",
+        "uid": "${DS_INFLUXDB-MASTER}"
+      },
+      "description": "",
+      "fieldConfig": {
+        "defaults": {
+          "custom": {
+            "align": "center",
+            "cellOptions": {
+              "type": "auto"
+            },
+            "inspect": false
+          },
+          "mappings": [],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green",
+                "value": null
+              },
+              {
+                "color": "red",
+                "value": 80
+              }
+            ]
+          }
+        },
+        "overrides": [
+          {
+            "matcher": {
+              "id": "byRegexp",
+              "options": "/_bytes/"
+            },
+            "properties": [
+              {
+                "id": "unit",
+                "value": "bytes"
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byRegexp",
+              "options": "/_space/"
+            },
+            "properties": [
+              {
+                "id": "unit",
+                "value": "bytes"
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byRegexp",
+              "options": "/_size/"
+            },
+            "properties": [
+              {
+                "id": "unit",
+                "value": "bytes"
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byRegexp",
+              "options": "/_pct/"
+            },
+            "properties": [
+              {
+                "id": "unit",
+                "value": "percent"
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "TableSpaceName"
+            },
+            "properties": [
+              {
+                "id": "displayName",
+                "value": "TableName"
+              },
+              {
+                "id": "links",
+                "value": [
+                  {
+                    "title": "",
+                    "url": "https://172.19.11.135:3000/grafana_iframe/d/oracle-table-space-kpi/oracle-table-space-kpi?orgId=1&${Host:queryparam}&${DBName:queryparam}&var-TableSpaceName=${__data.fields.TableSpaceName}&var-Field=All"
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "daily_used_bytes"
+            },
+            "properties": [
+              {
+                "id": "displayName",
+                "value": "昨日用量"
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "week_mean_daily_used_bytes"
+            },
+            "properties": [
+              {
+                "id": "displayName",
+                "value": "日平均用量"
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "total_tablespace_space"
+            },
+            "properties": [
+              {
+                "id": "displayName",
+                "value": "總容量"
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "total_used_space"
+            },
+            "properties": [
+              {
+                "id": "displayName",
+                "value": "Used"
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "total_tablespace_free_space"
+            },
+            "properties": [
+              {
+                "id": "displayName",
+                "value": "Free"
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "total_used_pct"
+            },
+            "properties": [
+              {
+                "id": "displayName",
+                "value": "Used%"
+              },
+              {
+                "id": "custom.cellOptions",
+                "value": {
+                  "mode": "basic",
+                  "type": "color-background"
+                }
+              },
+              {
+                "id": "color"
+              },
+              {
+                "id": "thresholds",
+                "value": {
+                  "mode": "absolute",
+                  "steps": [
+                    {
+                      "color": "green",
+                      "value": null
+                    },
+                    {
+                      "color": "red",
+                      "value": 80
+                    }
+                  ]
+                }
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "free_days"
+            },
+            "properties": [
+              {
+                "id": "displayName",
+                "value": "預估使用天數"
+              },
+              {
+                "id": "noValue",
+                "value": "∞"
+              },
+              {
+                "id": "unit",
+                "value": "days"
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "last_add_date"
+            },
+            "properties": [
+              {
+                "id": "displayName",
+                "value": "最近擴充日期"
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "last_add_size"
+            },
+            "properties": [
+              {
+                "id": "displayName",
+                "value": "最近擴充容量"
+              },
+              {
+                "id": "unit",
+                "value": "bytes"
+              },
+              {
+                "id": "mappings",
+                "value": []
+              }
+            ]
+          }
+        ]
+      },
+      "gridPos": {
+        "h": 8,
+        "w": 24,
+        "x": 0,
+        "y": 0
+      },
+      "id": 140,
+      "options": {
+        "footer": {
+          "countRows": false,
+          "fields": "",
+          "reducer": [
+            "sum"
+          ],
+          "show": false
+        },
+        "frameIndex": 5,
+        "showHeader": true,
+        "sortBy": [
+          {
+            "desc": true,
+            "displayName": "Used%"
+          }
+        ]
+      },
+      "pluginVersion": "9.4.3",
+      "targets": [
+        {
+          "datasource": {
+            "type": "influxdb",
+            "uid": "${DS_INFLUXDB-MASTER}"
+          },
+          "query": "import \"influxdata/influxdb/schema\"\nimport \"strings\"\nfrom(bucket: \"ipoc_task\")\n  |> range(start: -7d)\n  |> filter(fn: (r) => r[\"_measurement\"] == \"db_oracle\")\n  |> filter(fn: (r) => r[\"host\"] == \"${Host}\")\n  |> filter(fn: (r) => r[\"DBName\"] == \"${DBName}\")\n  |> filter(fn: (r) => r[\"TableSpaceName\"] != \"all\")\n  |> last()\n  |> map(fn: (r) => ({ r with _time: now() }))\n  |> drop(columns: [\"last_add_date\"]) \n  |> schema.fieldsAsCols()\n  |> group(columns: [\"_measurement\"], mode:\"by\")\n  |> drop(columns: [\"_stop\", \"_start\",\"_time\"])  \n  |> map(fn: (r) => ({ r with last_add_date: string(v:time(v:r.last_add_date) ) }))\n  |> map(fn: (r) => ({ r with last_add_date: if r.last_add_date != \"\" then strings.split(v: string(v:r.last_add_date), t: \"T\")[0] else r.last_add_date}))\n\n \n \n  ",
+          "refId": "A"
+        }
+      ],
+      "title": "${DBName}",
+      "transformations": [
+        {
+          "id": "organize",
+          "options": {
+            "excludeByName": {
+              "DBName": true,
+              "autoextensible": true,
+              "files_in_tablespace": true,
+              "host": true,
+              "max_free_size": true,
+              "max_size_of_tablespace": true,
+              "total_auto_free_pct": true,
+              "total_auto_used_pct": true,
+              "total_free_pct": true,
+              "total_tablespace_space": false,
+              "total_used_pct": false
+            },
+            "indexByName": {
+              "DBName": 1,
+              "TableSpaceName": 2,
+              "autoextensible": 10,
+              "daily_used_bytes": 4,
+              "files_in_tablespace": 11,
+              "free_days": 9,
+              "host": 0,
+              "max_free_size": 12,
+              "max_size_of_tablespace": 13,
+              "total_auto_free_pct": 14,
+              "total_auto_used_pct": 15,
+              "total_free_pct": 16,
+              "total_tablespace_free_space": 8,
+              "total_tablespace_space": 6,
+              "total_used_pct": 3,
+              "total_used_space": 7,
+              "week_mean_daily_used_bytes": 5
+            },
+            "renameByName": {
+              "TableSpaceName": "",
+              "daily_used_bytes": "",
+              "free_days": "",
+              "last_add_date": "",
+              "last_add_size": "",
+              "max_free_size": "",
+              "total_tablespace_free_space": "",
+              "total_tablespace_space": "",
+              "total_used_pct": "",
+              "total_used_space": "",
+              "week_mean_daily_used_bytes": ""
+            }
+          }
+        }
+      ],
+      "type": "table"
+    },
+    {
+      "datasource": {
+        "type": "influxdb",
+        "uid": "${DS_INFLUXDB-MASTER}"
+      },
+      "fieldConfig": {
+        "defaults": {
+          "mappings": [],
+          "noValue": "∞",
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "#9d9b9a",
+                "value": null
+              },
+              {
+                "color": "orange",
+                "value": 0
+              }
+            ]
+          },
+          "unit": "days"
+        },
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 4,
+        "w": 6,
+        "x": 0,
+        "y": 8
+      },
+      "id": 98,
+      "options": {
+        "colorMode": "background",
+        "graphMode": "none",
+        "justifyMode": "center",
+        "orientation": "auto",
+        "reduceOptions": {
+          "calcs": [
+            "lastNotNull"
+          ],
+          "fields": "",
+          "values": false
+        },
+        "text": {},
+        "textMode": "auto"
+      },
+      "pluginVersion": "9.4.3",
+      "repeat": "TableSpaceName",
+      "repeatDirection": "v",
+      "targets": [
+        {
+          "datasource": {
+            "type": "influxdb",
+            "uid": "${DS_INFLUXDB-MASTER}"
+          },
+          "query": "from(bucket: \"ipoc_task\")\n  |> range(start: v.timeRangeStart, stop: v.timeRangeStop)\n  |> filter(fn: (r) => r[\"_measurement\"] == \"db_oracle\")\n  |> filter(fn: (r) => r[\"DBName\"] == \"${DBName}\")\n  |> filter(fn: (r) => r[\"TableSpaceName\"] == \"${TableSpaceName}\")\n  |> filter(fn: (r) => r[\"_field\"] == \"free_days\")\n",
+          "refId": "A"
+        }
+      ],
+      "title": "${TableSpaceName} 空間達 90％ 剩餘",
+      "type": "stat"
+    },
+    {
+      "datasource": {
+        "type": "influxdb",
+        "uid": "${DS_INFLUXDB-MASTER}"
+      },
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "thresholds"
+          },
+          "custom": {
+            "fillOpacity": 70,
+            "lineWidth": 0
+          },
+          "decimals": 1,
+          "displayName": "Free",
+          "mappings": [],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "red",
+                "value": null
+              },
+              {
+                "color": "green",
+                "value": 0
+              }
+            ]
+          },
+          "unit": "bytes"
+        },
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 4,
+        "w": 18,
+        "x": 6,
+        "y": 8
+      },
+      "id": 38,
+      "options": {
+        "colWidth": 0.85,
+        "legend": {
+          "displayMode": "list",
+          "placement": "bottom",
+          "showLegend": false
+        },
+        "rowHeight": 0.9,
+        "showValue": "always",
+        "tooltip": {
+          "mode": "single",
+          "sort": "none"
+        }
+      },
+      "pluginVersion": "9.4.3",
+      "repeat": "TableSpaceName",
+      "repeatDirection": "v",
+      "targets": [
+        {
+          "datasource": {
+            "type": "influxdb",
+            "uid": "${DS_INFLUXDB-MASTER}"
+          },
+          "query": " import \"influxdata/influxdb/schema\"\nfrom(bucket: \"ipoc_task\")\n  |> range(start: v.timeRangeStart, stop: v.timeRangeStop)\n  |> filter(fn: (r) => r[\"_measurement\"] == \"db_oracle\")\n    |> filter(fn: (r) => r[\"DBName\"] == \"${DBName}\")\n    |> filter(fn: (r) => r[\"TableSpaceName\"] == \"${TableSpaceName}\")\n  |> filter(fn: (r) => r[\"_field\"] == \"daily_used_bytes\")\n    |> map(fn: (r) => ({ r with _value: r._value * -1.0 }))\n  |> schema.fieldsAsCols()",
+          "refId": "A"
+        }
+      ],
+      "transformations": [],
+      "type": "status-history"
+    }
+  ],
+  "refresh": "10s",
+  "revision": 1,
+  "schemaVersion": 38,
+  "style": "dark",
+  "tags": [
+    "master-oracle"
+  ],
+  "templating": {
+    "list": [
+      {
+        "current": {},
+        "datasource": {
+          "type": "influxdb",
+          "uid": "${DS_INFLUXDB-MASTER}"
+        },
+        "definition": "import \"influxdata/influxdb/schema\"\n\t\tschema.tagValues(\n\t\t\tbucket: \"ipoc_task\", \n\t\t\ttag: \"host\",\n\t\t\tpredicate: (r) =>  \n\t\t\tr._measurement == \"db_oracle\",\n\t\t\tstart: v.timeRangeStart, \n\t\t\tstop: v.timeRangeStop)",
+        "hide": 0,
+        "includeAll": false,
+        "label": "Host",
+        "multi": false,
+        "name": "Host",
+        "options": [],
+        "query": "import \"influxdata/influxdb/schema\"\n\t\tschema.tagValues(\n\t\t\tbucket: \"ipoc_task\", \n\t\t\ttag: \"host\",\n\t\t\tpredicate: (r) =>  \n\t\t\tr._measurement == \"db_oracle\",\n\t\t\tstart: v.timeRangeStart, \n\t\t\tstop: v.timeRangeStop)",
+        "refresh": 1,
+        "regex": "",
+        "skipUrlSync": false,
+        "sort": 0,
+        "type": "query"
+      },
+      {
+        "current": {},
+        "datasource": {
+          "type": "influxdb",
+          "uid": "${DS_INFLUXDB-MASTER}"
+        },
+        "definition": "import \"influxdata/influxdb/schema\"\n\t\tschema.tagValues(\n\t\t\tbucket: \"ipoc_task\",  \n\t\t\ttag: \"DBName\",\n\t\t\tpredicate: (r) =>  \n\t\t\tr._measurement == \"db_oracle\" and r.host == \"${Host}\",\n\t\t\tstart: v.timeRangeStart, \n\t\t\tstop: v.timeRangeStop)",
+        "hide": 0,
+        "includeAll": false,
+        "label": "DBName",
+        "multi": false,
+        "name": "DBName",
+        "options": [],
+        "query": "import \"influxdata/influxdb/schema\"\n\t\tschema.tagValues(\n\t\t\tbucket: \"ipoc_task\",  \n\t\t\ttag: \"DBName\",\n\t\t\tpredicate: (r) =>  \n\t\t\tr._measurement == \"db_oracle\" and r.host == \"${Host}\",\n\t\t\tstart: v.timeRangeStart, \n\t\t\tstop: v.timeRangeStop)",
+        "refresh": 1,
+        "regex": "",
+        "skipUrlSync": false,
+        "sort": 0,
+        "type": "query"
+      },
+      {
+        "allValue": "",
+        "current": {},
+        "datasource": {
+          "type": "influxdb",
+          "uid": "${DS_INFLUXDB-MASTER}"
+        },
+        "definition": "import \"influxdata/influxdb/schema\"\n\t\tschema.tagValues(\n\t\t\tbucket: \"ipoc_task\", \n\t\t\ttag: \"TableSpaceName\",\n\t\t\tpredicate: (r) =>  \n\t\t\tr._measurement == \"db_oracle\" \n      and r.DBName == \"${DBName}\",\n\t\t\tstart: v.timeRangeStart, \n\t\t\tstop: v.timeRangeStop)",
+        "hide": 0,
+        "includeAll": true,
+        "label": "TableSpaceName",
+        "multi": true,
+        "name": "TableSpaceName",
+        "options": [],
+        "query": "import \"influxdata/influxdb/schema\"\n\t\tschema.tagValues(\n\t\t\tbucket: \"ipoc_task\", \n\t\t\ttag: \"TableSpaceName\",\n\t\t\tpredicate: (r) =>  \n\t\t\tr._measurement == \"db_oracle\" \n      and r.DBName == \"${DBName}\",\n\t\t\tstart: v.timeRangeStart, \n\t\t\tstop: v.timeRangeStop)",
+        "refresh": 1,
+        "regex": "",
+        "skipUrlSync": false,
+        "sort": 0,
+        "type": "query"
+      },
+      {
+        "current": {},
+        "datasource": {
+          "type": "influxdb",
+          "uid": "${DS_INFLUXDB-MASTER}"
+        },
+        "definition": "import \"influxdata/influxdb/schema\"\n\t\tschema.fieldKeys(bucket: \"ipoc_task\",\n\t\tpredicate: (r) => r._measurement == \"db_oracle\", start: v.timeRangeStart, stop: v.timeRangeStop)",
+        "hide": 2,
+        "includeAll": false,
+        "label": "Field",
+        "multi": false,
+        "name": "Field",
+        "options": [],
+        "query": "import \"influxdata/influxdb/schema\"\n\t\tschema.fieldKeys(bucket: \"ipoc_task\",\n\t\tpredicate: (r) => r._measurement == \"db_oracle\", start: v.timeRangeStart, stop: v.timeRangeStop)",
+        "refresh": 1,
+        "regex": "^(?!.*autoextensible).*$",
+        "skipUrlSync": false,
+        "sort": 0,
+        "type": "query"
+      }
+    ]
+  },
+  "time": {
+    "from": "now-7d",
+    "to": "now"
+  },
+  "timepicker": {},
+  "timezone": "",
+  "title": "oracle-table-space-overview",
+  "uid": "oracle-table-space-overview",
+  "version": 69,
+  "weekStart": ""
+}

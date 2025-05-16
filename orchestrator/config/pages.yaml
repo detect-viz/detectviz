@@ -1,0 +1,419 @@
+- name: registry
+  label: 設備清單
+  icon: list_alt
+  color: text-primary
+  type: csv
+  path: data/registry.csv
+  columns:
+    - name: device_type
+      label: 類型
+      type: select
+      enum: [pdu, switch, ap, gateway]
+      sortable: true
+      searchable: true
+    - name: factory
+      label: 廠區
+      type: select
+      enum: [F12, F18]
+      sortable: true
+      searchable: true
+    - name: phase
+      label: 區段
+      type: select
+      enum: [P7, P8]
+      sortable: true
+      searchable: true
+    - name: dc
+      label: DC
+      type: text
+      sortable: true
+      searchable: true
+    - name: room
+      label: 機房
+      type: text
+      sortable: true
+      searchable: true
+    - name: rack
+      label: 機櫃
+      type: text
+      sortable: true
+      searchable: true
+    - name: side
+      label: 側邊
+      type: select
+      enum: [L, R]
+      sortable: true
+      searchable: true
+    - name: name
+      label: 名稱
+      type: text
+      sortable: true
+      searchable: true
+    - name: ip_key
+      label: IP鍵值
+      type: text
+      sortable: true
+      searchable: true
+    - name: ip
+      label: IP 位址
+      type: text
+      sortable: true
+      searchable: true
+    - name: port
+      label: Port
+      type: number
+      sortable: true
+      searchable: true
+    - name: slave_id
+      label: Modbus ID
+      type: number
+      sortable: true
+      searchable: true
+    - name: brand
+      label: 廠牌
+      type: text
+      sortable: true
+      searchable: true
+    - name: model
+      label: 型號
+      type: text
+      sortable: true
+      searchable: true
+    - name: version
+      label: 韌體版本
+      type: text
+      sortable: true
+      searchable: true
+    - name: serial_number
+      label: 序號
+      type: text
+      sortable: true
+      searchable: true
+    - name: snmp_engine_id
+      label: SNMP Engine ID
+      type: text
+      sortable: true
+      searchable: true
+    - name: protocol
+      label: 協定
+      type: select
+      enum: [snmp, modbus]
+      sortable: true
+      searchable: true
+    - name: interval
+      label: 收值頻率
+      type: number
+      sortable: true
+      searchable: true
+    - name: template_version
+      label: 模板版本
+      type: text
+      sortable: true
+      searchable: true
+    - name: snmp_version
+      label: SNMP 版本
+      type: text
+      sortable: true
+      searchable: true
+    - name: snmp_community
+      label: 社群字串
+      type: text
+      sortable: true
+      searchable: true
+    - name: create_at
+      label: 建立時間
+      type: datetime
+      sortable: true
+      searchable: true
+    - name: update_at
+      label: 更新時間
+      type: datetime
+      sortable: true
+      searchable: true
+
+- name: scan
+  label: 掃描模組
+  icon: search
+  color: text-success
+  type: csv
+  path: data/scan.csv
+  columns:
+    - name: protocol
+      label: 協定
+      type: select
+      enum: [snmp, modbus]
+      sortable: true
+      searchable: true
+    - name: device_type
+      label: 類型
+      type: select
+      enum: [pdu, switch, ap, gateway]
+      sortable: true
+      searchable: true
+    - name: brand
+      label: 廠牌
+      type: text
+      sortable: true
+      searchable: true
+    - name: model
+      label: 型號
+      type: text
+      sortable: true
+      searchable: true
+    - name: template_name
+      label: 模板名稱
+      type: text
+      sortable: true
+      searchable: true
+    - name: template_version
+      label: 模板版本
+      type: text
+      sortable: true
+      searchable: true
+    - name: match_string
+      label: 配對字串
+      type: text
+      sortable: true
+      searchable: true
+    - name: match_field
+      label: 配對欄位
+      type: text
+      sortable: true
+      searchable: true
+    - name: version_field
+      label: 韌體欄位
+      type: text
+      sortable: true
+      searchable: true
+    - name: serial_number_field
+      label: 序號欄位
+      type: text
+      sortable: true
+      searchable: true
+    - name: snmp_community
+      label: SNMP Community
+      type: text
+      sortable: true
+      searchable: true
+    - name: snmp_version
+      label: SNMP 版本
+      type: text
+      sortable: true
+      searchable: true
+    - name: enabled
+      label: 啟用
+      type: select
+      enum: [true, false]
+      sortable: true
+      searchable: true
+    - name: interval
+      label: 週期
+      type: number
+      sortable: true
+      searchable: true
+    - name: timeout
+      label: Timeout
+      type: number
+      sortable: true
+      searchable: true
+    - name: retries
+      label: Retries
+      type: number
+      sortable: true
+      searchable: true
+    - name: description
+      label: 描述
+      type: text
+      sortable: true
+      searchable: true
+
+- name: status
+  label: 設備狀態
+  icon: broken_image
+  color: text-info
+  type: status
+  path: data/status.csv
+  columns:
+    - name: ip
+      label: IP
+      type: text
+      sortable: true
+      searchable: true
+    - name: factory
+      label: 廠區
+      type: text
+      sortable: true
+      searchable: true
+    - name: phase
+      label: 區段
+      type: text
+      sortable: true
+      searchable: true
+    - name: datacenter
+      label: DC
+      type: text
+      sortable: true
+      searchable: true
+    - name: room
+      label: 機房
+      type: text
+      sortable: true
+      searchable: true
+    - name: row
+      label: 機櫃列
+      type: text
+      sortable: true
+      searchable: true
+    - name: col
+      label: 機櫃欄
+      type: text
+      sortable: true
+      searchable: true
+    - name: side
+      label: 側邊
+      type: select
+      enum: [L, R]
+      sortable: true
+      searchable: true
+    - name: is_pdu
+      label: 是 PDU 嗎
+      type: select
+      enum: [1, 0]
+      sortable: true
+      searchable: true
+    - name: name
+      label: 名稱
+      type: text
+      sortable: true
+      searchable: true
+    - name: has_data
+      label: 有資料
+      type: select
+      enum: [1, 0]
+      sortable: true
+      searchable: true
+    - name: protocol_status
+      label: 通訊狀態
+      type: select
+      enum: [1, 0]
+      sortable: true
+      searchable: true
+    - name: status_code
+      label: 狀態碼
+      type: text
+      sortable: true
+      searchable: true
+    - name: enabled
+      label: 啟用
+      type: select
+      enum: [true, false]
+      sortable: true
+      searchable: true
+    - name: message
+      label: 訊息
+      type: text
+      sortable: true
+      searchable: true
+
+- name: tag
+  label: IP 標籤
+  icon: label
+  color: text-warning
+  type: csv
+  path: data/tag.csv
+  columns:
+    - name: ip_key
+      label: IP鍵值
+      type: text
+      sortable: true
+      searchable: true
+    - name: rack
+      label: 機櫃
+      type: text
+      sortable: true
+      searchable: true
+    - name: side
+      label: 側邊
+      type: select
+      enum: [L, R]
+      sortable: true
+      searchable: true
+
+- name: env
+  label: 環境變數
+  icon: settings
+  color: text-secondary
+  type: files
+  path: data/.env
+  files:
+    - label: 環境變數設定
+      path: data/.env
+      type: edit
+    - label: 系統設定說明
+      path: data/settings.txt
+      type: view
+    - label: 範本配置
+      path: config/defaults.yaml
+      type: edit
+
+- name: log
+  label: 操作紀錄
+  icon: history
+  color: text-dark
+  type: log
+  path: data/main.log
+
+- name: exec
+  label: 工具任務
+  icon: build
+  color: text-danger
+  type: exec
+  actions:
+    - label: 立即備份
+      script_path: ./scripts/backup.sh
+      icon: backup
+      desc: 備份 Telegraf 設定檔
+      type: exec
+      disabled: false
+    - label: 匯出設備資料
+      script_path: ./scripts/export_registry.sh
+      icon: file_download
+      desc: 將設備資料匯出成 CSV
+      type: exec
+      disabled: false
+    - label: 匯出環境設定
+      script_path: ./scripts/export_env.sh
+      icon: tune
+      desc: 匯出 .env 檔案設定
+      type: exec
+      disabled: false
+    - label: 停用指令
+      script_path: ./scripts/not-ready.sh
+      icon: block
+      desc: 測試停用按鈕
+      type: exec
+      disabled: true
+
+- name: grafana-dashboard
+  label: DC1 Dashboard
+  icon: dashboard
+  color: text-primary
+  type: dashboard
+  url: "http://10.1.249.50:3000/d/cd36dacc-eb18-48b3-81d8-12eb8085eb36/monitor?orgId=1"
+  description: 嵌入 Grafana Dashboard
+
+- name: dc1_single_panel
+  label: DC1 單一面板
+  type: panels
+  layout:
+    type: grid
+    columns: 2
+    gap: 16
+  panels:
+    - title: PDU 即時狀態
+      url: http://10.1.249.50:3000/d-solo/cd36dacc-eb18-48b3-81d8-12eb8085eb36/monitor?orgId=1&panelId=1&kiosk
+      position:
+        row: 1
+        col: 1
+        colSpan: 2
+        rowSpan: 1

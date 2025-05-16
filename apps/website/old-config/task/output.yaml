@@ -1,0 +1,58 @@
+params:
+  bucket: "rawdata"
+  range: "-1h"
+  measurement: "device_status"
+  fieldType: "TYPE"
+  fieldValue: "VALUE"
+  fieldTimestamp: "TIME_STAMP"
+  fieldBank: "BANK"
+  fieldPDUName: "PDU_NAME"
+  driverName: "mysql"
+  dataSourceName: "user:password@tcp(localhost:3306)/dbname"
+  sqlTable: "device_data"
+  batchSize: 1000
+
+script: |
+  import "sql"
+  
+  raw =
+      from(bucket: "{{ .bucket }}")
+          |> range(start: {{ .range }})
+          |> filter(fn: (r) => r["_measurement"] == "{{ .measurement }}")
+          |> last()
+          |> map(
+              fn: (r) =>
+                  ({r with name:
+                          string(v: r.factory) + 
+                          string(v: r.phase) + 
+                          string(v: r.datacenter) +
+                          string(v: r.room) +
+                          string(v: r.rack) + "P" + 
+                          string(v: r.side),
+                  }),
+          )
+          |> map(fn: (r) => ({r with timestamp: int(v: r._stop) / 1000000000}))
+          |> keep(
+              columns: [
+                  "_field",
+                  "timestamp",
+                  "bank",
+                  "_value",
+                  "name",
+              ],
+          )
+          |> rename(
+              columns: {
+                  _field: "{{ .fieldType }}",
+                  _value: "{{ .fieldValue }}",
+                  timestamp: "{{ .fieldTimestamp }}",
+                  branch: "{{ .fieldBank }}",
+                  name: "{{ .fieldPDUName }}",
+              },
+          )
+          |> sql.to(
+              driverName: "{{ .driverName }}",
+              dataSourceName: "{{ .dataSourceName }}",
+              table: "{{ .sqlTable }}",
+              batchSize: {{ .batchSize }},
+          )

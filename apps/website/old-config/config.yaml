@@ -1,0 +1,192 @@
+# ───────────────────────────────────────────────
+# 通用設定（全模組共用）
+# ───────────────────────────────────────────────
+global:
+  app_name: "ViOT"
+  app_version: "1.0.0"
+  data_dir: ./data
+  output_dir: /etc/telegraf/telegraf.d
+  timezone: Asia/Taipei
+
+  logging:
+    level: "info"
+    format: "json"
+    output_path: "logs/viot.log"
+    max_size: 100
+    max_backups: 3
+    max_age: 28
+    compress: true
+    enable_stacktrace: false
+    development: true
+    caller: true
+
+# ───────────────────────────────────────────────
+# Scanner 模組設定
+# ───────────────────────────────────────────────
+scanner:
+  enabled: true
+  interval: 60
+  timeout: 3000
+  retries: 2
+  max_concurrent: 10
+  fping_exec: "./usr/bin/fping"
+  ip_range_file: "./config/ip_range.yaml"
+  device_file: "./config/devices.yaml"
+  protocols:
+    modbus:
+      enabled: false
+      type: field
+      mode: RTUOverTCP
+      timeout: 10
+      retry: 3
+      connections:
+        - port: 7000
+          slave_ids: [0, 1]
+        - port: 7001
+          slave_ids: [0, 1]
+    snmp:
+      enabled: true
+      type: field
+      timeout: 10
+      retry: 3
+      connections:
+        - port: 161
+          community: public
+          version: 1
+        - port: 161
+          community: private
+          version: 2
+    ping:
+      type: availability
+  dependencies:
+    IOT_CLIENT-LIENEO-WCM-421:
+      linked_devices:
+        - PDU-DELTA-PDU1315
+        - PDU-DELTA-PDU4425
+
+# ───────────────────────────────────────────────
+# Deployer 模組設定
+# ───────────────────────────────────────────────
+deployer:
+  enabled: true
+  interval: 60
+  dry_run: true
+  reload_command: systemctl reload telegraf
+  exec: ./telegraf/usr/bin/telegraf
+  base_path: ./telegraf
+  processor_path: ./telegraf/etc/telegraf/telegraf.d/processor.conf
+  output_config: ./telegraf/etc/telegraf/telegraf.d/output.conf
+  output_dir: "./telegraf/etc/telegraf/telegraf.d/{{ .DEPLOY_VERSION }}"
+  template_path: "./telegraf/templates/{{ .DEPLOY_VERSION }}/{{ .BRAND }}-{{ .MODEL }}_{{ .PROTOCOL }}.conf.tmpl"
+  filename_spec: "{{ .NAME }}_{{ .BRAND }}-{{ .MODEL }}_{{ .IP_KEY }}_{{ .DEPLOY_VERSION }}.conf"
+  default_interval: 60s
+  default_timeout: 5s
+  snmp:
+    retries: 3
+    version: 2
+    community: public
+    mibs_path: ./telegraf/mibs
+  modbus:
+    busy_retries: 3
+    busy_retries_wait: 5s
+    pause_between_requests: 5s
+    pause_after_connect: 5s
+
+# ───────────────────────────────────────────────
+# Maintainer 模組設定
+# ───────────────────────────────────────────────
+maintainer:
+  enabled: true
+  interval: 60
+  lost_threshold: 10 # 失聯門檻(秒)
+  expire_hours: 24 # 過期時間(小時)清除 .conf 檔案
+  schedule:
+    execute_task: "* * * * *"
+    influxdb_backup: "0 2 * * *"
+    influxdb_recover: "@every 10m"
+    telegraf_checker: "@every 1m"
+    influxdb_checker: "@every 1m"
+
+  influxdb:
+    url: http://localhost:8086
+    token: YOUR_INFLUX_TOKEN
+    org: YOUR_ORG
+    path: /data
+    exec: "./usr/bin/influx"
+    bucket:
+      rawdata:
+        name: rawdata
+        retention: 90d
+      monitor:
+        name: monitor
+        retention: 365d
+    backup_dir: ./backup/influxdb
+    tasks:
+      - cron: "0 2 * * *"
+        path: ./config/task/output.flux
+
+# ───────────────────────────────────────────────
+# Web 模組設定
+# ───────────────────────────────────────────────
+web:
+  enable: true
+  mode: "demo"
+  port: 8080
+  host: "0.0.0.0"
+  cors:
+    allowed_origins: ["*"]
+    allowed_methods: ["GET", "POST", "PUT", "DELETE", "OPTIONS"]
+    allowed_headers: ["*"]
+  write_timeout: 10
+  read_timeout: 10
+  web_path: "./web"
+  static_path: "./web/static"
+
+  ui:
+    refresh_interval: 5000
+    default_datacenter: "DC1"
+    default_room: "R1"
+    default_view: "grid"
+    colors:
+      primary: "#5c33a2"
+      surface: "#f8f5ff"
+      on_surface: "#3c2a67"
+      green: "#4caf50"
+      gray: "#e0dff0"
+      badge: "#d32f2f"
+      monitored: "#2ecc71"
+      unmonitored: "#cccccc"
+      empty: "#e8f4f8"
+    fonts:
+      primary: "'Roboto', -apple-system, BlinkMacSystemFont, 'PingFang TC', 'Microsoft JhengHei', sans-serif"
+      mono: "'Roboto Mono', SFMono-Regular, Consolas, 'Liberation Mono', Menlo, monospace"
+    layout:
+      sidebar_width: "200px"
+
+# ───────────────────────────────────────────────
+# 設備定義
+# ───────────────────────────────────────────────
+devices:
+  - name: "PDU-DELTA-PDU1315"
+    deploy_version: "v1"
+    match_contains_value: "PDU1315"
+  - name: "PDU-DELTA-PDU4425"
+    deploy_version: "v1"
+    match_contains_value: "PDU4425"
+  - name: "PDU-DELTA-PDUE428"
+    deploy_version: "v1"
+    match_contains_value: "PDUE428"   
+  - name: "PDU-VERTIV-6PS56"
+    deploy_version: "v1"
+    match_contains_value: "6PS56"
+  - name: "AP-MOXA-AWK-1161A"
+    deploy_version: "v1"
+    match_contains_value: "AWK-1161A"
+  - name: "IOT_CLIENT-LIENEO-WCM-421"
+    deploy_version: "v1"
+    match_contains_value: "WCM-421"
+  - name: "SWITCH-HPE-5130"
+    match_contains_value: "5130"
+  - name: "SWITCH-HPE-5945"
+    match_contains_value: "5945"
+

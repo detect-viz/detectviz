@@ -1,0 +1,29 @@
+tags:
+  base:
+    host: "host"
+    database: "database"
+    source: "source"
+    os: "os"
+    ip: "ip"
+    timestamp: "timestamp"
+    value: "value"
+
+  os:
+    aix: "aix"
+    linux: "linux"
+    windows: "windows"
+
+  partition:
+    tablespace: "tablespace_name"
+    cpu: "cpu_name"
+    disk: "disk_name"
+    filesystem: "filesystem_name"
+    swap: "swap_name"
+    process: "process_name"
+    network: "network_name"
+
+  sql:
+    id: "sql_id"
+    module: "sql_module"
+    text: "sql_text"
+

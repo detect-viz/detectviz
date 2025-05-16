@@ -1,0 +1,221 @@
+base_mean:
+  alias: "base_mean"
+  desc: "基線平均"
+  type: float
+
+base_std:
+  alias: "base_std"
+  desc: "基線標準差"
+  type: float
+
+mean:
+  alias: "mean"
+  desc: "當日平均"
+  type: float
+
+std:
+  alias: "std"
+  desc: "當日標準差"
+  type: float
+
+max:
+  alias: "max"
+  desc: "當日最大值"
+  type: float
+
+min:
+  alias: "min"
+  desc: "當日最小值"
+  type: float
+
+p25:
+  alias: "p25"
+  desc: "第25百分位數"
+  type: float
+
+p75:
+  alias: "p75"
+  desc: "第75百分位數"
+  type: float
+
+p02:
+  alias: "p02"
+  desc: "第2百分位數"
+  type: float
+
+p98:
+  alias: "p98"
+  desc: "第98百分位數"
+  type: float
+
+ucl:
+  alias: "ucl"
+  desc: "管制上限"
+  type: float
+
+lcl:
+  alias: "lcl"
+  desc: "管制下限"
+  type: float
+
+usl:
+  alias: "usl"
+  desc: "規格上限"
+  type: float
+
+lsl:
+  alias: "lsl"
+  desc: "規格下限"
+  type: float
+cp:
+  alias: "cp"
+  desc: "製程能力 Cp"
+  type: float
+
+cpk:
+  alias: "cpk"
+  desc: "製程能力 Cpk"
+  type: float
+
+zone_a_hi:
+  alias: "zone_a_hi"
+  desc: "A區上限"
+  type: float
+
+zone_a_lo:
+  alias: "zone_a_lo"
+  desc: "A區下限"
+  type: float
+
+zone_b_hi:
+  alias: "zone_b_hi"
+  desc: "B區上限"
+  type: float
+
+zone_b_lo:
+  alias: "zone_b_lo"
+  desc: "B區下限"
+  type: float
+
+
+date_str:
+  alias: "date_str"
+  desc: "日期字串"
+  type: string
+
+
+data_points:
+  alias: "data_points"
+  desc: "當日筆數"
+  type: int
+
+quality_code:
+  alias: "quality_code"
+  desc: "品質代碼"
+  type: int
+
+pr1_trigger:
+  alias: "pr1_trigger"
+  desc: "PR1觸發值"
+  type: float
+
+pr2_trigger:
+  alias: "pr2_trigger"
+  desc: "PR2觸發值"
+  type: float
+
+pr3_trigger:
+  alias: "pr3_trigger"
+  desc: "PR3觸發值"
+  type: float
+
+pr4_trigger:
+  alias: "pr4_trigger"
+  desc: "PR4觸發值"
+  type: float
+
+pr5_trigger:
+  alias: "pr5_trigger"
+  desc: "PR5觸發值"
+  type: float
+
+pr1_counter:
+  alias: "pr1_counter"
+  desc: "PR1觸發次數"
+  type: string
+
+pr2_counter:
+  alias: "pr2_counter"
+  desc: "PR2觸發次數"
+  type: int
+
+pr3_counter:
+  alias: "pr3_counter"
+  desc: "PR3觸發次數"
+  type: int
+
+pr4_counter:
+  alias: "pr4_counter"
+  desc: "PR4觸發次數"
+  type: int
+
+pr5_counter:
+  alias: "pr5_counter"
+  desc: "PR5觸發次數"
+  type: int
+
+pr1_rate:
+  alias: "pr1_rate"
+  desc: "PR1觸發率"
+  type: float
+
+pr2_rate:
+  alias: "pr2_rate"
+  desc: "PR2觸發率"
+  type: float
+
+pr3_rate:
+  alias: "pr3_rate"
+  desc: "PR3觸發率"
+  type: float
+
+pr4_rate:
+  alias: "pr4_rate"
+  desc: "PR4觸發率"
+  type: float
+
+pr5_rate:
+  alias: "pr5_rate"
+  desc: "PR5觸發率"
+  type: float
+
+
+pp:
+  alias: "pp"
+  desc: "整體製程能力 Pp"
+  type: float
+
+ppk:
+  alias: "ppk"
+  desc: "整體製程能力 Ppk"
+  type: float
+
+ooc_counter:
+  alias: "ooc_counter"
+  desc: "超出管制線次數 (Out of Control)"
+  type: int
+
+ooc_rate:
+  alias: "ooc_rate"
+  desc: "超出管制線比率"
+  type: float
+
+oos_counter:
+  alias: "oos_counter"
+  desc: "超出規格線次數 (Out of Spec)"
+  type: int
+
+oos_rate:
+  alias: "oos_rate"
+  desc: "超出規格線比率"
+  type: float

@@ -1,0 +1,32 @@
+{
+  "metadata": {
+    "realm_name": "master",
+    "resource_name": "test_server_DISK-001",
+    "datasource_name": "nmon",
+    "timestamp": 1647234567
+  },
+  "data": {
+    "busy:sda": [
+      {
+        "timestamp": 1647234567,
+        "value": 92.0
+      },
+      {
+        "timestamp": 1647234507,
+        "value": 93.0
+      },
+      {
+        "timestamp": 1647234447,
+        "value": 91.0
+      },
+      {
+        "timestamp": 1647234387,
+        "value": 94.0
+      },
+      {
+        "timestamp": 1647234327,
+        "value": 95.0
+      }
+    ]
+  }
+} 

@@ -1,0 +1,127 @@
+# 數據輸入配置文件
+# 包含所有支持的輸入類型及其配置
+
+# 全局配置
+global:
+  scan_interval: 1h
+  scan_timeout: 1m
+  scan_concurrent: 10
+  auto_deploy: false
+  work_dir: "."
+  log_dir: "logs"
+  data_dir: "data"
+
+# 輸入插件列表
+inputs:
+  - name: "snmp_input"
+    type: "snmp"
+    enabled: true
+    interval: 60s
+    
+    # IP範圍配置
+    ip_ranges:
+      - start_ip: "192.168.1.1"
+        end_ip: "192.168.1.254"
+        protocol: "snmp"
+        ports: [161]
+        enabled: true
+        interval: 300s
+        description: "SNMP設備掃描範圍"
+
+    # 協議特定配置
+    protocols:
+      snmp:
+        community: "public"
+        version: "2c"
+        port: 161
+        timeout: 5s
+        retries: 3
+        mib_path: "/usr/share/snmp/mibs"
+
+    # 設備特定配置
+    devices:
+      - manufacturer: "Delta"
+        model: "PDUE428"
+        oids:
+          - name: "version"
+            oid: ".1.3.6.1.4.1.1718.3.2.3.1.1.0"
+          - name: "serialNumber"
+            oid: ".1.3.6.1.4.1.1718.3.2.3.1.2.1"
+      
+      - manufacturer: "Vertiv"
+        model: "6PS56"
+        oids:
+          - name: "version"
+            oid: ".1.3.6.1.4.1.21239.2.1.1.1.0"
+          - name: "serialNumber"
+            oid: ".1.3.6.1.4.1.21239.2.1.1.2.0"
+
+    # 緩衝區配置
+    buffer:
+      size: 1000
+      worker_count: 5
+      flush_interval: "10s"
+
+    # 隊列配置
+    queue:
+      batch_size: 100
+
+  - name: "modbus_input"
+    type: "modbus"
+    enabled: true
+    interval: 60s
+    
+    # IP範圍配置
+    ip_ranges:
+      - start_ip: "192.168.2.1"
+        end_ip: "192.168.2.254"
+        protocol: "modbus"
+        ports: [502]
+        enabled: true
+        interval: 300s
+        description: "Modbus設備掃描範圍"
+
+    # 協議特定配置
+    protocols:
+      modbus:
+        port: 502
+        slave_id: 1
+        timeout: 5s
+        retries: 3
+
+    # 緩衝區配置
+    buffer:
+      size: 1000
+      worker_count: 5
+      flush_interval: "10s"
+
+    # 隊列配置
+    queue:
+      batch_size: 100
+
+  - name: "telegraf_input"
+    type: "telegraf"
+    enabled: true
+    interval: 60s
+    
+    # HTTP服務器配置
+    server:
+      port: 8086
+      read_timeout: 5s
+      write_timeout: 5s
+      idle_timeout: 60s
+
+    # 數據處理配置
+    processor:
+      batch_size: 100
+      flush_interval: 10s
+
+    # 緩衝區配置
+    buffer:
+      size: 1000
+      worker_count: 5
+      flush_interval: "10s"
+
+    # 隊列配置
+    queue:
+      batch_size: 100 

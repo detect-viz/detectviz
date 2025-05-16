@@ -1,0 +1,355 @@
+<head>
+  <meta charset="UTF-8">
+  <title>Detect Viz Layout Preview</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/admin-lte/3.2.0/css/adminlte.min.css" rel="stylesheet">
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+  <style>
+    body {
+      padding: 2rem;
+    }
+
+    .border-box {
+      border: 1px dashed #ccc;
+      padding: 1rem;
+      margin-bottom: 1rem;
+    }
+
+    .form-control {
+      max-width: 300px;
+    }
+
+    .cell {
+      font-size: 0.65rem;
+      padding: 2px 4px;
+      min-width: 1.5em;
+      text-align: center;
+    }
+  </style>
+</head>
+
+<body>
+
+  <!-- 登入頁模擬 login.templ -->
+  <div class="card border-box">
+    <div class="card-header">
+      <h3 class="card-title">登入頁</h3>
+    </div>
+    <div class="card-body">
+      <form>
+        <div class="form-group">
+          <label for="user">帳號</label>
+          <input type="text" class="form-control" id="user" placeholder="請輸入帳號">
+        </div>
+        <div class="form-group">
+          <label for="pass">密碼</label>
+          <input type="password" class="form-control" id="pass" placeholder="請輸入密碼">
+        </div>
+        <button type="submit" class="btn btn-primary">登入</button>
+      </form>
+    </div>
+  </div>
+
+  <!-- 篩選區與 Grid 狀態頁面 -->
+  <div class="card border-box">
+    <div class="card-header">
+      <h3 class="card-title">PDU 狀態圖</h3>
+    </div>
+    <div class="card-body">
+      <form class="form-inline mb-3">
+        <select class="form-control mr-2">
+          <option>F12</option>
+          <option>F14</option>
+        </select>
+        <select class="form-control mr-2">
+          <option>P7</option>
+          <option>P8</option>
+        </select>
+        <select class="form-control mr-2">
+          <option>DC1</option>
+          <option>DC2</option>
+        </select>
+        <select class="form-control mr-2">
+          <option>R0</option>
+          <option>R1</option>
+        </select>
+      </form>
+
+      <table class="table table-bordered text-center align-middle">
+        <thead>
+          <tr>
+            <th>Row \ Col</th>
+            <th>D</th>
+            <th>E</th>
+            <th>F</th>
+            <th>G</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <th>27</th>
+            <td>
+              <div class="d-flex justify-content-center">
+                <div class="bg-success text-white cell" title="F12P7DC1R0D27PL">L</div>
+                <div class="bg-success text-white cell ml-1" title="F12P7DC1R0D27PR">R</div>
+              </div>
+            </td>
+            <td>
+              <div class="d-flex justify-content-center">
+                <div class="bg-success text-white cell" title="F12P7DC1R0E27PL">L</div>
+                <div class="bg-danger text-white cell ml-1" title="F12P7DC1R0E27PR">R</div>
+              </div>
+            </td>
+            <td>
+              <div class="d-flex justify-content-center">
+                <div class="bg-success text-white cell" title="F12P7DC1R0F27PL">L</div>
+                <div class="bg-warning text-dark cell ml-1" title="F12P7DC1R0F27PR">R</div>
+              </div>
+            </td>
+            <td>
+              <div class="d-flex justify-content-center">
+                <div class="bg-success text-white cell" title="F12P7DC1R0G27PL">L</div>
+                <div class="bg-secondary text-white cell ml-1" title="未定義">R</div>
+              </div>
+            </td>
+          </tr>
+          <tr>
+            <th>30</th>
+            <td>
+              <div class="d-flex justify-content-center">
+                <div class="bg-success text-white cell" title="F12P7DC1R0D30PL">L</div>
+                <div class="bg-success text-white cell ml-1" title="F12P7DC1R0D30PR">R</div>
+              </div>
+            </td>
+            <td>
+              <div class="d-flex justify-content-center">
+                <div class="bg-success text-white cell" title="F12P7DC1R0E30PL">L</div>
+                <div class="bg-success text-white cell ml-1" title="F12P7DC1R0E30PR">R</div>
+              </div>
+            </td>
+            <td>
+              <div class="d-flex justify-content-center">
+                <div class="bg-success text-white cell" title="F12P7DC1R0F30PL">L</div>
+                <div class="bg-success text-white cell ml-1" title="F12P7DC1R0F30PR">R</div>
+              </div>
+            </td>
+            <td>
+              <div class="d-flex justify-content-center">
+                <div class="bg-secondary text-white cell" title="未定義">L</div>
+                <div class="bg-secondary text-white cell ml-1" title="未定義">R</div>
+              </div>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+      <small class="text-muted">滑鼠懸停可顯示完整 PDU 名稱</small>
+      <br>
+      <small class="text-muted">綠：正常｜黃：警告｜紅：異常｜灰：空櫃或未定義</small>
+    </div>
+  </div>
+
+  <!-- CSV CRUD 頁 csv.templ -->
+  <!-- CSV CRUD 頁 csv.templ：設備模板列表 -->
+  <div class="card border-box">
+    <div class="card-header">
+      <h3 class="card-title">設備識別模板 CSV 管理</h3>
+    </div>
+    <div class="card-body">
+      <button class="btn btn-sm btn-success mb-2" data-toggle="modal" data-target="#createModal"><i
+          class="material-icons md-18">add</i> 新增紀錄</button>
+      <table class="table table-bordered table-sm table-striped">
+        <thead class="thead-light">
+          <tr>
+            <th>協定</th>
+            <th>裝置類型</th>
+            <th>品牌</th>
+            <th>型號</th>
+            <th>模板檔名</th>
+            <th>週期</th>
+            <th>啟用</th>
+            <th>操作</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>snmp</td>
+            <td>pdu</td>
+            <td>DELTA</td>
+            <td>PDUE428</td>
+            <td>PDU-DELTA-PDUE428_snmp.conf.tmpl</td>
+            <td>60s</td>
+            <td><span class="badge badge-success">是</span></td>
+            <td>
+              <button class="btn btn-sm btn-primary"><i class="material-icons md-18">edit</i></button>
+              <button class="btn btn-sm btn-danger"><i class="material-icons md-18">delete</i></button>
+            </td>
+          </tr>
+          <tr>
+            <td>modbus</td>
+            <td>pdu</td>
+            <td>DELTA</td>
+            <td>PDU1315</td>
+            <td>PDU-DELTA-PDU-GENERAL_modbus.conf.tmpl</td>
+            <td>60s</td>
+            <td><span class="badge badge-secondary">否</span></td>
+            <td>
+              <button class="btn btn-sm btn-primary"><i class="material-icons md-18">edit</i></button>
+              <button class="btn btn-sm btn-danger"><i class="material-icons md-18">delete</i></button>
+            </td>
+          </tr>
+          <tr>
+            <td>snmp</td>
+            <td>gateway</td>
+            <td>Lieneo</td>
+            <td>WCM-421</td>
+            <td>IOT_CLIENT-LIENEO-WCM-421_snmp.conf.tmpl</td>
+            <td>60s</td>
+            <td><span class="badge badge-success">是</span></td>
+            <td>
+              <button class="btn btn-sm btn-primary"><i class="material-icons md-18">edit</i></button>
+              <button class="btn btn-sm btn-danger"><i class="material-icons md-18">delete</i></button>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <!-- 新增對話框 Modal -->
+  <div class="modal fade" id="createModal" tabindex="-1" role="dialog" aria-labelledby="createModalLabel"
+    aria-hidden="true">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="createModalLabel">新增設備識別模板</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+          <form>
+            <div class="form-group">
+              <label>協定</label>
+              <select class="form-control">
+                <option>snmp</option>
+                <option>modbus</option>
+              </select>
+            </div>
+            <div class="form-group">
+              <label>品牌</label>
+              <input type="text" class="form-control">
+            </div>
+            <div class="form-group">
+              <label>型號</label>
+              <input type="text" class="form-control">
+            </div>
+            <div class="form-group">
+              <label>模板名稱</label>
+              <input type="text" class="form-control">
+            </div>
+            <div class="form-group">
+              <label>週期</label>
+              <input type="text" class="form-control" placeholder="例如 60s">
+            </div>
+            <div class="form-check">
+              <input class="form-check-input" type="checkbox" id="enabled">
+              <label class="form-check-label" for="enabled">啟用</label>
+            </div>
+          </form>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-dismiss="modal">取消</button>
+          <button type="button" class="btn btn-primary">儲存</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- 檔案設定頁 files.templ -->
+  <div class="card border-box">
+    <div class="card-header">
+      <h3 class="card-title">設定檔檢視 / 編輯</h3>
+    </div>
+    <div class="card-body">
+      <div class="mb-3">
+        <button class="btn btn-outline-secondary">.env</button>
+        <button class="btn btn-outline-secondary">config.yaml</button>
+        <button class="btn btn-outline-secondary">tag.csv</button>
+      </div>
+      <textarea class="form-control" rows="6"># 點選檔案後內容顯示於此區...</textarea>
+      <button class="btn btn-sm btn-primary mt-2"><i class="material-icons md-18">save</i> 儲存設定</button>
+    </div>
+  </div>
+
+  <!-- 工具腳本頁 exec.templ -->
+  <div class="card border-box">
+    <div class="card-header">
+      <h3 class="card-title">工具操作</h3>
+    </div>
+    <div class="card-body">
+      <button class="btn btn-outline-info mb-2">
+        <i class="material-icons md-18">terminal</i> 執行 deploy_pdu.sh
+      </button>
+      <button class="btn btn-outline-warning mb-2">
+        <i class="material-icons md-18">system_update_alt</i> 匯出 config
+      </button>
+      <pre class="mt-3 p-2 bg-light" style="min-height: 100px;"># Script 執行結果顯示區</pre>
+    </div>
+  </div>
+
+  <!-- 系統日誌頁 log.templ -->
+  <div class="card border-box">
+    <div class="card-header">
+      <h3 class="card-title">系統日誌</h3>
+    </div>
+    <div class="card-body">
+      <div class="btn-group mb-2">
+        <button class="btn btn-sm btn-secondary">INFO</button>
+        <button class="btn btn-sm btn-secondary">DEBUG</button>
+        <button class="btn btn-sm btn-secondary">WARN</button>
+        <button class="btn btn-sm btn-secondary">ERROR</button>
+      </div>
+      <pre class="bg-dark text-white p-2" style="min-height: 120px;">
+[INFO] 系統啟動成功
+[DEBUG] 掃描設備中...
+[WARN] 192.168.1.3 回應逾時
+[ERROR] 無法寫入 registry.csv
+    </pre>
+    </div>
+  </div>
+
+
+  <!-- Grafana 單一面板頁 dashboard.templ -->
+  <div class="card border-box">
+    <div class="card-header">
+      <h3 class="card-title">Grafana 面板 (單一)</h3>
+    </div>
+    <div class="card-body">
+      <iframe src="http://localhost:3000/d/bek42skbuz5dsd?orgId=1&panelId=2&kiosk" width="100%" height="1200"
+        frameborder="0"></iframe>
+    </div>
+  </div>
+
+  <!-- Grafana 多面板頁 panels.templ -->
+  <div class="card border-box">
+    <div class="card-header">
+      <h3 class="card-title">Grafana 多面板嵌入</h3>
+    </div>
+    <div class="card-body">
+      <div class="row">
+        <div class="col-md-6 mb-3">
+          <iframe
+            src="http://localhost:3000/d-solo/bek42skbuz5dsd/spc-detail-e7b4b0-e7af80-e68c87-e6a899?orgId=1&from=1743436800000&to=1746028799000&timezone=browser&var-bucket=spc&var-measurement=pdu&var-fab=F8&var-field=CP&var-pdu=F8DC1R1Z99PR&var-bank=$__all&panelId=17&__feature.dashboardSceneSolo"
+            width="100%" height="300" frameborder="0"></iframe>
+        </div>
+        <div class="col-md-6 mb-3">
+          <iframe
+            src="http://localhost:3000/d-solo/cek1s6jx79rswb/826f2bb?orgId=1&from=1745294399500&to=1745380798500&timezone=browser&var-bucket=spc&var-measurement=pdu&var-fab=F8&var-pdu=$__all&var-field=CP&panelId=4&__feature.dashboardSceneSolo"
+            width="100%" height="300" frameborder="0"></iframe>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- 後略保留原結構 ... -->

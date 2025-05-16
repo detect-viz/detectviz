@@ -1,0 +1,71 @@
+simulate:
+  enable: false
+  url: "http://127.0.0.1:8088/api/v1/factory/metrics"
+  max_concurrent_requests: 300 # 最大併發數
+  interval: 60 # 發送的請求間隔時間，以秒為單位
+  timeout: 180 # 發送請求的 timeout 時間，以秒為單位
+
+# 共用
+global:
+  mode: all # factory / dc / all
+  max_conns_per_host: 200 # 單個主機最大併發連接數
+  http_timeout: 300 # 請求超時時間，以秒為單位
+  server_mode: "release" # release / debug
+  cors_allow_headers: "Content-type Access-Control-Allow-Origin Authorization Refresh-token realm"
+  log:
+    level: "info"
+    path: "./log"
+    maxsize: 50 # mb
+    maxage: 30 # days
+
+# 廠區
+factory:
+  group_name: "GROUP_A"
+  port: ":8088"
+  dc_endpoint: "http://localhost:8089/api/v1/dc"
+  init_global_data:
+    pdu:
+      name: "pdu"
+      file: "./pdu_list.csv"
+    env:
+      name: "env"
+      file: "./env_data.yml"
+    job:
+      name: "job"
+      file: "./job_data.yml"
+    log:
+      name: "log"
+      file: "./log_data.yml"
+  device_scale:
+    - manufacturer: "Delta"
+      current: 100
+      voltage: 100
+      watt: 10
+      energy: 10
+
+# 中控
+dc:
+  port: ":8089"
+  mysql:
+    host: "10.99.1.113"
+    port: "3306"
+    dbname: "tsmc"
+    user: "bimap"
+    password: "!QAZ2wsx"
+    max_idle: 10
+    max_life_time: "1h"
+    max_open_conn: 100
+    migrate_path: "file://./migrations"
+  influxdb:
+    url: "http://10.99.1.113:8888"
+    org: "bimap"
+    token: "C2titO9OLOTmt4oXIPGqQxxdlAN-w7f-tqnGWhmW9DF6D-api_LHnf46C4OBONpJ1yCAKQ=="
+    influx_exec: "/usr/bin/influx"
+    backup_path: "./influxdb_backup"
+  sqlserver:
+    host: "10.99.1.83"
+    port: "1433"
+    dbname: "tsmc"
+    user: "sa"
+    password: "1qaz2wsx"
+    batch_size: 100

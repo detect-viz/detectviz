@@ -1,0 +1,48 @@
+
+server:
+  port: 8080
+  mode: "release" # debug, release
+  config_directory: "./conf/conf.d"
+
+logger:
+  level: "debug"
+  path: "./log/alert.log"
+
+alert:
+  enabled: true
+  auto_apply_rule: true
+  notify_period: 60
+  retry_limit: 3
+  retry_interval: 300
+  migrate_path: "file://./conf/migrations"
+  template_path: "./conf/provisioning/notifiers"
+
+keycloak:
+  url: "https://10.99.1.106:8443"
+  realm: "master"
+  user: "zoe.lin@bimap.co"
+  password: "1qaz2wsx"
+  client_id: "ipoc"
+  client_secret: "ieLS1VNEOOfPOlJa9dRiC0Jc6UE3c1nR"
+  admin_role: "ipoc-admin"
+
+database:
+  influxdb:
+    version: "v2"
+    url: "http://10.99.1.131:8086"
+    token: "4-Z-WuwUTh74YXnGleK4Oab7Re86bpwBz-JFXLIl86BtYDt1RAMuNUkTT0e_MKftdqedZxDZX-_kv35KnB03ng=="
+    org: "master"
+    bucket: "ipoc_log"
+  mysql:
+    host: "10.99.1.106"
+    port: 3306
+    user: "bimap"
+    password: "1qaz2wsx"
+    db_name: "ipoc"
+    level: "debug"
+    max_idle: 10
+    max_open: 100
+    max_life: "1h"
+
+
+

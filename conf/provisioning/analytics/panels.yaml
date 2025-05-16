@@ -1,0 +1,82 @@
+panels:
+  PANEL-SYSTEM:
+    title: "系統狀態監控"
+    description: "監控系統運行時間和基本狀態"
+    prompt_template: "請分析系統運行狀態，重點關注系統重啟或異常關機情況"
+    rules:
+      - uptime
+
+  PANEL-CPU:
+    title: "CPU 資源監控"
+    description: "監控 CPU 使用率和各類型負載"
+    prompt_template: "請分析 CPU 使用情況，包括用戶空間、系統空間、IO 等待和資源爭奪情況"
+    rules:
+      - cpu_usage_threshold
+      - idle_usage
+      - system_usage
+      - user_usage
+      - iowait_usage
+      - steal_usage
+
+  PANEL-MEMORY:
+    title: "記憶體資源監控"
+    description: "監控記憶體使用率、快取和緩衝區"
+    prompt_template: "請分析記憶體使用情況，包括整體使用率、快取和緩衝區的使用情況"
+    rules:
+      - memory_usage_ma
+      - cache_usage
+      - buffer_usage
+
+  PANEL-FILESYSTEM:
+    title: "文件系統監控"
+    description: "監控文件系統使用率"
+    prompt_template: "請分析文件系統使用情況，關注空間使用趨勢"
+    rules:
+      - fs_usage
+
+  PANEL-NETWORK:
+    title: "網路流量監控"
+    description: "監控網路流量和錯誤情況"
+    prompt_template: "請分析網路使用情況，包括：
+      1. 流量趨勢分析
+      2. 錯誤率評估
+      3. 網路瓶頸識別
+      4. 通信模式分析
+      5. 優化建議"
+    rules:
+      - sent_bytes_ma
+      - recv_bytes_ma
+      - sent_errs
+      - recv_errs
+
+  PANEL-DISK:
+    title: "磁盤 I/O 監控"
+    description: "監控磁盤 I/O 性能和隊列情況"
+    prompt_template: "請分析磁盤 I/O 性能，包括：
+      1. 讀寫速率和 IOPS 分析
+      2. 隊列長度評估
+      3. I/O 模式識別
+      4. 性能瓶頸定位
+      5. 具體優化建議"
+    rules:
+      - busy_threshold
+      - read_bytes
+      - write_bytes
+      - reads
+      - writes
+      - rqueue
+      - wqueue
+
+prediction_panels:
+  PANEL-PREDICTIVE:
+    title: "系統資源預測分析"
+    description: "預測關鍵系統資源使用趨勢"
+    metrics:
+      - cpu_usage_predict
+      - memory_usage_ma
+      - disk_usage_threshold
+      - sent_bytes
+      - recv_bytes
+    prophet_settings:
+      horizon: 86400 # 24小時
+      period: 3600 # 1小時

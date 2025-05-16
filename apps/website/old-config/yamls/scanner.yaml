@@ -1,0 +1,165 @@
+scanner:
+  scan_interval: 600            # 10分鐘，單位秒
+  ip_range_file: "./data/ip_range.csv" # 掃描範圍配置
+  scan_result_path: "data/scan_results"
+  max_concurrent_scan: 10       # 最大並發掃描數量
+  scan_timeout: "5m"            # 掃描超時時間
+  save_unidentified: true            # 是否保存未識別設備
+  auto_deploy_unidentified: true     # 允許自動部署未識別的設備
+  history_retention: 30              # 掃描結果歷史保留天數
+
+  protocol:
+    snmp:
+      ports: [161]
+      version: "1"
+      community: "public"
+      timeout: "5s"
+      retries: 3
+      mib_path: "./mibs"
+      match_devices:
+        - name: "PDU-DELTA-PDUE428"
+        - name: "PDU-VERTIV-6PS56"
+        - name: "SWITCH-HPE-5130"
+        - name: "SWITCH-HPE-5945"
+        - name: "AP-MOXA-AWK-1161A"
+        - name: "IOT_CLIENT-LIENEO-WCM-421AC"
+    modbus:
+      ports: [7000,7001]
+      mode: "RTUOverTCP"
+      slave_id: [0,1]
+      match_devices:
+        - name: "PDU-DELTA-PDU1315"
+        - name: "PDU-DELTA-PDU4425"
+
+
+  # 設備識別配置
+  devices:
+    - name: "PDU-DELTA-PDUE428"
+      auto_deploy: false
+      type: "PDU"
+      manufacturer: "Delta"
+      protocol: "snmp"
+      match_field: "model"
+      match_keyword: "PDUE428"
+      collect_fields:
+        - field: "model"
+          oid: "DeltaPDU-MIB::dpduIdentModel.1"
+          walk: false
+        - field: "serial_number"
+          oid: "DeltaPDU-MIB::dpduIdentSerialNumber.1"
+          walk: false
+        - field: "version"
+          oid: "DeltaPDU-MIB::dpduIdentAgentSoftwareVersion.0"
+          walk: false 
+    - name: "PDU-DELTA-PDU1315"
+      auto_deploy: false
+      type: "PDU"
+      manufacturer: "Delta"
+      protocol: "modbus"
+      match_field: "model"
+      match_keyword: "PDU1315"
+      collect_fields:
+        - field: "model"
+          address: 1024
+          register_type: "input"
+          length: 16
+        - field: "serial_number"
+          address: 768
+          register_type: "holding"
+          length: 16
+        - field: "version"
+          address: 1024
+          register_type: "input"
+          length: 16
+    - name: "PDU-DELTA-PDU4425"
+      auto_deploy: false
+      type: "PDU"
+      manufacturer: "Delta"
+      protocol: "modbus"
+      match_field: "model"
+      match_keyword: "PDU4425"
+      collect_fields:
+        - field: "model"
+          address: 1024
+          register_type: "input"
+          length: 16
+        - field: "serial_number"
+          address: 768
+          register_type: "holding"
+          length: 16
+        - field: "version"
+          address: 1024
+          register_type: "input"
+          length: 16
+
+    - name: "PDU-VERTIV-6PS56"
+      auto_deploy: false
+      type: "PDU"
+      manufacturer: "Vertiv"
+      protocol: "snmp"
+      match_field: "model"
+      match_keyword: "6PS56"
+      collect_fields:
+        - field: "model"
+          oid: "VERTIV-V5-MIB::productModelNumber.0"
+          walk: false
+        - field: "serial_number"
+          oid: "VERTIV-V5-MIB::productSerialNumber.0"
+          walk: false
+        - field: "version"
+          oid: "VERTIV-V5-MIB::productVersion.0"
+          walk: false
+          
+  # 設備類型: 網路設備
+    - name: "SWITCH-HPE-5130"
+      auto_deploy: true
+      type: "SWITCH"
+      manufacturer: "HPE"
+      protocol: "snmp"
+      match_field: "model"
+      match_keyword: "HPE 5130"
+      collect_fields:
+        - field: "model"
+          oid: "ENTITY-MIB::entPhysicalModelName"
+          walk: true
+    - name: "SWITCH-HPE-5945"
+      auto_deploy: true
+      type: "SWITCH"
+      manufacturer: "HPE"
+      protocol: "snmp"
+      match_field: "model"
+      match_keyword: "HPE 5945"
+      collect_fields:
+        - field: "model"
+          oid: "ENTITY-MIB::entPhysicalModelName"
+          walk: true
+    - name: "AP-MOXA-AWK-1161A"
+      auto_deploy: true
+      type: "AP"
+      manufacturer: "Moxa"
+      protocol: "snmp"
+      match_field: "model"
+      match_keyword: "AWK-1161A"
+      collect_fields:
+        - field: "model"
+          oid: "SNMPv2-MIB::sysDescr"
+          walk: true    
+    - name: "IOT_CLIENT-LIENEO-WCM-421AC"
+      auto_deploy: true
+      type: "IOT_CLIENT"
+      manufacturer: "LIENEO"
+      protocol: "snmp"
+      match_field: "manufacturer" 
+      match_keyword: "WCM-421AC"
+      collect_fields:
+        - field: "manufacturer"
+          oid: "ENTITY-MIB::entPhysicalMfgName"
+          walk: true
+  
+
+      
+
+
+
+
+

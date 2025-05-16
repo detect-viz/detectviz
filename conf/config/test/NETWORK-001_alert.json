@@ -1,0 +1,32 @@
+{
+  "metadata": {
+    "realm_name": "master",
+    "resource_name": "test_server_NETWORK-001",
+    "datasource_name": "nmon",
+    "timestamp": 1647234567
+  },
+  "data": {
+    "sent_bytes:eth0": [
+      {
+        "timestamp": 1647234567,
+        "value": 450000000
+      },
+      {
+        "timestamp": 1647234507,
+        "value": 460000000
+      },
+      {
+        "timestamp": 1647234447,
+        "value": 455000000
+      },
+      {
+        "timestamp": 1647234387,
+        "value": 465000000
+      },
+      {
+        "timestamp": 1647234327,
+        "value": 458000000
+      }
+    ]
+  }
+} 

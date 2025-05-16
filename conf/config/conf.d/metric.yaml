@@ -1,0 +1,441 @@
+metric:
+  cpu:
+    usage:
+      category: cpu
+      metric_name: idle_usage
+      alias_name: idle
+      raw_unit: "%"
+      display_unit: "%"
+      partition_tag: cpu_name
+    system_usage:
+      category: cpu
+      metric_name: system_usage
+      alias_name: system
+      raw_unit: "%"
+      display_unit: "%"
+      partition_tag: cpu_name
+    user_usage:
+      category: cpu
+      metric_name: user_usage
+      alias_name: user
+      raw_unit: "%"
+      display_unit: "%"
+      partition_tag: cpu_name
+    iowait_usage:
+      category: cpu
+      metric_name: iowait_usage
+      alias_name: iowait
+      raw_unit: "%"
+      display_unit: "%"
+      partition_tag: cpu_name
+    nice_usage:
+      category: cpu
+      metric_name: nice_usage
+      alias_name: nice
+      raw_unit: "%"
+      display_unit: "%"
+      partition_tag: cpu_name
+    steal_usage:
+      category: cpu
+      metric_name: steal_usage
+      alias_name: steal
+      raw_unit: "%"
+      display_unit: "%"
+      partition_tag: cpu_name
+    privileged_time:
+      category: cpu
+      metric_name: privileged_time
+      alias_name: privileged
+      raw_unit: "%"
+      display_unit: "%"
+      partition_tag: cpu_name
+    user_time:
+      category: cpu
+      metric_name: user_time
+      alias_name: user
+      raw_unit: "%"
+      display_unit: "%"
+      partition_tag: cpu_name
+    interrupt_time:
+      category: cpu
+      metric_name: interrupt_time
+      alias_name: interrupt
+      raw_unit: "%"
+      display_unit: "%"
+      partition_tag: cpu_name
+    cpu_usage:
+      category: cpu
+      metric_name: cpu_usage
+      alias_name: cpu_usage
+      raw_unit: "%"
+      display_unit: "%"
+      partition_tag: cpu_name
+  disk:
+    busy:
+      category: disk
+      metric_name: busy
+      alias_name: busy
+      raw_unit: "%"
+      display_unit: "%"
+      partition_tag: disk_name
+    read_bytes:
+      category: disk
+      metric_name: read_bytes
+      alias_name: read
+      raw_unit: bytes
+      display_unit: bytes
+      partition_tag: disk_name
+    write_bytes:
+      category: disk
+      metric_name: write_bytes
+      alias_name: write
+      raw_unit: bytes
+      display_unit: bytes
+      partition_tag: disk_name
+    reads:
+      category: disk
+      metric_name: reads
+      alias_name: reads
+      raw_unit: count
+      display_unit: count
+      partition_tag: disk_name
+    writes:
+      category: disk
+      metric_name: writes
+      alias_name: writes
+      raw_unit: count
+      display_unit: count
+      partition_tag: disk_name
+    xfers:
+      category: disk
+      metric_name: xfers
+      alias_name: xfers
+      raw_unit: transfers
+      display_unit: transfers
+      partition_tag: disk_name
+    rqueue:
+      category: disk
+      metric_name: rqueue
+      alias_name: rqueue
+      raw_unit: queues
+      display_unit: queues
+      partition_tag: disk_name
+    wqueue:
+      category: disk
+      metric_name: wqueue
+      alias_name: wqueue
+      raw_unit: queues
+      display_unit: queues
+      partition_tag: disk_name
+    queue_length:
+      category: disk
+      metric_name: queue_length
+      alias_name: queue_length
+      raw_unit: queues
+      display_unit: queues
+      partition_tag: disk_name
+  filesystem:
+    fs_total_bytes:
+      category: filesystem
+      metric_name: fs_total_bytes
+      alias_name: total
+      raw_unit: bytes
+      display_unit: bytes
+      partition_tag: filesystem_name
+    fs_free_bytes:
+      category: filesystem
+      metric_name: fs_free_bytes
+      alias_name: free
+      raw_unit: bytes
+      display_unit: bytes
+      partition_tag: filesystem_name
+    fs_used_bytes:
+      category: filesystem
+      metric_name: fs_used_bytes
+      alias_name: used
+      raw_unit: bytes
+      display_unit: bytes
+      partition_tag: filesystem_name
+    fs_usage:
+      category: filesystem
+      metric_name: fs_usage
+      alias_name: usage
+      raw_unit: "%"
+      display_unit: "%"
+      partition_tag: filesystem_name
+    fs_free_usage:
+      category: filesystem
+      metric_name: fs_free_usage
+      alias_name: free
+      raw_unit: "%"
+      display_unit: "%"
+      partition_tag: filesystem_name
+  memory:
+    mem_total_bytes:
+      category: memory
+      metric_name: mem_total_bytes
+      alias_name: total
+      raw_unit: bytes
+      display_unit: bytes
+      partition_tag: null
+    mem_used_bytes:
+      category: memory
+      metric_name: mem_used_bytes
+      alias_name: used
+      raw_unit: bytes
+      display_unit: bytes
+      partition_tag: null
+    cache_bytes:
+      category: memory
+      metric_name: cache_bytes
+      alias_name: cache
+      raw_unit: bytes
+      display_unit: bytes
+      partition_tag: null
+    buffer_bytes:
+      category: memory
+      metric_name: buffer_bytes
+      alias_name: buffer
+      raw_unit: bytes
+      display_unit: bytes
+      partition_tag: null
+    mem_usage:
+      category: memory
+      metric_name: mem_usage
+      alias_name: mem_usage
+      raw_unit: "%"
+      display_unit: "%"
+      partition_tag: null
+    cache_usage:
+      category: memory
+      metric_name: cache_usage
+      alias_name: cache
+      raw_unit: "%"
+      display_unit: "%"
+      partition_tag: null
+    buffer_usage:
+      category: memory
+      metric_name: buffer_usage
+      alias_name: buffer
+      raw_unit: "%"
+      display_unit: "%"
+      partition_tag: null
+    free_usage:
+      category: memory
+      metric_name: free_usage
+      alias_name: free
+      raw_unit: "%"
+      display_unit: "%"
+      partition_tag: null
+  network:
+    sent_bytes:
+      category: network
+      metric_name: sent_bytes
+      alias_name: sent
+      raw_unit: bytes
+      display_unit: bytes
+      partition_tag: network_name
+    recv_bytes:
+      category: network
+      metric_name: recv_bytes
+      alias_name: recv
+      raw_unit: bytes
+      display_unit: bytes
+      partition_tag: network_name
+    sent_packets:
+      category: network
+      metric_name: sent_packets
+      alias_name: sent
+      raw_unit: packets
+      display_unit: packets
+      partition_tag: network_name
+    recv_packets:
+      category: network
+      metric_name: recv_packets
+      alias_name: recv
+      raw_unit: packets
+      display_unit: packets
+      partition_tag: network_name
+    sent_errs:
+      category: network
+      metric_name: sent_errs
+      alias_name: sent
+      raw_unit: errors
+      display_unit: errors
+      partition_tag: network_name
+    recv_errs:
+      category: network
+      metric_name: recv_errs
+      alias_name: recv
+      raw_unit: errors
+      display_unit: errors
+      partition_tag: network_name
+  process:
+    ps_cpu_usage:
+      category: process
+      metric_name: ps_cpu_usage
+      alias_name: cpu_usage
+      raw_unit: "%"
+      display_unit: "%"
+      partition_tag: process_name
+    ps_mem_usage:
+      category: process
+      metric_name: ps_mem_usage
+      alias_name: mem_usage
+      raw_unit: "%"
+      display_unit: "%"
+      partition_tag: process_name
+  swap:
+    swap_total_bytes:
+      category: swap
+      metric_name: swap_total_bytes
+      alias_name: total
+      raw_unit: bytes
+      display_unit: bytes
+      partition_tag: swap_name
+    swap_used_bytes:
+      category: swap
+      metric_name: swap_used_bytes
+      alias_name: used
+      raw_unit: bytes
+      display_unit: bytes
+      partition_tag: swap_name
+    swap_usage:
+      category: swap
+      metric_name: swap_usage
+      alias_name: swap
+      raw_unit: "%"
+      display_unit: "%"
+      partition_tag: swap_name
+    paging_usage:
+      category: swap
+      metric_name: paging_usage
+      alias_name: paging
+      raw_unit: "%"
+      display_unit: "%"
+      partition_tag: swap_name
+    pgin:
+      category: swap
+      metric_name: pgin
+      alias_name: pgin
+      raw_unit: pages
+      display_unit: pages
+      partition_tag: swap_name
+    pgout:
+      category: swap
+      metric_name: pgout
+      alias_name: pgout
+      raw_unit: pages
+      display_unit: pages
+      partition_tag: swap_name
+  system:
+    uptime:
+      category: system
+      metric_name: uptime
+      alias_name: uptime
+      raw_unit: seconds
+      display_unit: seconds
+      partition_tag: null
+  
+  ping:
+    result_code:
+      category: ping
+      metric_name: result_code
+      alias_name: result_code
+      raw_unit: count
+      display_unit: count
+      partition_tag: null
+  
+  connection:
+    refused:
+      category: connection
+      metric_name: refused
+      alias_name: refused
+      raw_unit: count
+      display_unit: count
+      partition_tag: null
+    status:
+      category: connection
+      metric_name: status
+      alias_name: status
+      raw_unit: count
+      display_unit: count
+      partition_tag: null
+  tablespace:
+    autoextensible:
+      category: "tablespace"
+      metric_name: "autoextensible"
+      alias_name: "autoextensible"
+      raw_unit: "count"
+      display_unit: "count"
+      partition_tag: "tablespace_name"
+    files_count:
+      category: "tablespace"
+      metric_name: "files_count"
+      alias_name: "files"
+      raw_unit: "count"
+      display_unit: "count"
+      partition_tag: "tablespace_name"
+    total_space_bytes:
+      category: "tablespace"
+      metric_name: "total_space_bytes"
+      alias_name: "total_space"
+      raw_unit: "bytes"
+      display_unit: "GB"
+      partition_tag: "tablespace_name"
+    used_space_bytes:
+      category: "tablespace"
+      metric_name: "used_space"
+      alias_name: "used_space"
+      raw_unit: "bytes"
+      display_unit: "GB"
+      partition_tag: "tablespace_name"
+    free_space_bytes:
+      category: "tablespace"
+      metric_name: "free_space"
+      alias_name: "free"
+      raw_unit: "bytes"
+      display_unit: "GB"
+      partition_tag: "tablespace_name"
+    used_usage:
+      category: "tablespace"
+      metric_name: "used_usage"
+      alias_name: "usage"
+      raw_unit: "%"
+      display_unit: "%"
+      partition_tag: "tablespace_name"
+    free_usage:
+      category: "tablespace"
+      metric_name: "free_usage"
+      alias_name: "free"
+      raw_unit: "%"
+      display_unit: "%"
+      partition_tag: "tablespace_name"
+    max_size_bytes:
+      category: "tablespace"
+      metric_name: "max_size_bytes"
+      alias_name: "max"
+      raw_unit: "bytes"
+      display_unit: "GB"
+      partition_tag: "tablespace_name"
+    max_free_bytes:
+      category: "tablespace"
+      metric_name: "max_free_bytes"
+      alias_name: "max"
+      raw_unit: "bytes"
+      display_unit: "GB"
+      partition_tag: "tablespace_name"
+    auto_used_usage:
+      category: "tablespace"
+      metric_name: "auto_used_usage"
+      alias_name: "used"
+      raw_unit: "%"
+      display_unit: "%"
+      partition_tag: "tablespace_name"
+    auto_free_usage:
+      category: "tablespace"
+      metric_name: "auto_free_usage"
+      alias_name: "free"
+      raw_unit: "%"
+      display_unit: "%"
+      partition_tag: "tablespace_name"

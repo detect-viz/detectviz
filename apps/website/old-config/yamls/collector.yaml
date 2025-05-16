@@ -1,0 +1,50 @@
+# 收集器通用設置
+settings:
+  max_concurrent_collections: 10   # 添加最大並發收集數
+  collection_timeout: "1m"         # 添加收集超時設定
+# 收集數據存儲配置
+storage:
+  buffer_size: 1000            # 緩衝區大小
+  batch_interval: "15s"        # 批處理間隔
+  max_retry_count: 3           # 最大重試次數
+  retry_delay: "5s"            # 重試延遲
+
+
+# SNMP收集配置
+snmp:
+  poll_interval: "1m"
+  timeout: 5
+  retries: 2
+  ports: [161]
+  version: "1"
+  community: "public"
+  mibs_path: "conf/mibs"
+  collect_fields:
+    - field: "sys_name"
+      oid: ".1.3.6.1.2.1.1.5"
+      walk: false
+    - field: "sys_description"
+      oid: ".1.3.6.1.2.1.1.1"
+      walk: false
+    - field: "uptime"
+      oid: ".1.3.6.1.2.1.1.3"
+      walk: false
+    - field: "model"
+      oid: ".1.3.6.1.2.1.47.1.1.1.1.13"
+      walk: true
+    - field: "manufacturer"
+      oid: ".1.3.6.1.2.1.47.1.1.1.1.12"
+      walk: true
+    - field: "serial_number"
+      oid: ".1.3.6.1.2.1.47.1.1.1.1.11"
+      walk: true
+      
+# Modbus收集配置
+modbus:
+  poll_interval: "1m"
+  timeout: 5
+  retries: 2
+  ports: [502, 7000, 7001]
+  slave_id: [0, 1]
+  mode: "RTUOverTCP"
+

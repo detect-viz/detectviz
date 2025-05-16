@@ -1,0 +1,455 @@
+metric_rules:
+  - name: CPU 使用率持續高負載
+    category: cpu
+    uid: CPU-001
+    match_datasource_names:
+      - "nmon"
+      - "njmon"
+      - "logman"
+      - "sysstat"
+    detection_type: absolute
+    metric_raw_name: cpu_usage
+    metric_display_name: "使用率"
+    match_target_pattern: "{cpu_usage}:{null}"
+    raw_unit: "%"
+    display_unit: "%"
+    scale: 1.0
+    duration: 5m
+    operator: gt
+    threshold:
+      info: 85
+      warn: 90
+      crit: 95
+
+  - name: IO 等待時間持續過高
+    category: cpu
+    uid: CPU-002
+    match_datasource_names:
+      - "nmon"
+      - "njmon"
+      - "logman"
+      - "sysstat"
+    detection_type: absolute
+    metric_raw_name: iowait_usage
+    metric_display_name: "IO 等待時間"
+    match_target_pattern: "{iowait_usage}:{null}"
+    raw_unit: "%"
+    display_unit: "%"
+    scale: 1.0
+    duration: 5m
+    operator: gt
+    threshold:
+      info: 50
+      warn: 60
+      crit: 70
+
+  - name: CPU 使用率突發增長
+    category: cpu
+    uid: CPU-003
+    match_datasource_names:
+      - "nmon"
+      - "njmon"
+      - "logman"
+      - "sysstat"
+    detection_type: amplitude
+    metric_raw_name: cpu_usage
+    metric_display_name: "使用率"
+    match_target_pattern: "{cpu_usage}:{null}"
+    raw_unit: "%"
+    display_unit: "%"
+    scale: 1.0
+    duration: 5m
+    operator: gt
+    threshold:
+      info: 200
+      warn: 250
+      crit: 300
+
+  - name: 記憶體使用量持續過高
+    category: memory
+    uid: MEMORY-001
+    match_datasource_names:
+      - "nmon"
+      - "njmon"
+      - "logman"
+      - "sysstat"
+    detection_type: absolute
+    metric_raw_name: mem_used_bytes
+    metric_display_name: "使用量"
+    match_target_pattern: "{mem_used_bytes}:{null}"
+    raw_unit: bytes
+    display_unit: MB
+    scale: 9.31e-10
+    duration: 5m
+    operator: gt
+    threshold:
+      info: 1000
+      warn: 1500
+      crit: 2000
+
+  - name: 記憶體使用率突發增長
+    category: memory
+    uid: MEMORY-002
+    match_datasource_names:
+      - "nmon"
+      - "njmon"
+      - "logman"
+      - "sysstat"
+    detection_type: amplitude
+    metric_raw_name: mem_usage
+    metric_display_name: "使用率"
+    match_target_pattern: "{mem_usage}:{null}"
+    raw_unit: "%"
+    display_unit: "%"
+    scale: 1.0
+    duration: 5m
+    operator: gt
+    threshold:
+      info: 150
+      warn: 200
+      crit: 250
+
+  - name: 磁碟繁忙率持續過高
+    category: disk
+    uid: DISK-001
+    match_datasource_names:
+      - "nmon"
+      - "njmon"
+      - "logman"
+      - "sysstat"
+    detection_type: absolute
+    metric_raw_name: busy
+    metric_display_name: "繁忙率"
+    match_target_pattern: "{busy}:{disk_name}"
+    raw_unit: "%"
+    display_unit: "%"
+    scale: 1.0
+    duration: 5m
+    operator: gt
+    threshold:
+      info: 80
+      warn: 85
+      crit: 90
+
+  - name: 磁碟讀取持續過高
+    category: disk
+    uid: DISK-002
+    match_datasource_names:
+      - "nmon"
+      - "njmon"
+      - "logman"
+      - "sysstat"
+    detection_type: absolute
+    metric_raw_name: read_bytes
+    metric_display_name: "讀取流量"
+    match_target_pattern: "{read_bytes}:{disk_name}"
+    raw_unit: bytes
+    display_unit: MB/s
+    scale: 1.0
+    duration: 5m
+    operator: gt
+    threshold:
+      info: 100
+      warn: 150
+      crit: 200
+
+  - name: 磁碟寫入持續過高
+    category: disk
+    uid: DISK-003
+    match_datasource_names:
+      - "nmon"
+      - "njmon"
+      - "logman"
+      - "sysstat"
+    detection_type: absolute
+    metric_raw_name: write_bytes
+    metric_display_name: "寫入流量"
+    match_target_pattern: "{write_bytes}:{disk_name}"
+    raw_unit: bytes
+    display_unit: MB/s
+    scale: 1.0
+    duration: 5m
+    operator: gt
+    threshold:
+      info: 100
+      warn: 150
+      crit: 200
+
+  - name: 磁碟寫入突發增長
+    category: disk
+    uid: DISK-004
+    match_datasource_names:
+      - "nmon"
+      - "njmon"
+      - "logman"
+      - "sysstat"
+    detection_type: amplitude
+    metric_raw_name: write_bytes
+    metric_display_name: "寫入流量"
+    match_target_pattern: "{write_bytes}:{disk_name}"
+    raw_unit: bytes
+    display_unit: MB/s
+    scale: 9.5367e-7
+    duration: 5m
+    operator: gt
+    threshold:
+      info: 300
+      warn: 400
+      crit: 500
+
+  - name: 檔案系統使用率持續過高
+    category: filesystem
+    uid: FILESYSTEM-001
+    match_datasource_names:
+      - "nmon"
+      - "njmon"
+      - "logman"
+      - "sysstat"
+    detection_type: absolute
+    metric_raw_name: fs_usage
+    metric_display_name: "使用率"
+    match_target_pattern: "{fs_usage}:{filesystem_name}"
+    raw_unit: "%"
+    display_unit: "%"
+    scale: 1.0
+    duration: 15m
+    operator: gt
+    threshold:
+      info: 90
+      warn: 95
+      crit: 100
+
+  - name: 檔案系統可用空間過低
+    category: filesystem
+    uid: FILESYSTEM-002
+    match_datasource_names:
+      - "nmon"
+      - "njmon"
+      - "logman"
+      - "sysstat"
+    detection_type: absolute
+    metric_raw_name: fs_free_bytes
+    metric_display_name: "可用空間"
+    match_target_pattern: "{fs_free_bytes}:{filesystem_name}"
+    raw_unit: bytes
+    display_unit: GB
+    scale: 9.31e-10
+    duration: 15m
+    operator: lt
+    threshold:
+      info: 10
+      warn: 5
+      crit: 1
+
+  - name: 檔案系統使用量突發增長
+    category: filesystem
+    uid: FILESYSTEM-003
+    match_datasource_names:
+      - "nmon"
+      - "njmon"
+      - "logman"
+      - "sysstat"
+    detection_type: amplitude
+    metric_raw_name: fs_used_bytes
+    metric_display_name: "使用量"
+    match_target_pattern: "{fs_used_bytes}:{filesystem_name}"
+    raw_unit: bytes
+    display_unit: GB
+    scale: 9.31e-10
+    duration: 5m
+    operator: gt
+    threshold:
+      info: 5
+      warn: 10
+      crit: 15
+
+  - name: 網路發送流量持續過高
+    category: network
+    uid: NETWORK-001
+    match_datasource_names:
+      - "nmon"
+      - "njmon"
+      - "logman"
+      - "sysstat"
+    detection_type: absolute
+    metric_raw_name: sent_bytes
+    metric_display_name: "發送流量"
+    match_target_pattern: "{sent_bytes}:{network_name}"
+    raw_unit: bytes
+    display_unit: MB/s
+    scale: 9.5367e-7
+    duration: 5m
+    operator: gt
+    threshold:
+      info: 200
+      warn: 300
+      crit: 400
+
+  - name: 網路接收流量持續過高
+    category: network
+    uid: NETWORK-002
+    match_datasource_names:
+      - "nmon"
+      - "njmon"
+      - "logman"
+      - "sysstat"
+    detection_type: absolute
+    metric_raw_name: recv_bytes
+    metric_display_name: "接收流量"
+    match_target_pattern: "{recv_bytes}:{network_name}"
+    raw_unit: bytes
+    display_unit: MB/s
+    scale: 9.5367e-7
+    duration: 5m
+    operator: gt
+    threshold:
+      info: 200
+      warn: 300
+      crit: 400
+
+  - name: 網路發送錯誤過多
+    category: network
+    uid: NETWORK-003
+    match_datasource_names:
+      - "nmon"
+      - "njmon"
+      - "logman"
+      - "sysstat"
+    detection_type: absolute
+    metric_raw_name: sent_errs
+    metric_display_name: "發送錯誤"
+    match_target_pattern: "{sent_errs}:{network_name}"
+    raw_unit: count
+    display_unit: count
+    scale: 1.0
+    duration: 5m
+    operator: gt
+    threshold:
+      info: 100
+      warn: 200
+      crit: 300
+
+  - name: 網路發送流量突發增長
+    category: network
+    uid: NETWORK-004
+    match_datasource_names:
+      - "nmon"
+      - "njmon"
+      - "logman"
+      - "sysstat"
+    detection_type: amplitude
+    metric_raw_name: sent_bytes
+    metric_display_name: "發送流量"
+    match_target_pattern: "{sent_bytes}:{network_name}"
+    raw_unit: bytes
+    display_unit: MB/s
+    scale: 9.5367e-7
+    duration: 5m
+    operator: gt
+    threshold:
+      info: 400
+      warn: 500
+      crit: 600
+
+  - name: 系統啟動時間過短
+    category: system
+    uid: SYSTEM-001
+    match_datasource_names:
+      - "nmon"
+      - "njmon"
+      - "logman"
+      - "sysstat"
+    detection_type: absolute
+    metric_raw_name: uptime
+    metric_display_name: "啟動時間"
+    match_target_pattern: "{uptime}:{null}"
+    raw_unit: seconds
+    display_unit: seconds
+    scale: 1.0
+    duration: 5m
+    operator: lt
+    threshold:
+      info: 300
+      warn: 400
+      crit: 500
+
+  - name: 系統無回應
+    category: system
+    uid: SYSTEM-002
+    match_datasource_names:
+      - "nmon"
+      - "njmon"
+      - "logman"
+      - "sysstat"
+    detection_type: absolute
+    metric_raw_name: result_code
+    metric_display_name: "回應碼"
+    match_target_pattern: "{result_code}:{null}"
+    raw_unit: count
+    display_unit: count
+    scale: 1.0
+    duration: 15m
+    operator: gt
+    threshold:
+      info: 1
+      warn: 2
+      crit: 3
+
+  - name: 資料庫連線拒絕過多
+    category: database
+    uid: DATABASE-001
+    match_datasource_names:
+      - "oracle_connection"
+    detection_type: absolute
+    metric_raw_name: connection_refused
+    metric_display_name: "連線拒絕"
+    match_target_pattern: "{connection_refused}:{database}"
+    raw_unit: count
+    display_unit: count
+    scale: 1.0
+    duration: 15m
+    operator: gt
+    threshold:
+      info: 1
+      warn: 2
+      crit: 3
+
+
+
+  - name: 資料庫使用率突發增長
+    category: database
+    uid: DATABASE-002
+    match_datasource_names:
+      - "oracle_awrrpt"
+    detection_type: amplitude
+    metric_raw_name: usage
+    metric_display_name: "使用率"
+    match_target_pattern: "{usage}:{database}"
+    raw_unit: "%"
+    display_unit: "%"
+    scale: 1.0
+    duration: 5m
+    operator: gt
+    threshold:
+      info: 100
+      warn: 150
+      crit: 200
+
+  - name: 資料庫表可用空間過低
+    category: tablespace
+    uid: TABLESPACE-001
+    match_datasource_names:
+      - "oracle_tablespace"
+    match_target_pattern: "{free_bytes}:{database}:{tablespace_name}"
+    detection_type: absolute
+    metric_raw_name: free_bytes
+    metric_display_name: "可用空間"
+    raw_unit: bytes
+    display_unit: GB
+    scale: 9.31e-10
+    duration: 1d
+    operator: lt
+    threshold:
+      info: 20
+      warn: 10
+      crit: 5

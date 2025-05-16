@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+
+<head>
+  <meta charset="UTF-8">
+  <title>Detect Viz Layout Preview</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/admin-lte/3.2.0/css/adminlte.min.css" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+  <style>
+    .border-box {
+      border: 1px dashed #ccc;
+      padding: 1rem;
+      margin-bottom: 1rem;
+    }
+  </style>
+</head>
+
+<body class="hold-transition sidebar-mini">
+  <div class="wrapper">
+
+    <!-- Navbar -->
+    <nav class="main-header navbar navbar-expand navbar-white navbar-light">
+      <ul class="navbar-nav">
+        <li class="nav-item">
+          <a class="nav-link" data-widget="pushmenu" href="#" role="button"><i class="material-icons">menu</i></a>
+        </li>
+        <li class="nav-item d-none d-sm-inline-block">
+          <a href="#" class="nav-link">預覽模式</a>
+        </li>
+      </ul>
+    </nav>
+
+    <!-- Sidebar -->
+    <aside class="main-sidebar sidebar-dark-primary elevation-4">
+      <a href="#" class="brand-link">
+        <span class="brand-text font-weight-light">Detect Viz</span>
+      </a>
+      <div class="sidebar">
+        <nav class="mt-2">
+          <ul class="nav nav-pills nav-sidebar flex-column">
+            <li class="nav-item">
+              <a href="#" class="nav-link active">
+                <i class="material-icons nav-icon">dashboard</i>
+                <p>預覽頁</p>
+              </a>
+            </li>
+          </ul>
+        </nav>
+      </div>
+    </aside>
+
+    <!-- Content Wrapper -->
+    <div class="content-wrapper">
+      <section class="content pt-3">
+        <div class="container-fluid">
+
+          <!-- Card -->
+          <div class="card border-box">
+            <div class="card-header">
+              <h3 class="card-title">卡片標題</h3>
+            </div>
+            <div class="card-body">
+              這是卡片內容區塊，可放置說明、統計數據或其他內容。
+            </div>
+          </div>
+
+          <!-- Table -->
+          <div class="card border-box">
+            <div class="card-header">
+              <h3 class="card-title">資料表格</h3>
+            </div>
+            <div class="card-body p-0">
+              <table class="table table-striped">
+                <thead>
+                  <tr>
+                    <th>設備</th>
+                    <th>狀態</th>
+                    <th>電流</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td>PDU-1</td>
+                    <td><span class="badge bg-success">正常</span></td>
+                    <td>5.1 A</td>
+                  </tr>
+                  <tr>
+                    <td>PDU-2</td>
+                    <td><span class="badge bg-warning">警告</span></td>
+                    <td>8.3 A</td>
+                  </tr>
+                  <tr>
+                    <td>PDU-3</td>
+                    <td><span class="badge bg-danger">異常</span></td>
+                    <td>10.5 A</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+
+          <!-- Modal Button -->
+          <div class="card border-box">
+            <div class="card-header">
+              <h3 class="card-title">對話框模擬</h3>
+            </div>
+            <div class="card-body">
+              <button class="btn btn-primary" onclick="$('#modal-preview').modal('show')">開啟對話框</button>
+            </div>
+          </div>
+
+          <!-- Modal -->
+          <div class="modal fade" id="modal-preview" tabindex="-1" role="dialog" aria-labelledby="modalLabel"
+            aria-hidden="true">
+            <div class="modal-dialog" role="document">
+              <div class="modal-content">
+                <div class="modal-header">
+                  <h5 class="modal-title" id="modalLabel">提示</h5>
+                  <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                  </button>
+                </div>
+                <div class="modal-body">這是一個模擬的 modal 對話框。</div>
+                <div class="modal-footer">
+                  <button type="button" class="btn btn-secondary" data-dismiss="modal">關閉</button>
+                </div>
+              </div>
+            </div>
+          </div>
+
+        </div>
+      </section>
+    </div>
+  </div>
+
+  <!-- JS 載入順序：jQuery → Bootstrap → AdminLTE -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.4/jquery.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.6.2/js/bootstrap.bundle.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/admin-lte/3.2.0/js/adminlte.min.js"></script>
+
+  <!-- 補捉錯誤方便 Debug -->
+  <script>
+    window.onerror = function (msg, url, lineNo, columnNo, error) {
+      console.error('捕捉錯誤:', msg, '於', url, '第', lineNo, '列');
+    };
+  </script>
+</body>
+
+</html>
