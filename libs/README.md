@@ -1,195 +1,141 @@
-# Tools SDK
-
-軟體開發套件 (SDK)，提供了一系列標準化的開發工具和介面，用於簡化和統一各產品開發專案的實現。
-
-## 特點
-
-- 標準化的 API 介面
-- 完整的身份驗證和授權功能
-- 統一的錯誤處理機制
-- 豐富的使用示例
-- 版本化的發布管理
-- 模組化設計，支援跨產品共用
-
-## 目標
-
-- 提供統一的代碼實現標準
-- 減少重複開發工作
-- 確保各專案間的一致性
-- 提高代碼質量和可維護性
-- 促進模組重用和共享
-
-## 模塊
-
-### Auth 模組
-認證相關模塊，提供統一的身份驗證和授權功能。
-
-#### Keycloak
-已完成：
-- [x] Client 初始化
-- [x] 用戶信息驗證
-- [x] 角色管理
-
-進行中：
-- [ ] 群組管理
-- [ ] 選單管理
-- [ ] RBAC 權限管理
-
-### General 模組
-通用基礎模組，提供跨產品共用的功能。
-
-#### 資源同步
-- [ ] Realms 同步管理
-- [ ] Groups 同步管理
-- [ ] Resources 同步管理
-
-#### 配置管理
-- [ ] 自定義標籤系統
-- [ ] 自定義變數管理
-- [ ] 群組選單配置
-- [ ] 通知模板管理
-- [ ] 通知規則管理
-- [ ] 資料來源管理
-
-#### Logger
-- [ ] 統一日誌格式
-- [ ] 日誌級別管理
-- [ ] 日誌輸出配置
-
-#### Config
-- [ ] 配置文件管理
-- [ ] 環境變數處理
-- [ ] 動態配置更新
-
-### 整合模組
-
-#### Grafana OAuth
-- [ ] 驗證機制
-- [ ] 授權管理
-- [ ] 權限控制
-
-### 規劃中
-
-#### License 
-- [ ] 授權驗證
-- [ ] 功能控制
-- [ ] 使用者管理
-
-## 架構設計
-
-### 系統流程
-```mermaid
-graph TB
-    subgraph Auth["認證模組"]
-        K[Keycloak] --> |認證| KA[帳號管理]
-        K --> |授權| KP[權限管理]
-    end
-
-    subgraph General["通用模組"]
-        direction TB
-        S[資源同步] --> |同步| R[(Realms)]
-        S --> |同步| G[(Groups)]
-        S --> |同步| RS[(Resources)]
-        
-        C[配置管理] --> |管理| L[Labels]
-        C --> |管理| V[Variables]
-        C --> |管理| M[Menus]
-        C --> |管理| N[Notifications]
-    end
-
-    subgraph Integration["整合模組"]
-        GO[Grafana OAuth]
-    end
-
-    K --> |驗證| S
-    K --> |授權| C
-    GO --> |整合| K
-    S --> |資源| GO
-```
-
-### 模組化結構
-```
-shared-lib/
-├── general/           # 通用基礎模組
-│   ├── sync/         # 資源同步
-│   ├── config/       # 配置管理
-│   └── notification/ # 通知系統
-└── auth/             # 認證授權
-    └── keycloak/     # Keycloak 實現
-```
-
-
-
-## 安裝
 
 ```bash
-go get github.com/zoelin2022/shared-lib
+libs/
+├── alert/             # 告警邏輯（計算、分類、狀態）
+│   ├── model.go
+│   ├── engine.go
+│   └── severity.go
+│
+├── api/               # 通用 API 工具
+│   ├── middleware/
+│   ├── errors/
+│   └── response/
+│
+├── auth/              # 驗證與使用者管理
+│   └── keycloak/
+│
+├── config/            # 設定載入與分層配置管理
+│   ├── loader/
+│   ├── manager/
+│   └── interfaces/
+│
+├── contacts/          # 通知對象資料邏輯
+│
+├── infra/             # 系統基礎建設工具
+│   ├── archiver/
+│   ├── logger/
+│   └── scheduler/
+│
+├── labels/            # Label CRUD 模組
+│
+├── licensing/         # 授權與 license 控管
+│
+├── mutes/             # 告警靜音規則模組
+│
+├── notifier/          # 發送通知的核心模組
+│
+├── plugins/           # Plugin 架構與插件註冊
+│   ├── manager.go
+│   ├── inputs/
+│   ├── outputs/
+│   └── parsers/
+│
+├── rules/             # Rule CRUD
+│
+├── storage/           # 儲存介面統一與實作
+│   ├── interface.go      # interface 定義
+│   ├── mysql/
+│   └── influxdb/
+│
+└── templates/         # 通知與報表樣板處理
+    └── service.go
 ```
 
-### 版本管理
 
-在 GitLab 倉庫的 Tags 頁面查看：
-[https://github.com/zoelin2022/shared-lib/-/tags](https://github.com/zoelin2022/shared-lib/-/tags)
+## 模組補充說明
 
-使用特定版本：
+---
+
+## 🛠 子模組結構優化建議
+
+目前 `libs/` 目錄下部分子模組已具備內部檔案（如 `model.go`, `service.go`），但大多尚未統一格式。為提升可維護性與一致性，建議每個子模組採用以下結構：
+
 ```bash
-go get github.com/zoelin2022/shared-lib@v0.1.0
+libs/模組名稱/
+├── model.go       # 結構定義（若該模組有 struct）
+├── service.go     # 該模組的主要對外邏輯（Handler / Processor）
+├── interface.go   # interface（若該模組需被 mock / 抽象）
+├── errors.go      # 錯誤處理（可選）
+├── config.go      # 該模組內部配置（可選）
+└── README.md      # 簡要說明模組用途與對外接口
 ```
 
-使用最新版本：
-```bash
-go get github.com/zoelin2022/shared-lib@latest
-```
+> 若該模組較大，可再加子目錄如 `internal/`, `handler/`, `util/` 等。
 
-在 go.mod 中指定版本：
-```
-require github.com/zoelin2022/shared-lib v0.1.0
-```
 
-> 注意：建議在生產環境中使用固定版本號，避免使用 `@latest` 標籤。
+建議優先調整目標模組：
+- `contacts/`（目前為空）
+- `labels/`（應補上 `model.go`, `service.go`）
+- `notifier/`（建議補上 `interface.go`, `channel/` 子模組）
+- `alert/`, `rules/`（若存在重複邏輯，應依責任劃分整併）
 
-### 版本發布規則
+調整後，每個 libs 子模組都應可獨立作為套件使用與測試，提升可讀性與團隊協作效率。
 
-我們遵循語義化版本 (Semantic Versioning)：
-- 主版本號 (MAJOR)：不兼容的 API 修改
-- 次版本號 (MINOR)：向下兼容的功能性新增
-- 修訂號 (PATCH)：向下兼容的問題修正
+---
 
-## 使用方式
+## 📌 各模組應實現的功能與檢查重點
 
-每個模塊都提供了完整的示例代碼，位於 `examples` 目錄下。例如：
+以下為各 `libs/` 子模組應具備的功能與建議檢查項目，供重構與檢查時參考：
 
-- General 模組：`examples/general/main.go`
-- Keycloak 認證：`examples/keycloak/main.go`
+### `contacts/`
+- 功能：管理告警聯絡人、聯絡群組、通道對應（email/LINE）
+- 應實作：
+  - `model.go`：Contact, Group 結構
+  - `service.go`：CRUD 與搜尋介面
+  - 建議有：`FindByID`, `FindByChannel`, `ListAll`
 
-## 開發指南
+### `labels/`
+- 功能：定義通用標籤（如設備分類、等級分類）
+- 應實作：
+  - `model.go`：Label 結構（含 name, key, value）
+  - `service.go`：CRUD + 搜尋 by type
+  - 適用於 event 分類、報表統計欄位
 
-### 目錄結構
+### `notifier/`
+- 功能：根據 alert 結果發送多通道通知
+- 應實作：
+  - `interface.go`：`type Sender interface { Send(ctx, msg) error }`
+  - `channel/`：子目錄每通道實作（email.go, line.go）
+  - `service.go`：主調度器，負責根據 `contacts` 路由訊息
 
-```
-shared-lib/
-├── interfaces/     # 介面定義
-├── general/       # 通用基礎模組
-├── auth/         # 認證相關實現
-│   └── keycloak/  
-├── examples/      # 使用示例
-└── ...           # 其他模塊
-```
+### `alert/`
+- 功能：告警判斷與狀態管理
+- 應實作：
+  - `model.go`：Alert 結構（包含 id, type, severity, state, source）
+  - `engine.go`：邏輯判定（如 CompareThreshold, WithinRange）
+  - `state.go`：狀態流轉（new → active → resolved）
 
-## 版本要求
+### `rules/`
+- 功能：CRUD 操作的告警條件設定（動態規則）
+- 應實作：
+  - `model.go`：Rule 結構（name, target, condition, threshold）
+  - `service.go`：CRUD + 查詢（By target type / field）
+  - 若需驗證條件語法，建議加入 `validator.go`
 
-- Go 1.21 或以上
+### `storage/`
+- 功能：提供資料儲存介面，統一封裝 InfluxDB/MySQL 等
+- 應實作：
+  - `interface.go`：`type Store interface`
+  - `influxdb/`, `mysql/`：各自實作 Store
+  - `NewStore(config)` 工廠函數，依環境建立對應儲存器
 
-## 貢獻指南
+### `plugins/`
+- 功能：定義可插拔模組（inputs/outputs/parsers）
+- 應實作：
+  - `manager.go`：PluginRegistry 註冊/載入
+  - 每 plugin 需實作 `Plugin` interface（Start / Stop / Status）
+  - 註冊方式可參考 map + init 時自動註冊
 
-1. 所有新功能必須提供介面定義
-2. 必須包含單元測試
-3. 需要提供使用示例
-4. 遵循公司代碼規範
+---
 
-## 注意事項
-
-- 使用前請仔細閱讀相關模塊的介面定義
-- 建議使用環境變數管理敏感配置
-- 注意資源的正確釋放
-- 遵循模組化設計原則
+每個模組建議補上 `README.md` 文件，簡要描述模組責任、interface 用法與對外依賴。Cursor 在檢查時可依據此清單快速確認是否已具備必要檔案與實作內容。

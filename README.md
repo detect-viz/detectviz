@@ -75,37 +75,405 @@ make up
 
 ```bash
 detectviz/
-├── apps/
-│   ├── viot-fab/
-│   ├── viot-dc/
-│   └── website/
-├── services/
+.
+├── apps
+│   ├── pdu-data-collector
+│   │   ├── config.example.yml
+│   │   ├── controller
+│   │   │   ├── dc.go
+│   │   │   └── factory.go
+│   │   ├── databases
+│   │   │   ├── influxdb.go
+│   │   │   ├── migrate.go
+│   │   │   ├── mssql.go
+│   │   │   └── mysql.go
+│   │   ├── env_data.yml
+│   │   ├── go.mod
+│   │   ├── go.sum
+│   │   ├── job_data.yml
+│   │   ├── log_data.yml
+│   │   ├── migrations
+│   │   │   ├── 000006_feed_envs_table.up.sql
+│   │   │   ├── 000008_feed_jobs_table.up.sql
+│   │   │   └── 000010_feed_logs_table.up.sql
+│   │   ├── models
+│   │   │   ├── env.go
+│   │   │   ├── gorm.go
+│   │   │   ├── job.go
+│   │   │   └── log.go
+│   │   ├── pdu.csv
+│   │   ├── README.md
+│   │   ├── rule.sql
+│   │   ├── services
+│   │   │   ├── dc
+│   │   │   ├── demo.go
+│   │   │   ├── demoInsert.go
+│   │   │   ├── factory
+│   │   │   ├── general.go
+│   │   │   ├── simulate.go
+│   │   │   └── testApi.go
+│   │   └── 軟體架構.jpg
+│   ├── README.md
+│   ├── viot-dc
+│   │   └── README.md
+│   ├── viot-fab
+│   │   └── README.md
+│   ├── viot-README.md
+│   └── website
+│       ├── cmd
+│       │   └── main.go
+│       ├── data
+│       │   ├── main.log
+│       │   ├── registry.csv
+│       │   ├── scan.csv
+│       │   ├── status_DC1.csv
+│       │   ├── status_DC2.csv
+│       │   ├── status.csv
+│       │   └── tag.csv
+│       ├── go.mod
+│       ├── go.sum
+│       ├── index.html
+│       ├── layout.html
+│       ├── old-config
+│       │   ├── config.yaml
+│       │   ├── devices.yaml
+│       │   ├── fping-5.3.md
+│       │   ├── ip_range.yaml
+│       │   ├── pdu_list.csv
+│       │   ├── position
+│       │   ├── processor
+│       │   ├── scripts
+│       │   ├── settings
+│       │   ├── task
+│       │   ├── telegraf.conf
+│       │   ├── templates
+│       │   └── yamls
+│       ├── README.md
+│       └── static
+│           ├── css
+│           ├── fonts
+│           ├── images
+│           └── js
+├── conf
+│   ├── alert-page.md
+│   ├── config
+│   │   ├── cleanup.sql
+│   │   ├── conf.d
+│   │   │   ├── code.yaml
+│   │   │   ├── metric_rule.yaml
+│   │   │   ├── metric.yaml
+│   │   │   ├── tag.yaml
+│   │   │   ├── template-default-alerting.yaml
+│   │   │   └── template-default-resolved.yaml
+│   │   ├── config.yaml
+│   │   ├── docs
+│   │   │   ├── 000003_create_metric_rules_table.up.sql
+│   │   │   ├── alert_contacts.yaml
+│   │   │   ├── alert_rules.yaml
+│   │   │   ├── constants.md
+│   │   │   ├── init.sql
+│   │   │   ├── main_menus_table.up.sql
+│   │   │   ├── menus_table.up.sql
+│   │   │   ├── metrics.csv
+│   │   │   ├── migrations
+│   │   │   ├── migrations_2
+│   │   │   ├── parser_awrrpt_files.sql
+│   │   │   ├── rule.sql
+│   │   │   ├── scheduler.yaml
+│   │   │   ├── Spec.md
+│   │   │   └── wire.md
+│   │   ├── m.yaml
+│   │   ├── mi_insert.sql
+│   │   ├── migrations
+│   │   │   ├── 000001_create_targets_table.down.sql
+│   │   │   ├── 000001_create_targets_table.up.sql
+│   │   │   ├── 000002_create_contacts_table.down.sql
+│   │   │   ├── 000002_create_contacts_table.up.sql
+│   │   │   ├── 000003_create_templates_table.down.sql
+│   │   │   ├── 000003_create_templates_table.up.sql
+│   │   │   ├── 000004_create_rules_table.down.sql
+│   │   │   ├── 000004_create_rules_table.up.sql
+│   │   │   ├── 000005_create_rule_contacts_table.down.sql
+│   │   │   ├── 000005_create_rule_contacts_table.up.sql
+│   │   │   ├── 000006_create_rule_states_table.down.sql
+│   │   │   ├── 000006_create_rule_states_table.up.sql
+│   │   │   ├── 000007_create_triggered_logs_table.down.sql
+│   │   │   ├── 000007_create_triggered_logs_table.up.sql
+│   │   │   ├── 000008_create_notify_logs_table.down.sql
+│   │   │   └── 000008_create_notify_logs_table.up.sql
+│   │   ├── oracle-monitor-script
+│   │   │   ├── all.sql
+│   │   │   ├── connection
+│   │   │   ├── README.md
+│   │   │   └── tablespace
+│   │   ├── pdu_list.numbers
+│   │   ├── provisioning
+│   │   │   ├── dashboards
+│   │   │   └── notifiers
+│   │   ├── test
+│   │   │   ├── CPU-001_alert.json
+│   │   │   ├── CPU-001_normal.json
+│   │   │   ├── CPU-002_alert.json
+│   │   │   ├── CPU-002_normal.json
+│   │   │   ├── CPU-003_alert.json
+│   │   │   ├── CPU-003_normal.json
+│   │   │   ├── DATABASE-001_alert.json
+│   │   │   ├── DATABASE-001_normal.json
+│   │   │   ├── DISK-001_alert.json
+│   │   │   ├── DISK-001_normal.json
+│   │   │   ├── FILESYSTEM-001_alert.json
+│   │   │   ├── FILESYSTEM-001_normal.json
+│   │   │   ├── FILESYSTEM-002_alert.json
+│   │   │   ├── FILESYSTEM-002_normal.json
+│   │   │   ├── MEMORY-001_alert.json
+│   │   │   ├── MEMORY-001_normal.json
+│   │   │   ├── MEMORY-002_alert.json
+│   │   │   ├── MEMORY-002_normal.json
+│   │   │   ├── NETWORK-001_alert.json
+│   │   │   ├── NETWORK-001_normal.json
+│   │   │   ├── README.md
+│   │   │   ├── TABLESPACE-001_alert.json
+│   │   │   └── TABLESPACE-001_normal.json
+│   │   └── 功能保留紀錄.md
+│   ├── custom.yaml
+│   ├── default.ini
+│   ├── provisioning
+│   │   └── analytics
+│   │       ├── panels.yaml
+│   │       ├── profiles.yaml
+│   │       └── rules.yaml
+│   ├── secret.ini
+│   └── settings.json
+├── docker-compose.yml
+├── libs
+│   ├── alert
+│   │   ├── alert.go
+│   │   ├── interface.go
+│   │   ├── monitor.go
+│   │   ├── notify.go
+│   │   ├── README.md
+│   │   ├── tools.go
+│   │   ├── wire_gen.go
+│   │   └── wire.go
+│   ├── api
+│   │   ├── controller
+│   │   │   ├── alert_page.go
+│   │   │   ├── alert.go
+│   │   │   ├── contact.go
+│   │   │   ├── process.go
+│   │   │   └── rule.go
+│   │   ├── errors
+│   │   │   └── error.go
+│   │   ├── middleware
+│   │   │   └── middleware.go
+│   │   ├── response
+│   │   │   └── responce.go
+│   │   └── router.go
+│   ├── auth
+│   │   ├── interface.go
+│   │   ├── keycloak
+│   │   │   ├── client.go
+│   │   │   ├── interface.go
+│   │   │   ├── login.go
+│   │   │   ├── provider.go
+│   │   │   ├── realm.go
+│   │   │   └── user.go
+│   │   ├── middleware
+│   │   │   └── auth.go
+│   │   └── README.md
+│   ├── config
+│   │   ├── interfaces
+│   │   │   └── config.go
+│   │   ├── loader
+│   │   │   └── loader.go
+│   │   ├── manager
+│   │   │   └── manager.go
+│   │   ├── models
+│   │   │   └── config.go
+│   │   └── README.md
+│   ├── contacts
+│   │   ├── interface.go
+│   │   └── service.go
+│   ├── infra
+│   │   ├── archiver
+│   │   │   ├── backup.go
+│   │   │   ├── interface.go
+│   │   │   ├── rotate.go
+│   │   │   └── service.go
+│   │   ├── logger
+│   │   │   ├── interface.go
+│   │   │   ├── README.md
+│   │   │   └── service.go
+│   │   └── scheduler
+│   │       ├── interface.go
+│   │       └── service.go
+│   ├── labels
+│   │   ├── interface.go
+│   │   └── service.go
+│   ├── licensing
+│   │   ├── interfaces
+│   │   │   └── license.go
+│   │   ├── manager
+│   │   │   └── manager.go
+│   │   ├── mock
+│   │   │   └── mock.go
+│   │   ├── models
+│   │   │   └── license.go
+│   │   └── README.md
+│   ├── main.go
+│   ├── models
+│   │   ├── alert
+│   │   │   ├── config.go
+│   │   │   ├── contact.go
+│   │   │   ├── metric_rule.go
+│   │   │   ├── notify_log.go
+│   │   │   ├── payload.go
+│   │   │   ├── rule_state.go
+│   │   │   ├── rule.go
+│   │   │   ├── snapshot.go
+│   │   │   ├── target.go
+│   │   │   ├── template.go
+│   │   │   └── triggered_log.go
+│   │   ├── common
+│   │   │   ├── archiver.go
+│   │   │   ├── gorm.go
+│   │   │   ├── notifier.go
+│   │   │   ├── response.go
+│   │   │   ├── task.go
+│   │   │   └── user.go
+│   │   ├── config
+│   │   │   ├── alert.go
+│   │   │   ├── auth.go
+│   │   │   ├── config.go
+│   │   │   ├── database.go
+│   │   │   ├── logger.go
+│   │   │   ├── parser.go
+│   │   │   └── server.go
+│   │   ├── dto
+│   │   │   └── label.go
+│   │   ├── label
+│   │   │   └── model.go
+│   │   ├── logger
+│   │   │   └── logger.go
+│   │   ├── models.go
+│   │   ├── mute
+│   │   │   └── mute.go
+│   │   ├── notifier
+│   │   │   └── channel.go
+│   │   ├── parser
+│   │   │   ├── file.go
+│   │   │   └── metric.go
+│   │   ├── resource
+│   │   │   └── resource.go
+│   │   ├── scheduler
+│   │   │   └── job.go
+│   │   └── template
+│   │       └── data.go
+│   ├── mutes
+│   │   ├── interface.go
+│   │   └── service.go
+│   ├── notifier
+│   │   ├── email.go
+│   │   ├── errors
+│   │   │   └── errors.go
+│   │   ├── interface.go
+│   │   ├── README.md
+│   │   ├── service.go
+│   │   ├── utils
+│   │   │   ├── http.go
+│   │   │   ├── time.go
+│   │   │   └── utils.go
+│   │   ├── validate
+│   │   │   ├── common.go
+│   │   │   ├── email.go
+│   │   │   ├── line.go
+│   │   │   ├── url.go
+│   │   │   ├── validator.go
+│   │   │   └── webhook.go
+│   │   └── webhook.go
+│   ├── plugins
+│   │   ├── inputs
+│   │   ├── manager.go
+│   │   ├── outputs
+│   │   └── parsers
+│   │       └── interface.go
+│   ├── README.md
+│   ├── rules
+│   │   ├── interface.go
+│   │   └── service.go
+│   ├── storage
+│   │   ├── influxdb
+│   │   │   ├── interfaces
+│   │   │   ├── v2
+│   │   │   ├── v3
+│   │   │   └── wire.go
+│   │   └── mysql
+│   │       ├── alert_notify_log.go
+│   │       ├── alert_rule_state.go
+│   │       ├── alert_triggered_log.go
+│   │       ├── alert.go
+│   │       ├── cleanup.go
+│   │       ├── contact.go
+│   │       ├── error.go
+│   │       ├── gorm.go
+│   │       ├── interface.go
+│   │       ├── label.go
+│   │       ├── migrate.go
+│   │       ├── mute.go
+│   │       ├── query.go
+│   │       ├── rule.go
+│   │       ├── service.go
+│   │       ├── target.go
+│   │       └── template.go
+│   └── templates
+│       ├── interface.go
+│       ├── README.md
+│       └── service.go
+├── Makefile
+├── orchestrator
+│   └── config
+│       └── pages.yaml
+├── README.md
+├── scripts
+│   └── auto-depoly-shell
+├── services
 │   ├── accesscontrol-service
 │   ├── alert-service
 │   ├── analytics-service
-│   ├── anomaly-service
+│   │   ├── engine
+│   │   │   ├── api.py
+│   │   │   ├── cli.py
+│   │   │   ├── detector
+│   │   │   ├── main.py
+│   │   │   ├── README.md
+│   │   │   └── requirements.txt
+│   │   ├── entities
+│   │   │   ├── metric.go
+│   │   │   ├── metrics.go
+│   │   │   ├── prompt.go
+│   │   │   ├── report.go
+│   │   │   ├── rule.go
+│   │   │   └── types.go
+│   │   ├── go.mod
+│   │   ├── go.sum
+│   │   ├── internal
+│   │   │   ├── analyzer
+│   │   │   ├── config
+│   │   │   ├── processor
+│   │   │   └── reporter
+│   │   ├── main.go
+│   │   ├── middleware
+│   │   │   └── middleware.go
+│   │   ├── README.md
+│   │   └── spc-shell
+
 │   ├── automation-service
 │   ├── collector-service
 │   ├── healthcheck-service
 │   ├── llm-service
 │   ├── notifier-service
-│   ├── report-service
-│   └── visual-service
-├── libs/
-│   ├── alert/
-│   ├── transform/
-│   ├── config/
-│   └── db/
-├── orchestrator/
-│   └── config/pages.yaml
-├── conf/
-│   ├── .env.local
-│   ├── secrets.toml
-│   └── migrations/
-├── scripts/
-├── Makefile
-├── docker-compose.yml
-└── README.md
+│   └── report-service
+
 ```
 
 ---
@@ -123,3 +491,16 @@ detectviz/
 | `Makefile` | 頂層建構與執行腳本整合入口 |
 | `docker-compose.yml` | 快速啟動本地整合環境 |
 | `README.md` | 本說明文件 |
+
+---
+
+## 📘 模組補充說明
+
+### `rules/` 與 `labels/`
+
+這兩個模組主要提供共用的 CRUD API 工具：
+
+- `rules/`：提供告警規則（Rule）定義的資料操作邏輯與查詢介面，支援 alert-service 與前端設定 UI 使用。
+- `labels/`：管理可配置的標籤（Label）分類，用於事件過濾、模組歸類或多維統計條件，支援通用查詢與 CRUD。
+
+這些模組不負責核心運算邏輯，而是提供彈性設定與 metadata 管理能力，適合作為告警模組（alert-service）與報表模組的擴展支援元件。

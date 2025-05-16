@@ -1,3 +1,0 @@
-logger:
-  level: "debug"
-  path: "./log/alert.log"
